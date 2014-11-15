@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+
+    </h:head>
+    <h:body>
+
+        <ui:composition template="Template.xhtml">
+            <ui:define name="title">#{msg.EventDetails}</ui:define>
+            <ui:define name="content">
+                <h:form id="eventListForm"> 
+                    <p:fieldset legend="#{msg.EventDetails}">
+                        <p:dataTable value="#{eventBeanList.eventMasterList}" var="eventMaster" style="text-align: center;" paginator="true" rows="25">
+                            <p:column headerText="#{msg.EventName}">
+                                <h:outputText value="#{eventMaster.eventName}"  />
+                            </p:column>
+
+                            <p:column headerText="#{msg.StartDate}">
+                                <h:outputText value="#{eventMaster.eventStartDatetime}"  />
+                            </p:column>
+
+                            <p:column headerText="#{msg.EndDate}">
+                                <h:outputText value="#{eventMaster.eventEndDatetime}"  />
+                            </p:column>
+
+                            <p:column headerText="#{msg.EventLocation}">
+                                <h:outputText value="#{eventMaster.eventAddress}"  />
+                            </p:column>
+
+                            <p:column headerText="#{msg.EventStatus}">
+                                <h:outputText value="#{eventMaster.eventStatus}"  />
+                            </p:column>
+
+                            <p:column headerText="#{msg.EventType}">
+                                <h:outputText value="#{eventMaster.eventTypeId}"  />
+                            </p:column>
+                            <p:column headerText="#{msg.edit}">
+                                <p:commandButton icon="ui-icon-pencil" title="Edit" immediate="true" action="#{eventBeanList.editEvent(eventMaster)}">                                                                        
+                                </p:commandButton>                                
+                            </p:column>
+
+<!--                            <p:column headerText="#{msg.delete}">
+                                <p:commandButton update=":eventListForm" icon="ui-icon-trash" title="#{msg.delete}" immediate="true"  process="@this" actionListener="#{eventBeanList.deleteEvent(eventMaster.eventId)}" >                                
+                                    <p:confirm header="Confirmation" message="Are you sure,you want to delete the Event?"  icon="ui-icon-alert" />                                
+                                </p:commandButton>                                
+                            </p:column>-->
+                        </p:dataTable>
+                        <p:confirmDialog showEffect="fade" global="true" severity="alert">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </p:fieldset>
+                    <br/>
+                    <p:commandButton value="#{msg.AddEventMaster}" icon="ui-icon-plus" ajax="false" action="#{eventBeanList.addEventMaster()}" />
+                </h:form>        
+            </ui:define>              
+        </ui:composition>
+    </h:body>
+</html>

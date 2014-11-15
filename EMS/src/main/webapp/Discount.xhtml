@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="discountDialog" widgetVar="DiscountDlg" dynamic="true" modal="true" resizable="false" header="#{msg.Discount}"  visible="#{facesContext.validationFailed}">      
+            <h:form id="discountForm">
+                <p:messages closable="true" />
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{msg.DiscountName}  *" />
+                    <p:inputText id="discountName" value="#{eventBean.discountMasterDTO.discountName}" title="#{msg.DiscountName}"  required="true" label="#{msg.DiscountName}"/>
+                    <p:outputLabel value="#{msg.StartDate}  *" />
+                    <p:calendar id="disStartDate" value="#{eventBean.discountMasterDTO.discountStartDate}" mode="popup" showOn="button" required="true"
+                                label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="MM/dd/yyyy"/>                    
+                    <p:outputLabel value="#{msg.EndDate}  *"  />
+                    <p:calendar id="disEndDate" value="#{eventBean.discountMasterDTO.discountEndDate}" mode="popup" showOn="button" required="true"
+                                label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="MM/dd/yyyy"/>                    
+                    <p:outputLabel value="#{msg.Criteria}  *" />
+                    <p:inputText id="criteria" value="#{eventBean.discountMasterDTO.criteria}" title="#{msg.Criteria}" required="true" label="#{msg.Criteria}"/>
+                    <p:outputLabel value="#{msg.Value}  *" />
+                    <p:inputText id="value" value="#{eventBean.discountMasterDTO.criteriaValues}" required="true" title="#{msg.Value}" label="#{msg.Value}" />
+                    <p:outputLabel value="#{msg.Maxpeoplecanavail}  *" />
+                    <p:inputText id="maxpeoplecanavail" value="#{eventBean.discountMasterDTO.maxPeopeAvail}" required="true" title="#{msg.Maxpeoplecanavail}" label="#{msg.Maxpeoplecanavail}" />
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="#{msg.Ok}" process="discountForm" update="discountForm"  oncomplete="if(!args.validationFailed)PF('DiscountDlg').hide();"/>
+                <p:commandButton value="#{msg.cancel}" type="button" onclick="PF('DiscountDlg').hide();" immediate="false" />                              
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+
+</html>

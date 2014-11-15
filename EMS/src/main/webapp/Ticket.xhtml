@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >             
+        <p:messages closable="true" id = "msg1"/>
+        <p:panelGrid columns="2" id="TicketDetailsId">            
+            <p:outputLabel value="#{msg.TicketCategory}"/>
+            <p:inputText id="ticketCategory" value="#{eventBean.ticket.ticketCategoryName}" title="#{msg.TicketCategory}"  required="true" 
+                         label="#{msg.TicketCategory}"/>              
+            <p:outputLabel value="#{msg.SuperCategory}"/>                 
+            <p:selectOneMenu id="superCategory" value="#{eventBean.ticket.superCategory}"  label="#{msg.SuperCategory}" >
+                <f:selectItem itemValue="" itemLabel="--SELECT--"></f:selectItem>
+                <f:selectItems value="#{eventBean.superTicketCategoryDTOList}" var="ticketcategory" 
+                               itemLabel="#{ticketcategory.superCategoryName}" itemValue="#{ticketcategory.superCategotyId}"/>
+            </p:selectOneMenu>                                             
+            <p:outputLabel value="#{msg.SalesStartDate}"/>
+            <p:calendar id="salesStartDate" value="#{eventBean.ticket.salesStartDate}" mode="popup" showOn="button" required="true"
+                        label="#{msg.SalesStartDate}" title="#{msg.SalesStartDate}"/>            
+            <p:outputLabel value="#{msg.SalesEndDate}"/>
+            <p:calendar id="salesEndDate" value="#{eventBean.ticket.salesEndDate}" mode="popup" showOn="button" required="true" 
+                        label="#{msg.SalesEndDate}" title="#{msg.SalesEndDate}"/>                                                                      
+            <p:outputLabel value="#{msg.AgeCriteriaFrom}"/>
+            <p:inputMask maxlength="2" mask="9?9" placeHolder=" " id="ageCriteriaFrom" value="#{eventBean.ticket.ageFrom}" 
+                         title="#{msg.AgeCriteriaFrom}" required="true" label="#{msg.AgeCriteriaFrom}"/>            
+            <p:outputLabel value="#{msg.AgeCriteriaTo}"/>
+            <p:inputMask maxlength="2" mask="9?9" placeHolder=" " id="ageCriteriaTo" value="#{eventBean.ticket.ageTo}" 
+                         title="#{msg.AgeCriteriaTo}" required="true" label="#{msg.AgeCriteriaTo}"/>            
+            <p:outputLabel value="#{msg.TicketPrice}"/>
+            <p:inputMask maxlength="10" mask="9?999999999" placeHolder=" " id="ticketPrice" value="#{eventBean.ticket.ticketPrice}" 
+                         title="#{msg.TicketPrice}" required="true" label="#{msg.TicketPrice}"/>            
+            <p:outputLabel value="#{msg.WantEarlybird}"/>
+            <p:selectBooleanCheckbox id="wantEarlybird" value="#{eventBean.ticket.discount}">
+                <p:ajax event="change" process="wantEarlybird" update="addDiscountCB"/>
+            </p:selectBooleanCheckbox>            
+            <p:outputLabel value="#{msg.Refundable}"/>
+            <p:selectBooleanCheckbox id="refundable" value="#{eventBean.ticket.refundable}"/>            
+            <p:outputLabel value="#{msg.TotTicketsAvail}" for="totTicketsAvail" />
+            <p:inputMask maxlength="2" mask="9?99999" placeHolder=" " id="totTicketsAvail" value="#{eventBean.ticket.totalTickets}" title="#{msg.TotTicketsAvail}"
+                         required="true" label="#{msg.TotTicketsAvail}"/>            
+            <p:outputLabel value="#{msg.MaxTicketsPerTrans}"/>
+            <p:inputMask maxlength="2" mask="9?9" placeHolder="" id="maxTicketsPerTrans" value="#{eventBean.ticket.maxTicketsPerTransaction}"
+                         title="#{msg.MaxTicketsPerTrans}" required="true" label="#{msg.MaxTicketsPerTrans}"/>            
+            <p:outputLabel value="#{msg.MinTicketsPerTrans}"/>
+            <p:inputMask maxlength="2" mask="9?9" placeHolder="" id="minTicketsPerTrans" value="#{eventBean.ticket.minTicketsPerTransaction}" 
+                         title="#{msg.MinTicketsPerTrans}" required="true" label="#{msg.MinTicketsPerTrans}"/>                                
+            <p:outputLabel value="#{msg.Disclaimer}" />
+            <p:inputTextarea id="disclaimertkt" value="#{eventBean.ticket.disclaimer}" 
+                             title="#{msg.Disclaimer}" required="true" label="#{msg.Disclaimer}"/>            
+        </p:panelGrid>  
+        <br/>   
+        <p:outputPanel id="btnPanel">
+        <p:commandButton value="#{msg.save}" action="#{eventBean.saveTicketDetails()}"  update="@form:TicketDetailsId msg1 @form:ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
+        <p:commandButton value="#{msg.update}" action="#{eventBean.updateTicketDetails()}" update="@form:TicketDetailsId msg1 @form:ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
+        &nbsp;
+        <p:commandButton value="#{msg.AddSuperCategory}" type="button" onclick="PF('SuperCategoryDlg').show();
+                return false;"/>  
+        &nbsp;
+        <p:commandButton id="addDiscountCB" value="#{msg.AddDiscount}" type="button" onclick="PF('DiscountDlg').show();" disabled="#{!eventBean.ticket.discount}"/>  
+        </p:outputPanel>
+        <p:confirmDialog id="catDelConf" widgetVar="catDelConfDlg" showEffect="fade" severity="alert" global="true">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+        </p:confirmDialog>
+        <br/>        
+        <p:dataTable id="ticketDetailsList" value="#{eventBean.ticketDTOList}" var="ticketDTO" style="text-align: center;" paginator="true" rows="25">
+            <p:column headerText="#{msg.TicketCategory}">
+                <h:outputText value="#{ticketDTO.ticketCategoryName}"  />
+            </p:column>
+
+            <p:column headerText="#{msg.SalesStartDate}">
+                <h:outputText value="#{ticketDTO.salesStartDate}"  />
+            </p:column>
+
+            <p:column headerText="#{msg.SalesEndDate}">
+                <h:outputText value="#{ticketDTO.salesEndDate}"  />
+            </p:column>
+
+            <p:column headerText="#{msg.TicketPrice}">
+                <h:outputText value="#{ticketDTO.ticketPrice}"  />
+            </p:column>
+
+            <p:column headerText="#{msg.MaxTicketsPerTrans}">
+                <h:outputText value="#{ticketDTO.maxTicketsPerTransaction}"  />
+            </p:column>
+
+            <p:column headerText="#{msg.MinTicketsPerTrans}">
+                <h:outputText value="#{ticketDTO.minTicketsPerTransaction}"  />
+            </p:column>
+            <p:column headerText="#{msg.edit}">
+                <p:commandButton update="@form:TicketDetailsId @form:btnPanel" icon="ui-icon-pencil" title="Edit" immediate="true"  process="@this">
+                    <p:resetInput target="@form:ticketDetails:TicketDetailsId" />
+                    <f:setPropertyActionListener value="#{ticketDTO}" target="#{eventBean.ticket}" />
+                    <f:setPropertyActionListener value="#{ticketDTO.discountMaster}" target="#{eventBean.discountMasterDTO}" />
+                </p:commandButton>                                
+            </p:column>
+            <p:column headerText="#{msg.delete}">
+                <p:commandButton update="@form:ticketDetails" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" actionListener="#{eventBean.deleteTicketDetails(ticketDTO.ticketCategoryId)}">                                    
+                    <p:confirm header="Confirmation" message="Are you sure,you want to delete the Ticket?" icon="ui-icon-alert" />                                    
+                </p:commandButton>                                
+            </p:column>                                 
+        </p:dataTable>
+    </ui:composition>
+
+</html>

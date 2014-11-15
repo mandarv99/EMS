@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title><ui:insert name="title"></ui:insert></title>        
+    </h:head>
+    <h:body>        
+        <div id="main">
+            <div align="top"  id="topMenus">
+                <h:form>
+                    <p:menubar>
+                        <p:menuitem value="Dashboard" >                        
+                        </p:menuitem>
+                        <p:submenu label="Manage" >                        
+                            <p:menuitem value="Users" url="/AddOrganizerUser.xhtml" />
+                            <p:menuitem value="Company" url="/CompanyDetails.xhtml" />
+                            <p:menuitem value="Event" url="/EventList.xhtml" />
+                        </p:submenu>
+                        <p:menuitem value="Event Statistics" url="#" >   </p:menuitem>
+<!--                        <p:menuitem value="Logout" ajax="false" action="#{loginBean.logout()}" >   </p:menuitem>-->
+                        <f:facet name="options">
+
+                            <p:inputText style="margin-right:10px"/>
+
+                            <p:commandButton value="Logout"  action="#{loginBean.logout()}"  icon="ui-icon-extlink" />
+
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
+
+            </div>
+            <div id="centerSection" class="left_content">
+                <ui:insert name="content"></ui:insert>
+            </div>
+            <div id="bottom">
+                <h:outputText value="©Copyright 2014 EMS" style="color: #750909;" />
+            </div>
+        </div>                   
+    </h:body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ParticipantsRegistration" widgetVar="ParticipantsReg" modal="true" resizable="false" appendTo="@(body)" header="#{msg.ParticipantsRegistration}">
+            <h:form id="ParticipantsRegistration">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{msg.FirstName}" for="firstName" />
+                    <p:inputText id="firstName" value="#{participantsBean.participantAttributeDTO.firstName}" title="#{msg.FirstName}"  required="true" label="#{msg.FirstName}"/>
+                    <p:outputLabel value="#{msg.LastName}" for="lastName" />
+                    <p:inputText id="lastName" value="#{participantsBean.participantAttributeDTO.lastName}" title="#{msg.LastName}"  required="true" label="#{msg.LastName}"/>
+                    <p:outputLabel value="#{msg.Gender}" for="gender" />
+                    <p:selectOneRadio id="gender" value="#{participantsBean.participantAttributeDTO.gender}">
+                        <f:selectItem itemValue="1" itemLabel="#{msg.Male}"/>
+                        <f:selectItem itemValue="0" itemLabel="#{msg.Female}"/>
+                    </p:selectOneRadio>
+                    <p:outputLabel value="#{msg.DOB}" for="dob" />
+                    <p:calendar value="#{participantsBean.participantAttributeDTO.DOB}" mode="popup" showOn="button" required="true" label="#{msg.DOB}" title="#{msg.DOB}"/>
+                    <p:outputLabel value="#{msg.Address1}" for="address1" />
+                    <p:inputTextarea id="address1" value="#{participantsBean.participantAttributeDTO.address1}" title="#{msg.Address1}" required="true" label="#{msg.Address1}"/>
+                    <p:outputLabel value="#{msg.Address2}" for="address2" />
+                    <p:inputTextarea id="address2" value="#{participantsBean.participantAttributeDTO.address2}" title="#{msg.Address2}" required="true" label="#{msg.Address2}"/>
+                    <p:outputLabel value="#{msg.Address3}" for="address3" />
+                    <p:inputTextarea id="address3" value="#{participantsBean.participantAttributeDTO.address3}" required="true" title="#{msg.Address3}" label="#{msg.Address3}" />                       
+                    <p:outputLabel value="#{msg.City}" for="city" />
+                    <p:inputText id="city" value="#{participantsBean.participantAttributeDTO.city}"  required="true" title="#{msg.City}" label="#{msg.City}"  />                       
+                    <p:outputLabel value="#{msg.State}" for="state" />
+                    <p:inputText id="state" value="#{participantsBean.participantAttributeDTO.state}"  required="true" title="#{msg.State}" label="#{msg.State}"  />
+                    <p:outputLabel value="#{msg.state}" for="country" />
+                    <p:selectOneMenu id="country" value="#{participantsBean.participantAttributeDTO.country}" required="true" label="#{msg.Country}" >
+                        <f:selectItem>--SELECT--</f:selectItem>
+                        <f:selectItems value="#{participantsBean.participantAttributeDTO.userTypeList}" var="userType" itemLabel="#{userType.userTypeName}" itemValue="#{userType.userTypeId}"/>
+                    </p:selectOneMenu>                   
+                    <p:outputLabel value="#{msg.MobileNo}" for="mobileNo" />
+                    <p:inputText id="mobileNo" value="#{participantsBean.participantAttributeDTO.mobNo}" title="#{msg.MobileNo}"  required="true" label="#{msg.MobileNo}"/>
+                    <p:outputLabel value="#{msg.Email}" for="Email" />
+                    <p:inputText id="email" value="#{participantsBean.participantAttributeDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}" />
+                     </p:panelGrid>
+                <br/>
+                <p:commandButton value="#{msg.cancel}" onclick="PF('SignupDlg').hide();
+                        return false;" immediate="false" />
+
+                <p:commandButton value="#{msg.Signup}" action="#{participantsBean.saveParticipant()}"/>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+
+</html>

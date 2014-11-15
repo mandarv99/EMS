@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="emsPU" transaction-type="RESOURCE_LOCAL">
+    <jta-data-source>java:jboss/datasources/SqlDS</jta-data-source>
+    <class>com.ems.datamodel.entity.CompanyDetails</class>
+    <class>com.ems.datamodel.entity.UserPasswordRequest</class>
+    <class>com.ems.datamodel.entity.UserStatus</class>
+    <class>com.ems.datamodel.entity.UserType</class>
+    <class>com.ems.datamodel.entity.EventMaster</class>
+    <class>com.ems.datamodel.entity.Users</class>
+    <class>com.ems.datamodel.entity.ParticipantSpecimenMaster</class>
+    <class>com.ems.datamodel.entity.DiscountMaster</class>
+    <class>com.ems.datamodel.entity.TicketMaster</class>
+    <class>com.ems.datamodel.entity.Disclaimer</class>
+    <class>com.ems.datamodel.entity.SuperCategoryTkt</class>
+    <class>com.ems.datamodel.entity.EventTypes</class>
+    <class>com.ems.datamodel.entity.ParticipantMaster</class>
+    <properties>
+<!--        <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://10.1.6.21:1433;databaseName=db_events"/>
+        <property name="javax.persistence.jdbc.user" value="sa"/>
+        <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="javax.persistence.jdbc.password" value="!5ury4"/>
+        <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+        <property name="javax.persistence.schema-generation.database.action" value="create"/>-->
+      <property name="hibernate.id.new_generator_mappings" value="false"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2008Dialect"/>
+      <property name="hibernate.cache.use_second_level_cache" value="true"/>
+      <property name="hibernate.cache.use_query_cache" value="false"/>
+      <property name="hibernate.show_sql" value="false"/>
+    </properties>
+  </persistence-unit>
+</persistence>

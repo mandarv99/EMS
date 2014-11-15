@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="superCategoryId" widgetVar="SuperCategoryDlg" width="400px" height="400px" modal="true" resizable="false" header="#{msg.SuperCategory}"  visible="#{facesContext.validationFailed}" dynamic="true">            
+            <h:form id="superCategoryFormId">
+                <p:messages closable="true" />
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{msg.SuperCategoryName}  *" />
+                    <p:inputText id="firstName" value="#{eventBean.superCategoryTktDTO.superCategoryName}" title="#{msg.SuperCategoryName}"  required="true" label="#{msg.SuperCategoryName}"/>                    
+                </p:panelGrid>
+                <br/>                
+                <p:commandButton value="#{msg.submit}" action="#{eventBean.insertSuperCategory()}" process="superCategoryFormId" update=":eventForm:superCategory superCategoryFormId :eventForm:msg1" oncomplete="if(!args.validationFailed)PF('SuperCategoryDlg').hide();"/>
+                &nbsp;&nbsp;&nbsp;
+                <p:commandButton value="#{msg.cancel}" onclick="PF('SuperCategoryDlg').hide();" type="button" immediate="false" />                              
+                <br/>                
+                <p:dataTable id ="superCategoryList" value="#{eventBean.superTicketCategoryDTOList}" var="superTicketCategoryDTO" rowKey="#{superTicketCategoryDTO.superCategotyId}" style="text-align: center;" paginator="true" rows="25">
+                    <p:column headerText="#{msg.SuperCategoryName}">
+                        <h:outputText value="#{superTicketCategoryDTO.superCategoryName}"  />
+                    </p:column>
+                    <p:column headerText="#{msg.delete}">
+                        <p:commandButton update=":eventForm:TicketDetailsId :superCategoryFormId" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this"  action="#{eventBean.deleteSuperCategory(superTicketCategoryDTO.superCategotyId)}">                                                                                            
+                        </p:commandButton>                                
+                    </p:column>                         
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

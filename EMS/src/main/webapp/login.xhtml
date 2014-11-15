@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"   
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{msg.login}</title>
+    </h:head>
+    <h:body style="padding-top:10%;padding-left: 35%;">        
+
+        <p:panel id="panel" header="Login" style="vertical-align: central;width: 350px;"> 
+            <h:form id="loginForm">
+                <p:focus context=":loginForm"/>  
+                <p:messages closable="true" />
+                <p:panelGrid columns="2"  style="width: 100%;border: 0">                                                           
+
+                    <h:outputLabel value="#{msg.Email}  *" />
+                    <p:inputText value="#{loginBean.loginDTO.emailAddress}"
+                                 id="userName"
+                                 required="true"
+                                 label="#{msg.Email}" size="20" tabindex="0">
+                    </p:inputText>                 
+                    <h:outputLabel value="#{msg.Password}  *" />
+                    <p:password value="#{loginBean.loginDTO.password}"
+                                id="password"
+                                required="true"
+                                label="#{msg.Password}" size="20">
+                    </p:password>                                        
+                    <p:commandButton  value="#{msg.login}" process=":loginForm" action="#{loginBean.checkLoginStatus()}" update=":loginForm"></p:commandButton>    
+                    <p:commandButton id="signupBtn" value="#{msg.Signup}" process="@this" update=":SignupForm" oncomplete="PF('SignupDlg').show();" actionListener="#{loginBean.openSignUpDialog()}">                        
+                    </p:commandButton>
+                    <p:commandLink hreflang="#" onclick="PF('forgotPWDPanel').toggle();" value="#{msg.ForgotPassword}" >                        
+                    </p:commandLink>
+                    <p:column colspan="2">
+                        <br />
+                    </p:column>         
+
+                </p:panelGrid>
+            </h:form>
+            <h:form id="forgotPassword">
+                <p:panel id="toggleable" toggleable="true" toggleSpeed="500" collapsed="true" widgetVar="forgotPWDPanel" style="margin-bottom:20px;border: none!important;">
+                    <p:messages closable="true" />
+                    <h1> Forgot your Password?</h1>
+                    <h:outputLabel value="Enter your Email Address here to receive a link to change password." />
+                    <br/>
+                    <p:panelGrid columns="2"  style="width: 100%;border: 0">
+                        <p:outputLabel value="#{msg.Email}  *"  />
+                        <p:inputText id="frgEmail" value="#{loginBean.recoverEmail}" title="#{msg.Email}" required="true" label="#{msg.Email}"  />
+
+                        <p:commandButton process="forgotPassword" value="#{msg.SendMail}" action="#{loginBean.sendForgotPassword()}" update="toggleable"></p:commandButton>  
+                    </p:panelGrid>
+                    <br/>
+
+
+                </p:panel>
+            </h:form>
+        </p:panel>
+        <ui:include src="SignUp.xhtml"/>
+
+
+
+    </h:body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>      
+    </h:head>
+    <h:body>
+        <ui:composition template="Template.xhtml">
+            <ui:define name="title">#{msg.OrganizerUser}</ui:define>
+            <ui:define name="content">                               
+                <p:fieldset legend="#{msg.OrganizerUser}">
+                    <h:form id="organizerUserForm">
+                        <p:focus context=":organizerUserForm:organizerDetails"/>  
+                        <p:messages closable="true" id="message"/>
+                        <p:panelGrid columns="2" id="organizerDetails">
+                            <p:outputLabel value="#{msg.FirstName}"  />
+                            <p:inputText id="firstName" value="#{organizerUserBean.organizerUserDTO.firstName}" title="#{msg.FirstName}"  required="true" label="#{msg.FirstName}"/>
+                            <p:outputLabel value="#{msg.LastName}"/>
+                            <p:inputText id="lastName" value="#{organizerUserBean.organizerUserDTO.lastName}" title="#{msg.LastName}" required="true" label="#{msg.LastName}" />
+                            <p:outputLabel value="#{msg.Email}"  />
+                            <p:inputText id="email" value="#{organizerUserBean.organizerUserDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}">
+                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
+                            <p:outputLabel value="#{msg.NeedChangeInNextLogin}"  />
+                            <p:selectBooleanCheckbox id="changeInNextLogin" value="#{organizerUserBean.organizerUserDTO.changeInNextLogin}" />                       
+                            <p:outputLabel value="#{msg.UserType}" />
+                            <p:selectOneMenu id="userType" value="#{organizerUserBean.organizerUserDTO.userTypeId}" required="true" label="#{msg.UserType}" >
+                                <f:selectItem itemLabel="--SELECT--" itemValue=""></f:selectItem>
+                                <f:selectItems value="#{organizerUserBean.userTypeDTOList}" var="userType" itemLabel="#{userType.userTypeName}" itemValue="#{userType.userTypeId}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <br/>
+                        <p:commandButton value="#{msg.save}" action="#{organizerUserBean.saveOrganizerUser()}" update=":organizerUserForm" rendered="#{!(organizerUserBean.organizerUserDTO.userId!=0)}" />
+                        <p:commandButton value="#{msg.update}" action="#{organizerUserBean.updateOrganizerUser()}" update=":organizerUserForm"  rendered="#{(organizerUserBean.organizerUserDTO.userId!=0)}"  />
+                        &nbsp;&nbsp;&nbsp;
+                        <p:commandButton value="#{msg.reset}" action="#{organizerUserBean.resetOrganizerUser()}" update=":organizerUserForm" immediate="true">
+                            <p:resetInput target=":organizerUserForm:organizerDetails" />
+                        </p:commandButton>
+                      
+                    </h:form>               
+                </p:fieldset>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

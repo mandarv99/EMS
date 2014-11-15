@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="SignupDialog" widgetVar="SignupDlg" modal="true" resizable="false" header="#{msg.Signup}"  visible="#{facesContext.validationFailed}">
+            <h:form id="SignupForm">
+                <p:messages closable="true" />
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{msg.FirstName}  *" />
+                    <p:inputText id="firstName" value="#{loginBean.signUpDTO.firstName}" title="#{msg.FirstName}"  required="true" label="#{msg.FirstName}"/>
+                    <p:outputLabel value="#{msg.LastName}  *" />
+                    <p:inputText id="lastName" value="#{loginBean.signUpDTO.lastName}" title="#{msg.LastName}" required="true" label="#{msg.LastName}" />
+                    <p:outputLabel value="#{msg.Email}  *"  />
+                    <p:inputText id="email" value="#{loginBean.signUpDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </p:inputText>
+                    <p:outputLabel value="#{msg.Password}  *" />
+                    <p:password id="password" value="#{loginBean.signUpDTO.password}" match="confirmPassword"  title="#{msg.Password}" required="true" label="#{msg.Password}" feedback="true" inline="true"/>
+                    <p:outputLabel value="#{msg.ConfirmPassword}  *" />
+                    <p:password id="confirmPassword" value="#{loginBean.signUpDTO.confirmPassword}" required="true" title="#{msg.ConfirmPassword}" label="#{msg.ConfirmPassword}" />                                           
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="#{msg.Signup}" action="#{loginBean.saveOrganizer()}" process=":SignupForm" update=":SignupForm" oncomplete="if(!args.validationFailed)PF('SignupDlg').hide();"/>
+                <p:commandButton value="#{msg.cancel}" onclick="PF('SignupDlg').hide();
+                        return false;" immediate="false" />                  
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+
+</html>
