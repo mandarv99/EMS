@@ -1,0 +1,166 @@
+/* CSS file */
+body {
+	 margin: 10% 0px;
+	padding: 0px;
+	text-align: center;
+	background-color: none;
+	background-image: url(../resources/images/main_bg.jpg);
+}
+
+.Content {	
+	margin: 0px auto;
+	width:320px;
+	height:250px;
+	border-width: 1px;
+	border-color: #C3C3C3;
+}
+
+.innerContent
+{
+	border: 0;
+	align:left;
+	padding-left:0px;
+	margin-top : 30px;
+}
+
+.mainBackGround
+{	
+	background-image: url(../resources/images/main_bg.jpg);
+	border:0;
+	text-align:center;
+}
+
+.ui-messages-error
+{
+	color : #b94a48;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 12pt;
+}
+
+.ui-messages-info
+{
+	color : #b94a48;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 12pt;
+}
+
+.ui-messages-info-icon, .ui-messages-warn-icon, .ui-messages-error-icon, .ui-messages-fatal-icon
+{
+	background: none;
+}
+.ui-widget-header {
+	background: none;
+}
+
+.ui-widget-content {
+	background: transparent;
+}
+
+.ui-panel-content {
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-image: none;
+}
+
+.ui-widget {
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12pt;
+	font-family: Helvetica neue, Calibri, Roboto;
+	text-decoration: none;
+	/* font-size: 100%;*/
+}
+
+.ui-panel-titlebar {
+	height: 22px;
+	font-size: 22px;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.ui-panel .ui-panel-titlebar {
+	background-color: #56657C;
+	color: #FFFFFF;
+	padding: 4px 4px 6px 4px;
+}
+ 
+.ui-inputfield
+{
+	color: #cccccc;
+	width: 200px !important;
+	height: 22px  !important;
+	border: 1px solid #D2D2D2 !important;
+	font-family: Helvetica neue, Calibri, Roboto !important;
+	-moz-box-shadow: inset 0 0px 0px gray;
+    -webkit-box-shadow: inset 0 0px 0px  gray !important;
+    box-shadow: inset 0 0px 0px  gray !important;	
+ }
+ 
+ /* to change fon size of text input */
+ .ui-widget-header .ui-inputfield,
+.ui-widget-content .ui-inputfield {
+	color: #cccccc;
+	font-weight: bold;
+    font-size: 14px;
+ }
+
+
+ /* to remove blue border from highlighted textbox*/
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus 
+{
+	-moz-box-shadow: inset 0 0px 0px gray;
+    -webkit-box-shadow: inset 0 0px 0px  gray;
+    box-shadow: inset 0 0px 0px gray; 
+    border: none;
+}
+
+/********************** html placeholder style ********************/
+::-webkit-input-placeholder {
+	color: #cccccc;
+    font-size: 12px;
+    font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+:-moz-placeholder {
+	color: #cccccc;
+    font-size: 12px;
+    font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+.ui-watermark {
+	color: #cccccc;
+    font-size: 12px;
+    font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+/****************************************************************/
+
+.loginStyle1
+{
+	padding-left:20px;
+	padding-right: 0px;
+}
+
+.loginStyle2
+{
+	padding-left: 0px;
+	width: 252px;
+}
