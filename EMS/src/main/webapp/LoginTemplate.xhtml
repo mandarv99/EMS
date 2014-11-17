@@ -15,30 +15,32 @@
     <div id="logoDiv">
     	<table  width="100%" cellpadding="0" cellspacing="0">
 				<tr>
-					<td align="left" style="padding-left: 10%" >							        		
-		        	    <h:graphicImage value="/resources/images/joinmyeventLogo1.png" />			        
+					<td align="left" style="padding-left: 5%" >							        		
+		        	    <h:graphicImage value="/resources/images/joinmyeventLogo.png" />			        
 	   				 </td>
 	 
 	 	 			<td align="right" width="35%" style="padding-right:5px;">
-	 				 <p:commandButton   value="SIGN UP"  immediate="true" action="SignUp.xhtml"  />						 	 						 	
-  					 <p:commandButton  value="LOGIN"  immediate="true"  action="login1.xhtml" />					 	
+	 				 <p:commandButton  value="SIGN UP"  immediate="true" action="SignUp.xhtml"  />						 	 						 	
+  					 <p:commandButton value="LOGIN"  immediate="true"  action="login.xhtml" />					 	
 		 			
 		 			</td>		 			
 				</tr>
-		
-			<tr>
-			
-			<td colspan="2" class="headerImg">&nbsp;</td>
-			
-			</tr>
-		
-		</table>
+ 	 	</table>
     </div>
-  
-	 <div id="centerSection" >
+    
+    <div id="header">
+     <div id="headerText">#{msg.headerTextLoginTemplate}</div>
+    </div>
+   
+   
+	<div id="centerSection" >
             <ui:insert name="loginContent"></ui:insert>
      </div>
     
+     <div id="footer">
+     	 <div id="footerText"> &copy; #{msg.footerTextLoginTemplate}</div>
+     </div>
+	
     </h:body>
 
 </html>
