@@ -1,26 +1,44 @@
 /* CSS file */
 body {
-	 margin: 10% 0px;
+/* 	margin: 10% 0px; */
 	padding: 0px;
 	text-align: center;
 	background-color: none;
 	background-image: url(../resources/images/main_bg.jpg);
 }
 
+#centerSection
+{
+	margin: 15% 0px;
+}
+
+.headerImg
+{
+ 	background-image: url('../../resources/images/footerbg.png');
+ 	background-repeat: no-repeat;
+ 	width: 100%;
+ 	height: 10%;
+}
+
 .Content {	
 	margin: 0px auto;
 	width:320px;
-	height:250px;
+/* 	height:200px; */
 	border-width: 1px;
 	border-color: #C3C3C3;
 }
 
+.ui-panel .ui-panel-content
+{
+	padding : 0px;
+}
+ 
 .innerContent
 {
 	border: 0;
 	align:left;
 	padding-left:0px;
-	margin-top : 30px;
+	margin-top : 15px;
 }
 
 .mainBackGround
@@ -40,7 +58,7 @@ body {
 	padding-bottom : 0px;
 	margin-top : 0px;
 	margin-bottom : 0px;
-	font-size: 12pt;
+	font-size: 10pt;
 }
 
 .ui-messages-info
@@ -53,7 +71,7 @@ body {
 	padding-bottom : 0px;
 	margin-top : 0px;
 	margin-bottom : 0px;
-	font-size: 12pt;
+	font-size: 10pt;
 }
 
 .ui-messages-info-icon, .ui-messages-warn-icon, .ui-messages-error-icon, .ui-messages-fatal-icon
@@ -80,7 +98,7 @@ body {
 	font-style: normal;
 	font-variant: normal;
 	font-weight: normal;
-	font-size: 12pt;
+	font-size: 12px;
 	font-family: Helvetica neue, Calibri, Roboto;
 	text-decoration: none;
 	/* font-size: 100%;*/
@@ -164,3 +182,61 @@ body {
 	padding-left: 0px;
 	width: 252px;
 }
+
+.imageLinks
+{
+	width: 100%;
+	height:40px;
+	border:0; 
+	padding:0px;
+	font-size: 12px;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+.imageLinksSmall
+{
+	width: 40%;
+	height:30px;
+	border:0; 
+	padding:0px;
+	font-size: 12px;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+.separator 
+{
+	border:1px;
+	width:80%;
+	vertical-align:center;
+	border-color: gray;
+	background-color: gray;
+}
+
+.popupLinks
+{
+ 	border:0; 
+	padding:0px;
+	font-size: 13px !important;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: bold !important;
+	color :#254d7e;
+	text-decoration: underline;
+}
+
+.popupLinks:hover
+{
+	text-decoration: underline;
+	cursor: hand;
+}
+
+/* .loginLinkImg
+{
+	background-image: url('../../resources/images/login.png');
+}
+
+.signInLinkImg
+{
+	background-image: url('../../resources/images/signup.png');
+} */

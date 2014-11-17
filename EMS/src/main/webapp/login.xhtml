@@ -1,66 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"   
-      xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>#{msg.login}</title>
-    </h:head>
-    <h:body style="padding-top:10%;padding-left: 35%;">        
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-        <p:panel id="panel" header="Login" style="vertical-align: central;width: 350px;"> 
-            <h:form id="loginForm">
-                <p:focus context=":loginForm"/>  
-                <p:messages closable="true" />
-                <p:panelGrid columns="2"  style="width: 100%;border: 0">                                                           
+<h:head>
+	<title>#{msg.login}</title>	
+ </h:head>
+<h:body>
+		
+ <ui:composition template="LoginTemplate.xhtml">
+   
+   <ui:define name="loginContent">       
+		<p:panel id="mainPanel" styleClass="mainBackGround"  >	
+						
+ 		<p:panel id="panel" style="background-color:#FFFFFF;" styleClass="Content" >			
+            	
+            	<h:form id="loginForm" >
+             
+             	<p:focus context=":loginForm"/>  
+             	 
+             	 <p:messages id="message" closable="true"/>
+             
+ 				<h:panelGrid id="innerPanel" columns="3" columnClasses="loginStyle1, loginStyle2,loginStyle2" 
+					width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">				
 
-                    <h:outputLabel value="#{msg.Email}  *" />
-                    <p:inputText value="#{loginBean.loginDTO.emailAddress}"
+					<h:graphicImage value="/resources/images/user_icon.png" width="22" id="userNmImg"/>
+					<p:inputText value="#{loginBean.loginDTO.emailAddress}"
                                  id="userName"
                                  required="true"
-                                 label="#{msg.Email}" size="20" tabindex="0">
-                    </p:inputText>                 
-                    <h:outputLabel value="#{msg.Password}  *" />
-                    <p:password value="#{loginBean.loginDTO.password}"
-                                id="password"
+                                 label="#{msg.Email}"  tabindex="0"  />
+ 					<p:watermark value="UserName or Email" for="userName" />
+
+					<h:graphicImage id="pwdImg" value="/resources/images/password_icon.png"/>
+ 					<p:password value="#{loginBean.loginDTO.password}"
+                                id="password"  placeholder="Password"  redisplay="true"
                                 required="true"
-                                label="#{msg.Password}" size="20">
-                    </p:password>                                        
-                    <p:commandButton  value="#{msg.login}" process=":loginForm" action="#{loginBean.checkLoginStatus()}" update=":loginForm"></p:commandButton>    
-                    <p:commandButton id="signupBtn" value="#{msg.Signup}" process="@this" update=":SignupForm" oncomplete="PF('SignupDlg').show();" actionListener="#{loginBean.openSignUpDialog()}">                        
-                    </p:commandButton>
-                    <p:commandLink hreflang="#" onclick="PF('forgotPWDPanel').toggle();" value="#{msg.ForgotPassword}" >                        
-                    </p:commandLink>
-                    <p:column colspan="2">
-                        <br />
-                    </p:column>         
+                                label="#{msg.Password}"  />
+ 					<p:watermark value="Password" for="password" />
 
-                </p:panelGrid>
-            </h:form>
-            <h:form id="forgotPassword">
-                <p:panel id="toggleable" toggleable="true" toggleSpeed="500" collapsed="true" widgetVar="forgotPWDPanel" style="margin-bottom:20px;border: none!important;">
-                    <p:messages closable="true" />
-                    <h1> Forgot your Password?</h1>
-                    <h:outputLabel value="Enter your Email Address here to receive a link to change password." />
-                    <br/>
-                    <p:panelGrid columns="2"  style="width: 100%;border: 0">
-                        <p:outputLabel value="#{msg.Email}  *"  />
+  				</h:panelGrid>
+  				
+   				<h:panelGrid id="innerPanel2" columns="1" 
+					width="100%" cellpadding="0" cellspacing="0" styleClass="innerContent">			
+					
+	  				<p:commandLink  process=":loginForm" update=":loginForm:message" action="#{loginBean.checkLoginStatus()}" 
+		 			styleClass="imageLinks" >
+		 				 	 <h:graphicImage value="/resources/images/loginbtnnormal.png" styleClass="imageLinks" />	
+	 	 			</p:commandLink>	
+	 	 			
+	 	 			<p:spacer height="10" />
+	 	 			
+	  		        <p:commandLink hreflang="#" onclick="PF('forgotPWDPanel').toggle();" value="#{msg.ForgotPassword}" 
+	  		         styleClass="popupLinks" />
+  		        
+  		        </h:panelGrid>                        
+          </h:form>  
+          
+             <h:form id="forgotPassword">
+   
+               <p:panel  id="toggleable" toggleable="true" collapsed="true"  widgetVar="forgotPWDPanel" styleClass="innerContent"
+                 style="margin-top:0px;">
+                   
+                   <p:separator styleClass="separator" />
+                   
+                   <h:outputText value="Enter your Email Address here to receive a link to change password." style="width:150px;" />
+  
+	               <p:messages closable="true" />
+     
+    	           <h:panelGrid columns="3"   cellpadding="5" cellspacing="5" 
+                   columnClasses="loginStyle1, loginStyle2"  styleClass="innerContent" style="width:100%;"> 
+                      	<h:graphicImage id="mailImg" value="/resources/images/e_mail.png"/>
                         <p:inputText id="frgEmail" value="#{loginBean.recoverEmail}" title="#{msg.Email}" required="true" label="#{msg.Email}"  />
-
-                        <p:commandButton process="forgotPassword" value="#{msg.SendMail}" action="#{loginBean.sendForgotPassword()}" update="toggleable"></p:commandButton>  
-                    </p:panelGrid>
-                    <br/>
-
-
+	                     <p:watermark value="Email Address" for="frgEmail" />
+	                   
+                    </h:panelGrid>
+                                     
+                    <p:commandLink  process="forgotPassword" update="toggleable" action="#{loginBean.sendForgotPassword()}" 
+		 				styleClass="imageLinksSmall" >
+		 				 	 <h:graphicImage id="sendMailImg" value="/resources/images/sendmailbtn.png" styleClass="imageLinksSmall" />	
+	 	 			</p:commandLink>	
+                    
+                    <p:spacer width="5" height="5" />
                 </p:panel>
+
             </h:form>
-        </p:panel>
-        <ui:include src="SignUp.xhtml"/>
+          
+       </p:panel>		
 
-
-
-    </h:body>
+ 	</p:panel>
+</ui:define>
+</ui:composition>
+ </h:body>
 </html>
