@@ -1,0 +1,159 @@
+/* CSS file */
+body {
+/* 	margin: 10% 0px; */
+	padding: 0px;
+	text-align: center;
+	background-color: none;
+	background-image: url(../../resources/images/main_bg.jpg);
+}
+
+#centerSection
+{
+	 margin: 20% 0px; 	 
+}
+
+ #header 
+{
+	left: 0px;
+	top: 94px;
+	position: absolute;
+	width: 100%;
+	height: 60px;
+	z-index: 19;
+	background-color: #372949;
+	background-image: url('../../resources/images/headerbg.png') ;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+#headerText 
+{
+   	padding-top: 10px;
+  	margin : auto;
+  	position: relative; 
+ 	height: 27px;
+	z-index: 20;
+	font-family: "Segoe UI", "Segoe UI Light", "Segoe Script", "Segoe Print";
+	color: #FFF;
+	font-size: 29px;
+	font-weight: lighter;
+	vertical-align: middle;
+	text-align: center;
+} 
+
+#footer 
+{
+	left: 0px;
+	bottom: 0;
+    position: fixed;
+	width: 100%;
+	height: 28px;
+	z-index: 47;
+	background-color: #4f3969;
+	background-image: url('../../resources/images/footerbg.png');
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+ 	
+} 
+ 
+ #footerText 
+{
+   	padding-top: 5px;
+  	margin : auto;
+  	position: relative; 
+ 	height: 25px;
+	z-index: 44;
+	font-family: "Segoe UI", "Segoe UI Light", "Segoe Script", "Segoe Print";
+	color: #FFF;
+	font-size: 15px;
+	font-weight: lighter;
+	vertical-align: middle;
+	text-align: center;
+} 
+  
+
+.ui-panel .ui-panel-content
+{
+	padding : 0px;
+}
+  
+
+.mainBackGround
+{	
+	background-image: url(../resources/images/main_bg.jpg);
+	border:0;
+	text-align:center;
+}
+
+.ui-widget-header {
+	background: none;
+}
+
+.ui-widget-content {
+	background: transparent;
+}
+
+.ui-panel-content {
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-image: none;
+}
+
+.ui-widget {
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12px;
+	font-family: Helvetica neue, Calibri, Roboto;
+	text-decoration: none;
+	/* font-size: 100%;*/
+}
+
+.ui-panel-titlebar {
+	height: 22px;
+	font-size: 22px;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.ui-panel .ui-panel-titlebar {
+	background-color: #56657C;
+	color: #FFFFFF;
+	padding: 4px 4px 6px 4px;
+}
+  
+.ui-messages-error, .ui-message-error
+{
+	color : #b94a48;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 10pt;
+}
+
+.ui-messages-info
+{
+	color : #b94a48;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 10pt;
+}
+
+.ui-messages-info-icon, .ui-messages-warn-icon, .ui-messages-error-icon, .ui-messages-fatal-icon
+{
+	background: none;
+}
+
+ 

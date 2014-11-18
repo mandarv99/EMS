@@ -12,8 +12,9 @@
 <h:body>
 		
  <ui:composition template="LoginTemplate.xhtml">
+   <ui:define name="title">#{msg.login}</ui:define>
    
-   <ui:define name="loginContent">       
+   <ui:define name="content">       
 		<p:panel id="mainPanel" styleClass="mainBackGround"  >	
 						
  		<p:panel id="panel" style="background-color:#FFFFFF;" styleClass="Content" >			

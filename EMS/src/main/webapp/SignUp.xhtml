@@ -7,8 +7,9 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="LoginTemplate.xhtml">
+       <ui:define name="title">#{msg.signUp}</ui:define>
         
-       <ui:define name="loginContent">       
+       <ui:define name="content">       
 		<p:panel id="mainPanelSignUp" styleClass="mainBackGround"  >	
 						
  		<p:panel id="panelSignUp" style="background-color:#FFFFFF;" styleClass="Content" >		
