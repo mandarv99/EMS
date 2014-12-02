@@ -12,7 +12,12 @@ import org.primefaces.context.RequestContext;
 
 public class MessageUtil implements Serializable{
 
-    public void sendInfoMessageToUser(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -870380944849975843L;
+
+	public void sendInfoMessageToUser(String message) {
         FacesMessage facesMessage = createMessage(FacesMessage.SEVERITY_INFO, message);
         addMessageToJsfContext(facesMessage);
     }
@@ -28,7 +33,8 @@ public class MessageUtil implements Serializable{
 
     private void addMessageToJsfContext(FacesMessage facesMessage) {
         FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-    }
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+     }
 
     public void showMessageInDialog(String message) {
         FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Message", message);

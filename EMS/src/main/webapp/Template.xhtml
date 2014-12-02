@@ -14,22 +14,30 @@
     
         <ui:composition template="MainTemplate.xhtml">
     
+    	 <ui:define name="css">
+ 	    	<link href="./resources/css/pages.css" rel="stylesheet" type="text/css" />
+	    </ui:define>
+	    
         <ui:define name="menu">
 	            <h:form>
 	                <p:menubar styleClass="left-menus" >
 	                    <p:menuitem value="Dashboard" url=""/>                        
 	                    <p:submenu label="Manage">
 	                        <p:menuitem value="Users" url="OrganizerUserList.xhtml"/>
-	                        <p:menuitem value="Company" url="CompanyDetails.xhtml"/>
+	                        <p:menuitem value="Company" url="CompanyDetails1.xhtml"/>
 	                        <p:menuitem value="Event" url="EventList.xhtml"/>
 	                    </p:submenu>
 	                    <p:menuitem value="Event Statistics" url=""/>
-	                    <p:menuitem value="Logout" url=""/>
+	                    <p:menuitem value="Logout"  actionListener="#{loginBean.logout}"  />
 	                </p:menubar>
 	            </h:form>
 		</ui:define>
-	    
- 		</ui:composition>
+		
+		<ui:define name="welcomeText">
+		           <p:outputLabel value="Welcome #{pageNavBean.loggedInUserDTO.firstName}" />
+		</ui:define>
+		
+		</ui:composition>
     </h:body>
 
 </html>

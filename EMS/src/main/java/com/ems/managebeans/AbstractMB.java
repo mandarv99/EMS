@@ -4,8 +4,12 @@
  */
 package com.ems.managebeans;
 
-import com.ems.util.MessageUtil;
 import java.io.Serializable;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
+import com.ems.util.MessageUtil;
 
 public class AbstractMB implements Serializable {
 
@@ -42,5 +46,11 @@ public class AbstractMB implements Serializable {
 //            e.printStackTrace();
 //        }
 //    }
+    
+    public Object getObjectFromFlash(String objName)
+    {
+    	ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+    	return ec.getFlash().get(objName);
+    }
     
 }

@@ -17,7 +17,7 @@
    <ui:define name="content">       
 		<p:panel id="mainPanel" styleClass="mainBackGround"  >	
 						
- 		<p:panel id="panel" style="background-color:#FFFFFF;" styleClass="Content" >			
+ 		<p:panel id="panel" styleClass="Content" >			
             	
             	<h:form id="loginForm" >
              
@@ -33,14 +33,14 @@
                                  id="userName"
                                  required="true"
                                  label="#{msg.Email}"  tabindex="0"  />
- 					<p:watermark value="UserName or Email" for="userName" />
+ 					<p:watermark value="Email" for="userName" />
   					
  					<h:graphicImage id="pwdImg" value="/resources/images/password_icon.png"/>
  					<p:password value="#{loginBean.loginDTO.password}"
                                 id="password"  placeholder="Password"  redisplay="true"
                                 required="true"
                                 label="#{msg.Password}"  />
- 					<p:watermark value="Password" for="password" />
+ 					<p:watermark value="#{msg.Password}" for="password" />
 
   				</h:panelGrid>
   				

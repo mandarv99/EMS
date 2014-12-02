@@ -16,6 +16,7 @@ public class SignUpDTO extends AbstractDTO {
     private int superUserId;
     private int userId;
     private String userTypeName;
+    private int statusId;
 
     @Override
     public String toString() {
@@ -147,6 +148,14 @@ public class SignUpDTO extends AbstractDTO {
     public void setUserTypeName(String userTypeName) {
         this.userTypeName = userTypeName;
     }
+
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
+	}
 
   
 }

@@ -40,6 +40,37 @@ public class UsersDAO extends GenericDAO<Users> {
         }
         return users;
     }
+    
+    public SignUpDTO findUserAllData(String email, String password) {
+        Users users = null;
+        SignUpDTO userDetails = null;
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        try {
+            beginTransaction();
+            parameters.put("email", email);
+            parameters.put("password", password);
+            users = super.findOneResult("Users.findByEmailAndPwd", parameters);
+            
+            if(users!=null)
+            {
+            	userDetails = new SignUpDTO();
+            	userDetails.setUserId(users.getUserId());
+            	userDetails.setFirstName(users.getFirstName());
+            	userDetails.setLastName(users.getLastName());
+            	userDetails.setSuperUserId(users.getSuperUserId());
+            	userDetails.setUserType(users.getUserTypeId().getUserTypeId());
+            	userDetails.setUserTypeName(users.getUserTypeId().getUserTypeName());
+            	userDetails.setStatusId(users.getStatusId());
+            	userDetails.setSuperUserId(users.getSuperUserId());
+            	userDetails.setEmailAddress(users.getEmail());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            commitAndCloseTransaction();
+        }
+        return userDetails;
+    }
 
     public int insertUser(SignUpDTO signUpDTO) {
         int result = 0;

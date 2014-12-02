@@ -7,7 +7,9 @@ package com.ems.managebeans;
 
 import com.ems.datamodel.dao.CompanyDetailsDAO;
 import com.ems.datamodel.dto.CompanyDetailsDTO;
+
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -22,20 +24,38 @@ import javax.faces.validator.ValidatorException;
 @ViewScoped
 public class CompanyDetailsBean extends AbstractMB {
 
-    private CompanyDetailsDTO companyDetails;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6366475952326500974L;
+	private CompanyDetailsDTO companyDetails;
     private List<CompanyDetailsDTO> companyDetailsList;
-    @ManagedProperty(value = "#{loginBean}")
-    private LoginBean loginBean;
+  /*  @ManagedProperty(value = "#{loginBean}")
+    private LoginBean loginBean;*/
     CompanyDetailsDAO companyDetailsDAO = null;
+    
+    @ManagedProperty(value="#{pageNavBean}")
+  	private PageNavigationBean pageNavBean ;
+
 
     public CompanyDetailsBean() {
     }
 
     @PostConstruct
-    public void init() {
+    public void init()
+    {
         companyDetails = new CompanyDetailsDTO();
         companyDetailsDAO = new CompanyDetailsDAO();
-        companyDetailsList = companyDetailsDAO.getCompanyDetailsList(loginBean.getLoginUserId());
+        companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
+        
+       getDataFromRequestMap();
+    }
+    
+    private void getDataFromRequestMap()
+    {
+    	Object obj= getObjectFromFlash("companyDetails");
+    	if(obj!=null)
+    		this.companyDetails = (CompanyDetailsDTO) obj;
     }
 
     /**
@@ -68,10 +88,11 @@ public class CompanyDetailsBean extends AbstractMB {
 
     public void saveCompanyDetails() {
         try {
-            companyDetailsDAO.insertCompanyDetails(companyDetails, getLoginBean().getLoginUserId());
+            companyDetailsDAO.insertCompanyDetails(companyDetails, pageNavBean.getLoggedInUserDTO().getUserId());
             displayInfoMessageToUser("Company details added successfully");
-            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(loginBean.getLoginUserId());
+            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
             resetCompanyDetails();
+            pageNavBean.redirectPageToSearchCompany();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,10 +100,11 @@ public class CompanyDetailsBean extends AbstractMB {
 
     public void updateCompanyDetails() {
         try {
-            companyDetailsDAO.updateCompanyDetails(companyDetails, getLoginBean().getLoginUserId());
+            companyDetailsDAO.updateCompanyDetails(companyDetails, pageNavBean.getLoggedInUserDTO().getUserId());
             displayInfoMessageToUser("Company details updated successfully");
-            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(loginBean.getLoginUserId());
+            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
             resetCompanyDetails();
+            pageNavBean.redirectPageToSearchCompany();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,7 +115,7 @@ public class CompanyDetailsBean extends AbstractMB {
             this.companyDetails = companyDetails;
             companyDetailsDAO.deleteCompanyDetails(companyDetails);
             displayInfoMessageToUser("Company details deleted successfully");
-            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(loginBean.getLoginUserId());
+            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
             resetCompanyDetails();
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,21 +126,25 @@ public class CompanyDetailsBean extends AbstractMB {
         companyDetails = new CompanyDetailsDTO();
     }
 
-    /**
-     * @return the loginBean
-     */
-    public LoginBean getLoginBean() {
+    
+   /* public LoginBean getLoginBean() {
         return loginBean;
     }
 
-    /**
-     * @param loginBean the loginBean to set
-     */
+    
     public void setLoginBean(LoginBean loginBean) {
         this.loginBean = loginBean;
-    }
+    }*/
 
-    public void accountNoValidator(FacesContext context, UIComponent component, Object value) {
+    public PageNavigationBean getPageNavBean() {
+		return pageNavBean;
+	}
+
+	public void setPageNavBean(PageNavigationBean pageNavBean) {
+		this.pageNavBean = pageNavBean;
+	}
+
+	public void accountNoValidator(FacesContext context, UIComponent component, Object value) {
         UIInput accountNoComponent = (UIInput) component.getAttributes().get("bankAcctNO");
 
         //Retrieve the String value from the component
@@ -126,8 +152,8 @@ public class CompanyDetailsBean extends AbstractMB {
 
         //Convert the value parameter to a String.
         String confirmAccountNo = (String) value;
-        if (!accountNo.equals(confirmAccountNo)) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account no does not match", null));
+        if (!accountNo.toLowerCase().equals(confirmAccountNo.toLowerCase())) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account No does not match", null));
         }
 
     }

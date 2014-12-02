@@ -8,7 +8,7 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />      
         <link href="./resources/css/templateLayout.css" rel="stylesheet" type="text/css" />
-         <ui:insert name="css" />
+        <ui:insert name="css" />
 		<title><ui:insert name="title" /></title>
     </h:head>
 
@@ -28,10 +28,10 @@
     </div>
     
     <div id="header">
-     <div id="headerText"><ui:insert name="headerText" /></div>
+     <div id="headerText" style="text-align: center;"><ui:insert name="headerText" /></div>
+     <div id="welcomeText" style="text-align: right;"><ui:insert name="welcomeText" /></div>
     </div>
-   
-   
+    
 	 <div id="centerSection" >
             <ui:insert name="content"></ui:insert>
      </div>

@@ -7,7 +7,9 @@ package com.ems.managebeans;
 
 import com.ems.datamodel.dao.EventMasterDAO;
 import com.ems.datamodel.dto.EventMasterDTO;
+
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -18,17 +20,25 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class EventBeanList extends AbstractMB {
 
-    private List<EventMasterDTO> eventMasterList;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8658025445945975898L;
+	private List<EventMasterDTO> eventMasterList;
     private EventMasterDTO eventMasterDTO;
     EventMasterDAO eventMasterDAO = null;
-    @ManagedProperty(value = "#{loginBean}")
+ /*   @ManagedProperty(value = "#{loginBean}")
     private LoginBean loginBean;
+*/    
+    @ManagedProperty(value="#{pageNavBean}")
+	private PageNavigationBean pageNavBean ;
 
+    
     @PostConstruct
-    public void init() {
-
+    public void init()
+    {
         eventMasterDAO = new EventMasterDAO();
-        setEventMasterList(eventMasterDAO.getEventMasterList(loginBean.getLoginUserId()));
+       setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getUserId()));
         setEventMasterDTO(new EventMasterDTO());
     }
 
@@ -71,20 +81,23 @@ public class EventBeanList extends AbstractMB {
     }
     public void deleteEvent(int eventId){
         eventMasterDAO.deleteEventMaster(eventId);
-        setEventMasterList(eventMasterDAO.getEventMasterList(loginBean.getLoginUserId()));
+        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getUserId()));
     }
 
-    /**
-     * @return the loginBean
-     */
-    public LoginBean getLoginBean() {
+   
+    /*public LoginBean getLoginBean() {
         return loginBean;
     }
-
-    /**
-     * @param loginBean the loginBean to set
-     */
+ 
     public void setLoginBean(LoginBean loginBean) {
         this.loginBean = loginBean;
     }
+*/
+	public PageNavigationBean getPageNavBean() {
+		return pageNavBean;
+	}
+
+	public void setPageNavBean(PageNavigationBean pageNavBean) {
+		this.pageNavBean = pageNavBean;
+	}
 }

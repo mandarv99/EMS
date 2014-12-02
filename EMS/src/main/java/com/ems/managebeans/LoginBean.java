@@ -4,42 +4,57 @@
  */
 package com.ems.managebeans;
 
-import com.ems.datamodel.dao.UserTypeDAO;
-import com.ems.datamodel.dao.UsersDAO;
-import com.ems.datamodel.dto.LoginDTO;
-import com.ems.datamodel.dto.OrganizerUserDTO;
-import com.ems.datamodel.dto.ResetPasswordDTO;
-import com.ems.datamodel.dto.SignUpDTO;
-import com.ems.datamodel.dto.UserTypeDTO;
-import com.ems.datamodel.entity.Users;
-import com.ems.util.CommonUtil;
-import com.ems.util.EmailUtility;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+
 import org.primefaces.context.RequestContext;
 
+import com.ems.datamodel.dao.UsersDAO;
+import com.ems.datamodel.dto.LoginDTO;
+import com.ems.datamodel.dto.ResetPasswordDTO;
+import com.ems.datamodel.dto.SignUpDTO;
+import com.ems.datamodel.entity.Users;
+import com.ems.util.CommonUtil;
+import com.ems.util.EmailUtility;
+
+/**
+ * @author snehalr
+ *
+ */
 @ManagedBean(name = "loginBean")
 @SessionScoped
 public class LoginBean extends AbstractMB {
 
-    private static final String STAY_IN_THE_SAME_PAGE = null;
-    private static final String EVENT_LIST_PAGE = "EventList.xhtml?faces-redirect=true";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5479420716043825631L;
+	private static final String STAY_IN_THE_SAME_PAGE = null;
+    private static final String EVENT_LIST_PAGE = "EventList.xhtml";
     private LoginDTO loginDTO;
     private String recoverEmail;
     private SignUpDTO signUpDTO;
+    private SignUpDTO loggedInUserDTO;
+
     private ResetPasswordDTO resetPasswordDTO;
     private int loginUserId;
+    
+    private UsersDAO userDAOService = new UsersDAO();
 
-    public LoginBean() {
+/*	@ManagedProperty(value="#{pageNavBean}")
+	private PageNavigationBean pageNavBean ;
+*/	
+	public LoginBean() {
     }
 
     @PostConstruct
@@ -49,21 +64,28 @@ public class LoginBean extends AbstractMB {
         signUpDTO = new SignUpDTO();
     }
 
-    public String checkLoginStatus() {
+    // verify login for user
+    public String checkLoginStatus()
+    {
         try {
             boolean status = false;
-            if (loginDTO != null) {
-                UsersDAO user = new UsersDAO();
-                Users users = null;
-                users = user.findUser(loginDTO.getEmailAddress(), loginDTO.getPassword());
-                if (users != null) {
-                    if (users.getStatusId() == 0) {
+            if (loginDTO != null)
+            {
+                loggedInUserDTO = null;
+                loggedInUserDTO = userDAOService.findUserAllData(loginDTO.getEmailAddress(), loginDTO.getPassword());
+                if (loggedInUserDTO != null)
+                {
+                    if (loggedInUserDTO.getStatusId() == 0)
+                    {
                         displayErrorMessageToUser("Please do the confirmation");
                         return "login.xhtml";
                     }
                     displayInfoMessageToUser("Login successfully");
-                    setLoginUserId((int) users.getUserId());
-                } else {
+                    setLoginUserId((int) loggedInUserDTO.getUserId());
+                  } 
+                else
+                {
+                	loggedInUserDTO= new SignUpDTO();
                     displayErrorMessageToUser("Invalid user name password");
                     return "login.xhtml";
                 }
@@ -80,16 +102,48 @@ public class LoginBean extends AbstractMB {
         return EVENT_LIST_PAGE;
     }
 
+    // to logout user
+    public void logout() 
+    {
+        try
+        {
+      		FacesContext fc = FacesContext.getCurrentInstance();
+       		fc.getExternalContext().getSessionMap().clear();
+      		loggedInUserDTO = null;
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+    		Flash flash = fc.getExternalContext().getFlash();
+    		flash.setKeepMessages(true);
+    		flash.setRedirect(true);
+    		displayInfoMessageToUser("You have successfully logged out of your account.");
+    		redirectToLogin();	 
+    		
+         } catch (Exception ex) {
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    //to redirect page for authenticated User
+  	public void redirectToLogin()
+  	{
+  		 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+  		 loggedInUserDTO = new SignUpDTO();
+  		 loginDTO = new LoginDTO();
+  		 try {
+  				String red= "login.xhtml";
+   				ec.redirect(red);
+  			  } catch (IOException e) { e.printStackTrace();}	  		
+  	}
+
     public void saveOrganizer() {
         try {
-            UsersDAO user = new UsersDAO();
-            if (user.isEmailIdRegister(signUpDTO.getEmailAddress()) != null) {
+             if (userDAOService.isEmailIdRegister(signUpDTO.getEmailAddress()) != null) {
                 displayErrorMessageToUser("User already register");
                 signUpDTO = new SignUpDTO();
                 return;
             }
             signUpDTO.setUserType(1);
-            int result = user.insertUser(signUpDTO);
+            int result = userDAOService.insertUser(signUpDTO);
             if (result > 0) {
                 displayInfoMessageToUser("User added successfully please verify user using verify email");
                 signUpDTO.setUserId(result);
@@ -107,8 +161,7 @@ public class LoginBean extends AbstractMB {
 
     public void sendForgotPassword() {
         try {
-            UsersDAO user = new UsersDAO();
-            Users users = user.isEmailIdRegister(recoverEmail);
+             Users users = userDAOService.isEmailIdRegister(recoverEmail);
             if (users != null) {                
                 EmailUtility emailUtility = new EmailUtility();
                 signUpDTO = new SignUpDTO();
@@ -118,7 +171,7 @@ public class LoginBean extends AbstractMB {
                 signUpDTO.setLastName(users.getLastName());
                 signUpDTO.setLastName(users.getLastName());
                 signUpDTO.setPassword(CommonUtil.generateRandomPassword());
-                user.updateUserPassword(signUpDTO);
+                userDAOService.updateUserPassword(signUpDTO);
                 emailUtility.sendUserPassword(signUpDTO);
                 displayInfoMessageToUser("The password send on the register email");
                 recoverEmail = null;
@@ -132,9 +185,18 @@ public class LoginBean extends AbstractMB {
 
     }
 
+    public void getOrganiserUserList() {
+        try {
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+
     public void resetPassword() {
         resetPasswordDTO = new ResetPasswordDTO();
     }
+    
 
     /**
      * @return the serverDateTime
@@ -151,21 +213,16 @@ public class LoginBean extends AbstractMB {
         this.loginDTO = loginDTO;
     }
 
-    public String logout() {
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-//            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");            
-        } catch (Exception ex) {
-            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "/login.xhtml?faces-redirect=true";
-    }
+    public SignUpDTO getLoggedInUserDTO() {
+		return loggedInUserDTO;
+	}
 
-    public void getOrganiserUserList() {
-        try {
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+	public void setLoggedInUserDTO(SignUpDTO loggedInUserDTO) {
+		this.loggedInUserDTO = loggedInUserDTO;
+	}
+
+    public void openSignUpDialog() {
+        RequestContext.getCurrentInstance().reset(":SignupForm");
     }
 
     /**
@@ -223,8 +280,14 @@ public class LoginBean extends AbstractMB {
     public void setLoginUserId(int loginUserId) {
         this.loginUserId = loginUserId;
     }
+    
+	/*public PageNavigationBean getPageNavBean() {
+		return pageNavBean;
+	}
 
-    public void openSignUpDialog() {
-        RequestContext.getCurrentInstance().reset(":SignupForm");
-    }
+	public void setPageNavBean(PageNavigationBean pageNavBean) {
+		this.pageNavBean = pageNavBean;
+	}*/
+
+
 }
