@@ -160,7 +160,7 @@ public class PageNavigationBean implements Serializable
 		//RequestContext.getCurrentInstance().execute("PF('loaderDialog').show();");
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		try {
-			String red= "CompanyDetails1.xhtml";
+			String red= "CompanyDetails.xhtml";
 			ec.getFlash().put("companyDetails", companyDetails);
 			ec.redirect(red);
 		} catch (IOException e) { e.printStackTrace();	}
