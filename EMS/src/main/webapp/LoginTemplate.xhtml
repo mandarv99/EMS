@@ -18,8 +18,13 @@
 	    </ui:define>
 	     
 	      <ui:define name="menu">
-	 		  <p:commandButton  value="SIGN UP"  immediate="true" action="SignUp.xhtml"  />						 	 						 	
-	  		  <p:commandButton value="LOGIN"  immediate="true"  action="login.xhtml" />					 	
+ 	  		  <p:commandLink  immediate="true" action="SignUp.xhtml" 	styleClass="imageLinksSmall" >
+	  			 	 <h:graphicImage value="/resources/images/signup.png" styleClass="imageLinksSmall" />
+	  		  </p:commandLink>
+	  		  <p:commandLink  immediate="true" action="login.xhtml" 	styleClass="imageLinksSmall" >
+		 			 <h:graphicImage value="/resources/images/loginbtnnormal.png" styleClass="imageLinksSmall" />	
+	 	 	</p:commandLink>
+	 	 						 	
 		 </ui:define>
 	    
 	    

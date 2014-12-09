@@ -1,4 +1,6 @@
-/* CSS file */
+/* CSS file 
+http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-types-of-resolu
+*/
  
  .ui-widget .ui-widget
  {
@@ -18,8 +20,9 @@
  
 .Content {	
 	margin: 0px auto;
-/*	width:320px;*/
- 	height:600px; 
+/*	width:320px;
+ 	height:600px;*/
+ 	height:auto; 
 	border-width: 1px;
 	border-color: #C3C3C3;
 	/*	padding-bottom : 5px; */
@@ -183,7 +186,8 @@
  /* scrollpanel height*/
  .ui-scrollpanel
  {
- 	height: 500px;
+ 	/*height: 500px;*/
+ 	height:auto; 
  	border : none;
  }
  
