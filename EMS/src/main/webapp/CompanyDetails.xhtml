@@ -19,11 +19,11 @@
         	 <p:panel id="panel" styleClass="Content"  >	
         	 		
         		<f:facet name="header">
-         			 <p:commandButton value="#{msg.back}" action="#{pageNavBean.redirectPageToSearchCompany}" process="@this" immediate="true" />
+         			 <p:commandButton value="#{msg.back}" icon="ui-icon-arrowthick-1-w"  action="#{pageNavBean.redirectPageToSearchCompany}" process="@this" immediate="true" />
           		</f:facet>
              
              	<p:scrollPanel mode="native" >
- 
+ 					<p:messages id="messages" redisplay="false" globalOnly="true" />
                     <h:panelGrid id="companyDetails" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
 					width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">		
 							
@@ -77,10 +77,11 @@
                  </p:scrollPanel>
                				
 				<f:facet name="footer">
-        			 <p:commandButton value="#{msg.save}" action="#{companyDetailsBean.saveCompanyDetails()}" update=":companyDetailsForm" rendered="#{!(companyDetailsBean.companyDetails.id!=-9)}"/>
-                    <p:commandButton value="#{msg.update}" action="#{companyDetailsBean.updateCompanyDetails()}" update=":companyDetailsForm" rendered="#{(companyDetailsBean.companyDetails.id!=-9)}"/>
+        			 <p:commandButton value="#{msg.save}" icon="ui-icon-check" action="#{companyDetailsBean.saveCompanyDetails()}" update=":companyDetailsForm" rendered="#{!(companyDetailsBean.companyDetails.id!=-9)}"/>
+                    <p:commandButton value="#{msg.update}" icon="ui-icon-check"  action="#{companyDetailsBean.updateCompanyDetails()}" update=":companyDetailsForm" rendered="#{(companyDetailsBean.companyDetails.id!=-9)}"/>
                     &nbsp;&nbsp;&nbsp;
-                    <p:commandButton value="#{msg.reset}" action="#{companyDetailsBean.resetCompanyDetails()}" update=":companyDetailsForm" immediate="true">
+                    <p:commandButton value="#{msg.reset}" action="#{companyDetailsBean.resetCompanyDetails()}" update=":companyDetailsForm" immediate="true"
+                    icon="ui-icon-arrowrefresh-1-s">
                         <p:resetInput target=":companyDetailsForm:companyDetails" />
                     </p:commandButton>
         		</f:facet>

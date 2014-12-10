@@ -17,15 +17,15 @@
         	 <p:panel id="panel" styleClass="Content"  >	
         	 		
         		<f:facet name="header">
-         			 <p:commandButton value="#{msg.home}" />
-         		</f:facet>
+  	                 <p:commandButton value="#{msg.addCompany}" icon="ui-icon-circle-plus" process="@this" action="#{pageNavBean.redirectPageToEditCompany(null)}" />                        
+          		</f:facet>
              
              	<p:scrollPanel mode="native" >
                                 	
              		<p:messages id="messages" />
                      
                     <p:dataTable id ="userList" value="#{companyDetailsBean.companyDetailsList}" var="companyDetails" rowKey="#{companyDetails.id}" 
-                    style="text-align: center;" paginator="#{companyDetailsBean.companyDetailsList.size() > pageNavBean.pageSize}" rows="#{pageNavBean.pageSize}"  paginatorPosition="bottom">
+                    style="text-align: center;padding-top:10px;" paginator="#{companyDetailsBean.companyDetailsList.size() > pageNavBean.pageSize}" rows="#{pageNavBean.pageSize}"  paginatorPosition="bottom">
                         <p:column headerText="#{msg.CompanyName}">
                             <h:outputText value="#{companyDetails.companyName}"  />
                         </p:column>

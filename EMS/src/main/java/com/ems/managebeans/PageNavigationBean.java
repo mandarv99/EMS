@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.ems.datamodel.dto.CompanyDetailsDTO;
+import com.ems.datamodel.dto.OrganizerUserDTO;
 import com.ems.datamodel.dto.SignUpDTO;
 
 @ManagedBean(name="pageNavBean")
@@ -177,5 +178,32 @@ public class PageNavigationBean implements Serializable
 			ec.redirect(red);
 		} catch (IOException e) { e.printStackTrace();	}
 	}
+	
+	// open search organize user listing
+	public void redirectPageToSearchUsers()
+	{
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		ec.getFlash().setKeepMessages(true);
+		ec.getFlash().setRedirect(true);
+		try {
+			String red= "OrganizerUserList.xhtml";
+			ec.redirect(red);
+		} catch (IOException e) { e.printStackTrace();	}
+	}
+	
+	// open add organize user listing
+    public void redirectPageToAddOrganizerUser(OrganizerUserDTO organizerUserDTO)
+    {
+    	ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+    	try {
+	    	
+    		if(organizerUserDTO!=null)
+ 	    		ec.getFlash().put("organizerUserDTO", organizerUserDTO);
 
+  			String red= "AddOrganizerUser.xhtml";
+			ec.redirect(red);
+		} catch (IOException e) { e.printStackTrace();	}
+     }
+    
+    
 }

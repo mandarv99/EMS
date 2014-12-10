@@ -108,6 +108,15 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  	font-size: 13px;
 }
 
+.leftContentStyleSrch
+{
+	height: 28px;
+	text-align: left;
+ 	padding-right: 5px;
+ 	width:10%;
+ 	font-size: 14px;
+}
+
 .buttonRow
 {
 	text-align:left;
@@ -217,4 +226,35 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  .ui-dialog .ui-dialog-content
  {
  	font-size:  15px;
+ }
+ 
+ /* for drop down width*/
+ .ui-selectonemenu  
+ {
+  	width: 220px !important;
+ 	vertical-align: bottom ;
+ 	-moz-box-shadow: inset 0 0px 0px gray;
+    -webkit-box-shadow: inset 0 0px 0px  gray !important;
+ }
+ 
+ .ui-selectonemenu .ui-selectonemenu-trigger
+ {
+	border-right-width: 1px;
+	border-right-color: #D2D2D2;
+	border-right-style: solid;
+ }
+ .ui-selectonemenu-items-wrapper
+ {
+ 	 width: 100% !important;
+ }
+ 
+ /*for search button row*/
+ .buttonRow
+ {
+ 	text-align:left;
+ 	border-width:0;
+ 	border-style:none;
+ 	background: none;
+ 	padding-left: 10px;
+ 	background-color: transparent;
  }
