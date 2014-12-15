@@ -6,61 +6,96 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>                          
-        <p:messages closable="true" id = "msg"/>        
-        <p:panelGrid columns="2" id="eventMasterDetails">
-            <p:outputLabel value="#{msg.EventName} *"/>
-            <p:inputText id="eventName" value="#{eventBean.eventMasterDTO.eventName}" title="#{msg.EventName}"  required="true" 
-                         label="#{msg.EventName}"/>
-            <p:outputLabel value="#{msg.StartDate} *"/>
-            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}" mode="popup" showOn="button" required="true"
-                        label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="MM/dd/yyyy hh:mm a"/>
-            <p:outputLabel value="#{msg.EndDate} *"/>
-            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" mode="popup" showOn="button" required="true" 
-                        label="#{msg.EndDate}" title="#{msg.EndDate}" pattern="MM/dd/yyyy hh:mm a"/>                                                          
-            <p:outputLabel value="#{msg.EventDesc} *"/>
-            <p:editor id="eventDesc" value="#{eventBean.eventMasterDTO.eventDescription}" required="true"  validatorMessage="#{msg.EventDesc}" />
-            <p:outputLabel value="#{msg.FreeEvent}"/>
-            <p:selectBooleanCheckbox id="freeEvent" value="#{eventBean.eventMasterDTO.paidEvent}"/>
-
-            <p:outputLabel value="#{msg.EventLocation} *"/>
-            <p:inputTextarea id="eventLocation" value="#{eventBean.eventMasterDTO.eventAddress}" 
-                             title="#{msg.EventLocation}" required="true" label="#{msg.EventLocation}"/>
-            <p:outputLabel value="#{msg.EventType} *"/>
-            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="true" label="#{msg.EventType}" >
-                <f:selectItem itemValue=" " itemLabel="--SELECT--"></f:selectItem>
-                <f:selectItems value="#{eventBean.eventTypesDTOList}" var="eventType" 
-                               itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType.eventTypeId}"/>
-            </p:selectOneMenu>   
-            <p:outputLabel value="#{msg.CompanyName}"/>
-            <p:selectOneMenu id="companyName" value="#{eventBean.eventMasterDTO.companyId}" required="true" label="#{msg.CompanyName}" >
-                <f:selectItems value="#{eventBean.companyDetailsDTOList}" var="companyDetails" 
-                               itemLabel="#{companyDetails.companyName}" itemValue="#{companyDetails.id}" />
-            </p:selectOneMenu>   
-            <p:outputLabel value="#{msg.ReqSittingArrang}"/>
-            <p:selectBooleanCheckbox id="reqSittingArrang" value="#{eventBean.eventMasterDTO.isSittingArrangmentRequired}"/>
-            <p:outputLabel value="#{msg.ReqSignDis}" />
-            <p:selectOneRadio value="#{eventBean.eventMasterDTO.requireDisclaimer}" id="reqSignDis">
-                <f:selectItem itemValue="0" itemLabel="Applicable to all tickets"/>
-                <f:selectItem itemValue="1" itemLabel="Only specific tickets"/>
-                <f:selectItem itemValue="2" itemLabel="not required"/>
-                <p:ajax process="@this" update="disclaimer" listener="#{eventBean.onDisclaimerChange()}" />
-            </p:selectOneRadio>
-            <p:outputLabel value="#{msg.SpeParticiNum}" />
-            <p:selectBooleanCheckbox id="speParticiNum" value="#{eventBean.eventMasterDTO.bibNumbering}"/>
-            <p:outputLabel value="#{msg.TktCatgrouping}"/>
-            <p:selectBooleanCheckbox id="TktCatgrouping" value="#{eventBean.eventMasterDTO.tktGroupingCategory}"/>
-            <p:outputLabel value="#{msg.EventStatus}" />
-            <p:selectOneMenu id="eventStatus" value="#{eventBean.eventMasterDTO.eventStatus}" required="true" label="#{msg.EventStatus}" >               
-                <f:selectItem itemValue="2" itemLabel="InActive" />
-                <f:selectItem itemValue="1" itemLabel="Active"/>
-
-            </p:selectOneMenu>     
-
-            <p:outputLabel value="#{msg.Disclaimer}" />
-            <p:inputTextarea id="disclaimer" value="#{eventBean.eventMasterDTO.desclaimer}" 
-                             title="#{msg.Disclaimer}" required="#{eventBean.eventMasterDTO.disclaimerRequired}" label="#{msg.Disclaimer}"/>
-
-        </p:panelGrid>                                        
+    <ui:composition>                         
+    
+    	<p:panel id="panelEvent" styleClass="Content"  >	
+    		<p:scrollPanel mode="native" >
+    		 
+	        <p:messages id="msg" redisplay="false" globalOnly="true" />
+	
+		         <h:panelGrid id="eventMasterDetails" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
+					 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">	
+					 	
+	            <h:outputLabel value="#{msg.EventName}" styleClass="star" />
+	            <p:inputText id="eventName" value="#{eventBean.eventMasterDTO.eventName}" title="#{msg.EventName}"  required="true" 
+	                         label="#{msg.EventName}"/>
+				<p:message for="eventName" />	             
+	           
+	            <h:outputLabel value="#{msg.StartDate} " styleClass="star" />
+	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}" mode="popup" showOn="button" required="true"
+	                        label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="MM/dd/yyyy hh:mm a"/>
+	           <p:message for="startDate" />	
+	           				
+	            <h:outputLabel value="#{msg.EndDate} " styleClass="star" />
+	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" mode="popup" showOn="button" required="true" 
+	                        label="#{msg.EndDate}" title="#{msg.EndDate}" pattern="MM/dd/yyyy hh:mm a" />                                                          
+	           	<p:message for="endDate" />	
+	           
+	            <h:outputLabel value="#{msg.EventDesc} " styleClass="star" />
+	            <p:editor id="eventDesc" value="#{eventBean.eventMasterDTO.eventDescription}" required="true"  validatorMessage="#{msg.EventDesc}" />
+	            <p:message for="eventDesc" />	
+	            
+	            <h:outputLabel value="#{msg.FreeEvent}"/>
+	            <p:selectBooleanCheckbox id="freeEvent" value="#{eventBean.eventMasterDTO.paidEvent}"/>
+				 <p:message for="freeEvent" />	
+	 
+	            <h:outputLabel value="#{msg.EventLocation} " styleClass="star" />
+	            <p:inputTextarea id="eventLocation" value="#{eventBean.eventMasterDTO.eventAddress}" 
+	                             title="#{msg.EventLocation}" required="true" label="#{msg.EventLocation}"/>
+	            <p:message for="eventLocation" />
+	            
+	            <h:outputLabel value="#{msg.EventType} " styleClass="star" />
+	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="true" label="#{msg.EventType}" >
+	                <f:selectItem itemValue=" " itemLabel="--SELECT--"></f:selectItem>
+	                <f:selectItems value="#{eventBean.eventTypesDTOList}" var="eventType" 
+	                               itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType.eventTypeId}"/>
+	            </p:selectOneMenu>   
+	             <p:message for="eventType" />
+	           
+	            <h:outputLabel value="#{msg.CompanyName}"/>
+	            <p:selectOneMenu id="companyName" value="#{eventBean.eventMasterDTO.companyId}" required="true" label="#{msg.CompanyName}" >
+	                <f:selectItems value="#{eventBean.companyDetailsDTOList}" var="companyDetails" 
+	                               itemLabel="#{companyDetails.companyName}" itemValue="#{companyDetails.id}" />
+	            </p:selectOneMenu> 
+	             <p:message for="companyName" />
+	              
+	            <h:outputLabel value="#{msg.ReqSittingArrang}"/>
+	            <p:selectBooleanCheckbox id="reqSittingArrang" value="#{eventBean.eventMasterDTO.isSittingArrangmentRequired}"/>
+	             <p:message for="reqSittingArrang" />
+	             
+	            <h:outputLabel value="#{msg.ReqSignDis}" />
+	            <p:selectOneRadio value="#{eventBean.eventMasterDTO.requireDisclaimer}" id="reqSignDis">
+	                <f:selectItem itemValue="0" itemLabel="Applicable to all tickets"/>
+	                <f:selectItem itemValue="1" itemLabel="Only specific tickets"/>
+	                <f:selectItem itemValue="2" itemLabel="not required"/>
+	                <p:ajax process="@this" update="disclaimer" listener="#{eventBean.onDisclaimerChange()}" />
+	            </p:selectOneRadio>
+	            <p:message for="reqSignDis" />
+	            
+	            <h:outputLabel value="#{msg.SpeParticiNum}" />
+	            <p:selectBooleanCheckbox id="speParticiNum" value="#{eventBean.eventMasterDTO.bibNumbering}"/>
+	             <p:message for="speParticiNum" />
+	             
+	            <h:outputLabel value="#{msg.TktCatgrouping}"/>
+	            <p:selectBooleanCheckbox id="TktCatgrouping" value="#{eventBean.eventMasterDTO.tktGroupingCategory}"/>
+	            <p:message for="TktCatgrouping" />
+	            
+	            <h:outputLabel value="#{msg.EventStatus}" />
+	            <p:selectOneMenu id="eventStatus" value="#{eventBean.eventMasterDTO.eventStatus}" required="true" label="#{msg.EventStatus}" >               
+	                <f:selectItem itemValue="2" itemLabel="InActive" />
+	                <f:selectItem itemValue="1" itemLabel="Active"/>
+	
+	            </p:selectOneMenu>     
+				<p:message for="eventStatus" />
+	
+	            <h:outputLabel value="#{msg.Disclaimer}" />
+	            <p:inputTextarea id="disclaimer" value="#{eventBean.eventMasterDTO.desclaimer}" 
+	                             title="#{msg.Disclaimer}" required="#{eventBean.eventMasterDTO.disclaimerRequired}" label="#{msg.Disclaimer}"/>
+				<p:message for="disclaimer" />
+	        </h:panelGrid>   
+	        
+       	 </p:scrollPanel>
+        </p:panel>
+                                             
     </ui:composition>
 </html>

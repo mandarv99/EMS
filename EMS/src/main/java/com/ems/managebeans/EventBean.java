@@ -16,21 +16,28 @@ import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.EventTypesDTO;
 import com.ems.datamodel.dto.SuperCategoryTktDTO;
 import com.ems.datamodel.dto.TicketDTO;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
 import org.primefaces.event.FlowEvent;
 
 @ManagedBean(name = "eventBean")
 @ViewScoped
 public class EventBean extends AbstractMB {
     
-    private EventMasterDTO eventMasterDTO;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7671523986670245517L;
+	private EventMasterDTO eventMasterDTO;
     EventMasterDAO eventMasterDAO = null;
     private TicketDTO ticket;
     private List<TicketDTO> ticketDTOList;
@@ -50,12 +57,10 @@ public class EventBean extends AbstractMB {
     public void init() {
         
         eventMasterDAO = new EventMasterDAO();
-        Object o = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("EventMaster");
-        if (o != null) {
-            eventMasterDTO = (EventMasterDTO) o;
-        } else {
-            eventMasterDTO = new EventMasterDTO();
-        }
+        eventMasterDTO = new EventMasterDTO();
+
+        getDataFromRequestMap();
+        
         ticket = new TicketDTO();
         superCategoryTktDTO = new SuperCategoryTktDTO();
         superTicketCategoryDTOList = new ArrayList<>();
@@ -69,6 +74,13 @@ public class EventBean extends AbstractMB {
         superCategoryDAO = new SuperCategoryDAO();
         ticketDAO = new TicketDAO();
         
+    }
+
+    private void getDataFromRequestMap()
+    {
+    	Object obj= getObjectFromFlash("eventMaster");
+    	if(obj!=null)
+    		this.eventMasterDTO = (EventMasterDTO) obj;
     }
 
     /**

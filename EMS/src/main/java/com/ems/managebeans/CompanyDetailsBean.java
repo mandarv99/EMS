@@ -30,8 +30,6 @@ public class CompanyDetailsBean extends AbstractMB {
 	private static final long serialVersionUID = 6366475952326500974L;
 	private CompanyDetailsDTO companyDetails;
     private List<CompanyDetailsDTO> companyDetailsList;
-  /*  @ManagedProperty(value = "#{loginBean}")
-    private LoginBean loginBean;*/
     CompanyDetailsDAO companyDetailsDAO = null;
     
     @ManagedProperty(value="#{pageNavBean}")
@@ -125,16 +123,6 @@ public class CompanyDetailsBean extends AbstractMB {
     public void resetCompanyDetails() {
         companyDetails = new CompanyDetailsDTO();
     }
-
-    
-   /* public LoginBean getLoginBean() {
-        return loginBean;
-    }
-
-    
-    public void setLoginBean(LoginBean loginBean) {
-        this.loginBean = loginBean;
-    }*/
 
     public PageNavigationBean getPageNavBean() {
 		return pageNavBean;

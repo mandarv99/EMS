@@ -5,16 +5,15 @@
  */
 package com.ems.managebeans;
 
-import com.ems.datamodel.dao.EventMasterDAO;
-import com.ems.datamodel.dto.EventMasterDTO;
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
+
+import com.ems.datamodel.dao.EventMasterDAO;
+import com.ems.datamodel.dto.EventMasterDTO;
 
 @ManagedBean(name = "eventBeanList")
 @ViewScoped
@@ -27,9 +26,7 @@ public class EventBeanList extends AbstractMB {
 	private List<EventMasterDTO> eventMasterList;
     private EventMasterDTO eventMasterDTO;
     EventMasterDAO eventMasterDAO = null;
- /*   @ManagedProperty(value = "#{loginBean}")
-    private LoginBean loginBean;
-*/    
+   
     @ManagedProperty(value="#{pageNavBean}")
 	private PageNavigationBean pageNavBean ;
 
@@ -38,7 +35,7 @@ public class EventBeanList extends AbstractMB {
     public void init()
     {
         eventMasterDAO = new EventMasterDAO();
-       setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getUserId()));
+        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getUserId()));
         setEventMasterDTO(new EventMasterDTO());
     }
 
@@ -69,30 +66,12 @@ public class EventBeanList extends AbstractMB {
     public void setEventMasterDTO(EventMasterDTO eventMasterDTO) {
         this.eventMasterDTO = eventMasterDTO;
     }
-
-    public String editEvent(EventMasterDTO eventMaster) {
-        this.eventMasterDTO = eventMaster;
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("EventMaster", eventMaster);
-        return "Event.xhtml ";
-    }
-
-    public String addEventMaster() {
-        return "Event.xhtml ";
-    }
+    
     public void deleteEvent(int eventId){
         eventMasterDAO.deleteEventMaster(eventId);
         setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getUserId()));
     }
 
-   
-    /*public LoginBean getLoginBean() {
-        return loginBean;
-    }
- 
-    public void setLoginBean(LoginBean loginBean) {
-        this.loginBean = loginBean;
-    }
-*/
 	public PageNavigationBean getPageNavBean() {
 		return pageNavBean;
 	}

@@ -6,7 +6,7 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  {
  	font-size: 12px;
  }
- 
+
 #centerSection
 {
 	 margin: 10% 0px; 	 
@@ -258,3 +258,28 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  	padding-left: 10px;
  	background-color: transparent;
  }
+ 
+ .ui-wizard
+ {
+ 	height:auto;
+ }
+ 
+  .ui-wizard-content
+ {
+ 	height:auto;
+ }
+  
+.ui-icon-calendar
+{
+  	background-image: url(../../resources/images/calendaricon.png) !important;
+	height: 24px;
+	width: 26px;
+	background-position: center center !important;
+}
+
+.ui-datepicker-trigger .ui-button
+{
+ 	background:  none !important;
+}
+ 
+  

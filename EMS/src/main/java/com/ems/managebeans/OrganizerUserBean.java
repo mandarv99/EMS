@@ -15,6 +15,8 @@ import javax.faces.bean.ViewScoped;
 import com.ems.datamodel.dao.UserTypeDAO;
 import com.ems.datamodel.dao.UsersDAO;
 import com.ems.datamodel.dto.OrganizerUserDTO;
+import com.ems.datamodel.dto.ResetPasswordDTO;
+import com.ems.datamodel.dto.SignUpDTO;
 import com.ems.datamodel.dto.UserTypeDTO;
 import com.ems.util.CommonUtil;
 
@@ -28,7 +30,8 @@ public class OrganizerUserBean extends AbstractMB {
 	private static final long serialVersionUID = 3839715729656889361L;
 	private OrganizerUserDTO organizerUserDTO;
     private List<UserTypeDTO> userTypeDTOList;
-    
+    private ResetPasswordDTO resetPasswordDTO;
+
     private OrganizerUserDTO selectedOrganizerUserDTO;
     private List<OrganizerUserDTO> userList ;
      
@@ -49,7 +52,7 @@ public class OrganizerUserBean extends AbstractMB {
         userTypeDTOList = userType.getUserTypeList();
         userList = new ArrayList<>();
         selectedOrganizerUserDTO = new OrganizerUserDTO();
-
+        resetPasswordDTO  = new ResetPasswordDTO();
         getDataFromRequestMap();
     }
 
@@ -95,6 +98,14 @@ public class OrganizerUserBean extends AbstractMB {
 		this.userList = userList;
 	}
 	
+	public ResetPasswordDTO getResetPasswordDTO() {
+		return resetPasswordDTO;
+	}
+
+	public void setResetPasswordDTO(ResetPasswordDTO resetPasswordDTO) {
+		this.resetPasswordDTO = resetPasswordDTO;
+	}
+
 	public PageNavigationBean getPageNavBean() {
 		return pageNavBean;
 	}
@@ -172,4 +183,23 @@ public class OrganizerUserBean extends AbstractMB {
         }
         return "OrganizerUserList.xhtml";
     }
+    
+    /********************* RESET PASSWORD************************/
+    
+    public void resetPassword()
+    {
+        try {
+             if (pageNavBean.getLoggedInUserDTO() != null)
+             {                
+                SignUpDTO signUpDTO = new SignUpDTO();
+                signUpDTO = pageNavBean.getLoggedInUserDTO() ;
+                signUpDTO.setPassword(getResetPasswordDTO().getPassword());
+                new UsersDAO().updateUserPassword(signUpDTO);
+                displayInfoMessageToUser("Password Reset Successfully");
+                resetPasswordDTO = new ResetPasswordDTO();
+             }  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+     }
 }

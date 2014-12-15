@@ -12,6 +12,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import com.ems.datamodel.dto.CompanyDetailsDTO;
+import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.OrganizerUserDTO;
 import com.ems.datamodel.dto.SignUpDTO;
 
@@ -146,16 +147,8 @@ public class PageNavigationBean implements Serializable
 		} catch (IOException e) { e.printStackTrace();	}
 	}
 
-	// open event listing page
-	public void redirectToEventListing()
-	{
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		try {
-			String red= "EventList.xhtml";
-			ec.redirect(red);
-		} catch (IOException e) { e.printStackTrace();	}
-	}
 	
+	// open edit company details page
 	public void redirectPageToEditCompany(CompanyDetailsDTO companyDetails)
 	{
 		//RequestContext.getCurrentInstance().execute("PF('loaderDialog').show();");
@@ -167,7 +160,7 @@ public class PageNavigationBean implements Serializable
 		} catch (IOException e) { e.printStackTrace();	}
 	} 
 	
-	// open event listing page
+	// open company listing page
 	public void redirectPageToSearchCompany()
 	{
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
@@ -205,5 +198,26 @@ public class PageNavigationBean implements Serializable
 		} catch (IOException e) { e.printStackTrace();	}
      }
     
-    
+    // open event listing page
+ 	public void redirectPageToEventListing()
+ 	{
+ 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+ 		try {
+ 			String red= "EventList.xhtml";
+ 			ec.redirect(red);
+ 		} catch (IOException e) { e.printStackTrace();	}
+ 	}
+ 	
+ 	 // open add/edit event page
+ 	public void redirectPageToEventMaster(EventMasterDTO eventMasterDTO)
+ 	{
+ 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+ 		if(eventMasterDTO!=null)
+	    		ec.getFlash().put("eventMaster", eventMasterDTO);
+
+ 		try {
+ 			String red= "Event.xhtml";
+ 			ec.redirect(red);
+ 		} catch (IOException e) { e.printStackTrace();	}
+ 	}
 }

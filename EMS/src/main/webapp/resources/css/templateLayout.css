@@ -112,7 +112,24 @@ body {
 	color : white;
 	font-weight: bold;
 } 
-
+ 
+  .ui-datatable th 
+ {
+	background-image: none !important;
+	background-color:  #2E608C !important;
+	color : white !important;
+	font-weight: bold !important;
+	font-size: 13px;
+} 
+ 
+.ui-datatable .ui-paginator, .ui-datatable .ui-paginator
+ {
+ 	background-image: none !important;
+	background-color: transparent;
+	border : none;
+ }
+ 
+ 
  .ui-widget-content {
 	background-image: none;
 	border-width: 1px;
@@ -183,3 +200,4 @@ body {
 {
 	background: none;
 } 
+

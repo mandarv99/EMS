@@ -10,10 +10,13 @@
     <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="title">#{msg.EventDetails}</ui:define>
+            
+            <ui:define name="headerText">#{msg.EventDetails}</ui:define>
+            
             <ui:define name="content">
                 <h:form id="eventForm">       
                     <p:wizard flowListener="#{eventBean.onFlowProcess}">     
-                        <!--                    <p:tabView dynamic="true">-->
+                         
                         <p:tab id="event" title="#{msg.EventDetails}" >                                                     
                             <ui:include src="EventMaster.xhtml"/>
                         </p:tab>       
@@ -21,8 +24,7 @@
                             <ui:include src="Ticket.xhtml"/>                                                    
                         </p:tab>
                     </p:wizard>
-                    <!--             
-                    </p:tabView>-->
+   
 
                 </h:form>  
                 <ui:include src="SuperCategory.xhtml"/>

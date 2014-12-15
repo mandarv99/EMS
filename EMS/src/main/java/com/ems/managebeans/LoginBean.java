@@ -21,7 +21,6 @@ import org.primefaces.context.RequestContext;
 
 import com.ems.datamodel.dao.UsersDAO;
 import com.ems.datamodel.dto.LoginDTO;
-import com.ems.datamodel.dto.ResetPasswordDTO;
 import com.ems.datamodel.dto.SignUpDTO;
 import com.ems.datamodel.entity.Users;
 import com.ems.util.CommonUtil;
@@ -46,14 +45,10 @@ public class LoginBean extends AbstractMB {
     private SignUpDTO signUpDTO;
     private SignUpDTO loggedInUserDTO;
 
-    private ResetPasswordDTO resetPasswordDTO;
     private int loginUserId;
     
     private UsersDAO userDAOService = new UsersDAO();
 
-/*	@ManagedProperty(value="#{pageNavBean}")
-	private PageNavigationBean pageNavBean ;
-*/	
 	public LoginBean() {
     }
 
@@ -68,8 +63,7 @@ public class LoginBean extends AbstractMB {
     public String checkLoginStatus()
     {
         try {
-            boolean status = false;
-            if (loginDTO != null)
+             if (loginDTO != null)
             {
                 loggedInUserDTO = null;
                 loggedInUserDTO = userDAOService.findUserAllData(loginDTO.getEmailAddress(), loginDTO.getPassword());
@@ -89,9 +83,9 @@ public class LoginBean extends AbstractMB {
                     displayErrorMessageToUser("Invalid user name password");
                     return "login.xhtml";
                 }
-
-                //return "Dashboard.xhtml?faces-redirect=true";
-            } else {
+            }
+            else 
+            {
                 displayErrorMessageToUser("Invalid Login. The Username and password you entered is incorrect.");
                 return "login.xhtml";
             }
@@ -135,7 +129,8 @@ public class LoginBean extends AbstractMB {
   			  } catch (IOException e) { e.printStackTrace();}	  		
   	}
 
-    public void saveOrganizer() {
+    public void saveOrganizer()
+    {
         try {
              if (userDAOService.isEmailIdRegister(signUpDTO.getEmailAddress()) != null) {
                 displayErrorMessageToUser("User already register");
@@ -156,12 +151,12 @@ public class LoginBean extends AbstractMB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+  }
 
-    }
-
-    public void sendForgotPassword() {
+    public void sendForgotPassword()
+    {
         try {
-             Users users = userDAOService.isEmailIdRegister(recoverEmail);
+            Users users = userDAOService.isEmailIdRegister(recoverEmail);
             if (users != null) {                
                 EmailUtility emailUtility = new EmailUtility();
                 signUpDTO = new SignUpDTO();
@@ -182,21 +177,8 @@ public class LoginBean extends AbstractMB {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
-
-    public void getOrganiserUserList() {
-        try {
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-
-    public void resetPassword() {
-        resetPasswordDTO = new ResetPasswordDTO();
-    }
-    
+     }
+ 
 
     /**
      * @return the serverDateTime
@@ -252,21 +234,7 @@ public class LoginBean extends AbstractMB {
     public void setSignUpDTO(SignUpDTO signUpDTO) {
         this.signUpDTO = signUpDTO;
     }
-
-    /**
-     * @return the resetPasswordDTO
-     */
-    public ResetPasswordDTO getResetPasswordDTO() {
-        return resetPasswordDTO;
-    }
-
-    /**
-     * @param resetPasswordDTO the resetPasswordDTO to set
-     */
-    public void setResetPasswordDTO(ResetPasswordDTO resetPasswordDTO) {
-        this.resetPasswordDTO = resetPasswordDTO;
-    }
-
+ 
     /**
      * @return the loginUserId
      */
@@ -280,14 +248,4 @@ public class LoginBean extends AbstractMB {
     public void setLoginUserId(int loginUserId) {
         this.loginUserId = loginUserId;
     }
-    
-	/*public PageNavigationBean getPageNavBean() {
-		return pageNavBean;
-	}
-
-	public void setPageNavBean(PageNavigationBean pageNavBean) {
-		this.pageNavBean = pageNavBean;
-	}*/
-
-
 }
