@@ -71,16 +71,16 @@ public class LoginBean extends AbstractMB {
                 {
                     if (loggedInUserDTO.getStatusId() == 0)
                     {
-                        displayErrorMessageToUser("Please do the confirmation");
+                        displayErrorMessageToUser("Please confirm your Account");
                         return "login.xhtml";
                     }
-                    displayInfoMessageToUser("Login successfully");
+                    //displayInfoMessageToUser("Login successfully");
                     setLoginUserId((int) loggedInUserDTO.getUserId());
                   } 
                 else
                 {
                 	loggedInUserDTO= new SignUpDTO();
-                    displayErrorMessageToUser("Invalid user name password");
+                    displayErrorMessageToUser("Invalid User Name or Password");
                     return "login.xhtml";
                 }
             }

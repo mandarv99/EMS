@@ -9,26 +9,55 @@
     <ui:composition>
         <p:dialog id="discountDialog" widgetVar="DiscountDlg" dynamic="true" modal="true" resizable="false" header="#{msg.Discount}"  visible="#{facesContext.validationFailed}">      
             <h:form id="discountForm">
-                <p:messages closable="true" />
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="#{msg.DiscountName}  *" />
+               
+             <p:messages id="messages" redisplay="false" globalOnly="true" />
+              
+               <h:panelGrid id="discountPanel" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
+					width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">		
+					  
+                    <p:outputLabel value="#{msg.DiscountName}" styleClass="star" />
                     <p:inputText id="discountName" value="#{eventBean.discountMasterDTO.discountName}" title="#{msg.DiscountName}"  required="true" label="#{msg.DiscountName}"/>
-                    <p:outputLabel value="#{msg.StartDate}  *" />
+            		<p:message for="discountName" />
+            		                    
+                    <p:outputLabel value="#{msg.StartDate} "  styleClass="star"/>
                     <p:calendar id="disStartDate" value="#{eventBean.discountMasterDTO.discountStartDate}" mode="popup" showOn="button" required="true"
-                                label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="MM/dd/yyyy"/>                    
-                    <p:outputLabel value="#{msg.EndDate}  *"  />
+                                label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="dd-MMM-yyyy" readonlyInput="true" />                     
+             		<p:message for="disStartDate" />
+             		                   
+                    <p:outputLabel value="#{msg.EndDate} "  styleClass="star" />
                     <p:calendar id="disEndDate" value="#{eventBean.discountMasterDTO.discountEndDate}" mode="popup" showOn="button" required="true"
-                                label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="MM/dd/yyyy"/>                    
-                    <p:outputLabel value="#{msg.Criteria}  *" />
-                    <p:inputText id="criteria" value="#{eventBean.discountMasterDTO.criteria}" title="#{msg.Criteria}" required="true" label="#{msg.Criteria}"/>
-                    <p:outputLabel value="#{msg.Value}  *" />
-                    <p:inputText id="value" value="#{eventBean.discountMasterDTO.criteriaValues}" required="true" title="#{msg.Value}" label="#{msg.Value}" />
-                    <p:outputLabel value="#{msg.Maxpeoplecanavail}  *" />
+                                label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="dd-MMM-yyyy" readonlyInput="true" />                  
+       		      	<p:message for="disEndDate" />
+       		                         
+                    <p:outputLabel value="#{msg.Criteria} "  styleClass="star"/>
+                    <p:selectOneRadio id="criteriaValue" value="#{eventBean.discountMasterDTO.criteriaType}" required="true" styleClass="radioIcon">
+                    	<p:ajax update="value messages" event="change" process="criteriaValue" listener="#{eventBean.processCriteriaValue}"/>
+			            <f:selectItem itemLabel="Amount" itemValue="1"   />
+			            <f:selectItem itemLabel="%" itemValue="2" />
+ 			        </p:selectOneRadio>
+                    <p:message for="criteriaValue" id="criteriaValueMsg" />
+  
+                    <p:outputLabel value="#{msg.Value} "  styleClass="star"/>
+                    <p:inputText id="value" value="#{eventBean.discountMasterDTO.criteriaValues}" required="true" title="#{msg.Value}" label="#{msg.Value}"
+                    disabled="#{eventBean.discountMasterDTO.criteriaType == 0 }">
+                    	  <p:ajax event="blur" listener="#{eventBean.validateCriteriaValue}" process="value" update="value valueMsg messages"/>
+                    </p:inputText>
+                    <p:message for="value" id="valueMsg" />
+                      
+                    <p:outputLabel value="#{msg.Maxpeoplecanavail} "  styleClass="star" />
                     <p:inputText id="maxpeoplecanavail" value="#{eventBean.discountMasterDTO.maxPeopeAvail}" required="true" title="#{msg.Maxpeoplecanavail}" label="#{msg.Maxpeoplecanavail}" />
-                </p:panelGrid>
-                <br/>
-                <p:commandButton value="#{msg.Ok}" process="discountForm" update="discountForm"  oncomplete="if(!args.validationFailed)PF('DiscountDlg').hide();"/>
-                <p:commandButton value="#{msg.cancel}" type="button" onclick="PF('DiscountDlg').hide();" immediate="false" />                              
+                    <p:message for="maxpeoplecanavail" />
+                </h:panelGrid>
+              
+				<p:panel border="0" id="buttonRow" styleClass="buttonRow" style="text-align:center;">	   
+	                <p:commandButton value="#{msg.Ok}" process="discountForm" update="discountForm"  icon="ui-icon-check"
+	                oncomplete="if(!args.validationFailed)PF('DiscountDlg').hide();"/>
+	               <p:spacer height="5" width="10" />   
+	                <p:commandButton value="#{msg.cancel}" icon="ui-icon-close" type="button" onclick="PF('DiscountDlg').hide();" 
+	                immediate="false" >
+	                  <p:resetInput target=":discountForm:discountPanel" />
+	                </p:commandButton>
+                </p:panel>                              
             </h:form>
         </p:dialog>
     </ui:composition>

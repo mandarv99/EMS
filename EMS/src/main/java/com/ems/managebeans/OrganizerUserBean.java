@@ -54,6 +54,7 @@ public class OrganizerUserBean extends AbstractMB {
         selectedOrganizerUserDTO = new OrganizerUserDTO();
         resetPasswordDTO  = new ResetPasswordDTO();
         getDataFromRequestMap();
+        searchOrganizerUser();
     }
 
     private void getDataFromRequestMap()

@@ -19,11 +19,15 @@
 	            </p:column>
 	
 	            <p:column headerText="#{msg.SalesStartDate}">
-	                <h:outputText value="#{ticketDTO.salesStartDate}"  />
+	                <h:outputText value="#{ticketDTO.salesStartDate}" >
+	                	<f:convertDateTime pattern="dd-MMM-yyyy"/>
+	                </h:outputText>
 	            </p:column>
 	
 	            <p:column headerText="#{msg.SalesEndDate}">
-	                <h:outputText value="#{ticketDTO.salesEndDate}"  />
+	                <h:outputText value="#{ticketDTO.salesEndDate}"  >
+	                	<f:convertDateTime pattern="dd-MMM-yyyy"/>
+	                </h:outputText>
 	            </p:column>
 	
 	            <p:column headerText="#{msg.TicketPrice}">
@@ -45,13 +49,14 @@
 	                </p:commandButton>                                
 	            </p:column>
 	            <p:column headerText="#{msg.delete}">
-	                <p:commandButton update="@form:ticketDetails" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" actionListener="#{eventBean.deleteTicketDetails(ticketDTO.ticketCategoryId)}">                                    
+	                <p:commandButton update="ticketDetailsList @form:ticketDetails:TicketDetailsId @form:btnPanel" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" 
+	                actionListener="#{eventBean.deleteTicketDetails(ticketDTO.ticketCategoryId)}"  >                                    
 	                    <p:confirm header="Confirmation" message="Are you sure,you want to delete the Ticket?" icon="ui-icon-alert" />                                    
 	                </p:commandButton>                                
 	            </p:column>                                 
      	  </p:dataTable>
   
-      	 <h:panelGrid id="TicketDetailsId" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
+      	 <h:panelGrid id="TicketDetailsId" columns="3" columnClasses="leftContentStyle , rightContentStyle " 
 			 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">	
             
             <h:outputLabel value="#{msg.TicketCategory}" styleClass="star" />
@@ -69,12 +74,12 @@
             
             <h:outputLabel value="#{msg.SalesStartDate}" styleClass="star" />
             <p:calendar id="salesStartDate" value="#{eventBean.ticket.salesStartDate}" mode="popup" showOn="button" required="true"
-                        label="#{msg.SalesStartDate}" title="#{msg.SalesStartDate}"/>            
+                        label="#{msg.SalesStartDate}" title="#{msg.SalesStartDate}" pattern="dd-MMM-yyyy" readonlyInput="true"/>            
              <p:message for="salesStartDate" />
                         
             <h:outputLabel value="#{msg.SalesEndDate}" styleClass="star" />
             <p:calendar id="salesEndDate" value="#{eventBean.ticket.salesEndDate}" mode="popup" showOn="button" required="true" 
-                        label="#{msg.SalesEndDate}" title="#{msg.SalesEndDate}"/>                                                                      
+                        label="#{msg.SalesEndDate}" title="#{msg.SalesEndDate}" pattern="dd-MMM-yyyy" readonlyInput="true" />                                                                             
               <p:message for="salesEndDate" />
                          
             <h:outputLabel value="#{msg.AgeCriteriaFrom}" styleClass="star" />
@@ -90,13 +95,14 @@
             <h:outputLabel value="#{msg.TicketPrice}" styleClass="star" />
             <p:inputMask maxlength="10" mask="9?999999999" placeHolder=" " id="ticketPrice" value="#{eventBean.ticket.ticketPrice}" 
                          title="#{msg.TicketPrice}" required="true" label="#{msg.TicketPrice}"/>            
-             <p:message for="ticketPrice" />
+             <p:message for="ticketPrice" id="ticketPriceMsg" />
              
             <h:outputLabel value="#{msg.WantEarlybird}"/>
             <p:selectBooleanCheckbox id="wantEarlybird" value="#{eventBean.ticket.discount}">
-                <p:ajax event="change" process="wantEarlybird" update="addDiscountCB"/>
+                <p:ajax event="change" process="wantEarlybird ticketPrice" update="addDiscountCB ticketPriceMsg" />
             </p:selectBooleanCheckbox>            
-             <p:message for="wantEarlybird" />
+            <p:commandButton id="addDiscountCB" value="#{msg.AddDiscount}" oncomplete="if(!args.validationFailed)PF('DiscountDlg').show();" process="ticketPrice" 
+            update="ticketPriceMsg"  disabled="#{!eventBean.ticket.discount}"/>  
              
             <h:outputLabel value="#{msg.Refundable}"/>
             <p:selectBooleanCheckbox id="refundable" value="#{eventBean.ticket.refundable}"/>            
@@ -124,35 +130,25 @@
                                       
         </h:panelGrid>  
  	
-
-	            
        </p:scrollPanel>
        
        <f:facet name="footer">
-	         <p:outputPanel id="btnPanel">
-	        <p:commandButton value="#{msg.save}" action="#{eventBean.saveTicketDetails()}"  update="TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
-	        <p:commandButton value="#{msg.update}" action="#{eventBean.updateTicketDetails()}" update="TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
-	        &nbsp;
-	        <p:commandButton value="#{msg.AddSuperCategory}" type="button" onclick="PF('SuperCategoryDlg').show();
-	                return false;"/>  
-	        &nbsp;
-	        <p:commandButton id="addDiscountCB" value="#{msg.AddDiscount}" type="button" onclick="PF('DiscountDlg').show();" disabled="#{!eventBean.ticket.discount}"/>  
-	        </p:outputPanel>
-        
+	       <p:outputPanel id="btnPanel"  styleClass="buttonRow" >
+		        <p:commandButton value="#{msg.save}" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
+		        <p:commandButton value="#{msg.update}" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
+		       <p:spacer height="5" width="10" />   
+		        <p:commandButton value="#{msg.AddSuperCategory}" type="button" onclick="PF('SuperCategoryDlg').show(); 
+			        return false;"/>  
+ 	        </p:outputPanel>
        </f:facet>
        
      </p:panel>
-        
-        <br/>   
-      
+       
         <p:confirmDialog id="catDelConf" widgetVar="catDelConfDlg" showEffect="fade" severity="alert" global="true">
             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
         </p:confirmDialog>
-        <br/>   
-        
-             
-     
-    </ui:composition>
+ 
+   </ui:composition>
 
 </html>
