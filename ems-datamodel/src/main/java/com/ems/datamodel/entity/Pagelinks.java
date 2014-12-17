@@ -29,7 +29,15 @@ import javax.persistence.Table;
     @NamedQuery(name = "Pagelinks.findByPagelinkid", query = "SELECT p FROM Pagelinks p WHERE p.pagelinkid = :pagelinkid"),
     @NamedQuery(name = "Pagelinks.findByPagelinkname", query = "SELECT p FROM Pagelinks p WHERE p.pagelinkname = :pagelinkname"),
     @NamedQuery(name = "Pagelinks.findByPagelinkurl", query = "SELECT p FROM Pagelinks p WHERE p.pagelinkurl = :pagelinkurl"),
-    @NamedQuery(name = "Pagelinks.findByPagelinkseq", query = "SELECT p FROM Pagelinks p WHERE p.pagelinkseq = :pagelinkseq")})
+    @NamedQuery(name = "Pagelinks.findByPagelinkseq", query = "SELECT p FROM Pagelinks p WHERE p.pagelinkseq = :pagelinkseq"),
+
+    @NamedQuery(name = "Pagelinks.findByPageDetailLinkUserId", query = "SELECT p , pm "
+   		+ " FROM PagelinksMaster pm , Pagelinks p , UserTypePagelinks up "
+    		    		+ " where pm.pagelinkmasterid = p.pagelinkmasterid.pagelinkmasterid and p.pagelinkid = up.userTypePagelinksPK.pagelinkid  and up.userTypePagelinksPK.userTypeId  = :userTypeId "
+    		    		+ " and pm.enable = true "
+    		    		+ " order by pm.pagelinkmasterseq , p.pagelinkseq "),
+
+})
 public class Pagelinks implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

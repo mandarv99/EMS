@@ -20,17 +20,7 @@
 	    
         <ui:define name="menu">
 	            <h:form>
-	                <p:menubar styleClass="left-menus" >
-	                    <p:menuitem value="Dashboard" url=""/>                        
-	                    <p:submenu label="Manage">
-	                        <p:menuitem value="Users" url="OrganizerUserList.xhtml"/>
-	                        <p:menuitem value="Company" url="CompanyDetailsSearch.xhtml"/>
-	                        <p:menuitem value="Event" url="EventList.xhtml"/>
-	                         <p:menuitem value="Reset Password" url="ResetPassword.xhtml"/>
-	                    </p:submenu>
-	                    <p:menuitem value="Event Statistics" url=""/>
-	                    <p:menuitem value="Logout"  actionListener="#{loginBean.logout}"  />
-	                </p:menubar>
+	                <p:menubar model="#{pageNavBean.menuModel}" autoDisplay="true"  id="mainMenu"/>
 	            </h:form>
 		</ui:define>
 		

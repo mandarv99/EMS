@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "pagelinks_master")
 @NamedQueries({
-    @NamedQuery(name = "PagelinksMaster.findAll", query = "SELECT p FROM PagelinksMaster p"),
+    @NamedQuery(name = "PagelinksMaster.findAll", query = "SELECT p FROM PagelinksMaster p order by p.pagelinkmasterseq"),
     @NamedQuery(name = "PagelinksMaster.findByPagelinkmasterid", query = "SELECT p FROM PagelinksMaster p WHERE p.pagelinkmasterid = :pagelinkmasterid"),
     @NamedQuery(name = "PagelinksMaster.findByPagelinkmastername", query = "SELECT p FROM PagelinksMaster p WHERE p.pagelinkmastername = :pagelinkmastername"),
     @NamedQuery(name = "PagelinksMaster.findByPagelinkmasterseq", query = "SELECT p FROM PagelinksMaster p WHERE p.pagelinkmasterseq = :pagelinkmasterseq"),
@@ -39,6 +39,8 @@ public class PagelinksMaster implements Serializable {
     private Short pagelinkmasterseq;
     @Column(name = "enable")
     private Boolean enable;
+    @Column(name = "pagelinkmastertype")
+    private Short pagelinkmastertype;
     @OneToMany(mappedBy = "pagelinkmasterid")
     private List<Pagelinks> pagelinksList;
 
@@ -89,7 +91,15 @@ public class PagelinksMaster implements Serializable {
         this.pagelinksList = pagelinksList;
     }
 
-    @Override
+    public Short getPagelinkmastertype() {
+		return pagelinkmastertype;
+	}
+
+	public void setPagelinkmastertype(Short pagelinkmastertype) {
+		this.pagelinkmastertype = pagelinkmastertype;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (pagelinkmasterid != null ? pagelinkmasterid.hashCode() : 0);

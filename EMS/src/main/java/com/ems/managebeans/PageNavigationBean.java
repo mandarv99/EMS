@@ -2,6 +2,7 @@ package com.ems.managebeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -11,11 +12,17 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultMenuModel;
+import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 
+import com.ems.datamodel.dao.PageLinkDAO;
 import com.ems.datamodel.dto.CompanyDetailsDTO;
 import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.OrganizerUserDTO;
+import com.ems.datamodel.dto.PageLinkMasterDTO;
+import com.ems.datamodel.dto.PageLinksDTO;
 import com.ems.datamodel.dto.SignUpDTO;
 
 @ManagedBean(name="pageNavBean")
@@ -36,7 +43,8 @@ public class PageNavigationBean implements Serializable
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
 	  
-  	
+  	private PageLinkDAO pageDAO ;
+	
 	public LoginBean getLoginBean() {
 		return loginBean;
 	}
@@ -119,6 +127,7 @@ public class PageNavigationBean implements Serializable
     {
 		loggedInUserDTO = getLoginBean().getLoggedInUserDTO();
 		pageSize = 15;
+		pageDAO =  new PageLinkDAO();
 		generateMenuForUser();
     }
 	 
@@ -133,7 +142,37 @@ public class PageNavigationBean implements Serializable
 	// to generate the menu
 	private void generateMenuForUser()
 	{
-		
+		 List<PageLinkMasterDTO> pageLinkDTOList = null;
+		 pageLinkDTOList = pageDAO.getPageLinkListForUserType(loggedInUserDTO.getUserType());
+		 System.out.println(pageLinkDTOList.size());
+		 
+		 menuModel =  new DefaultMenuModel();
+		 
+		 for(PageLinkMasterDTO pm : pageLinkDTOList)
+		 {
+			 if(pm.getPagelinkMasterType() == 1) // No sub Menu
+			 {
+				 DefaultMenuItem item = new DefaultMenuItem(pm.getPageLinkMasterName());
+ 			     if(pm.getPageLinksList().get(0).getPageLinkUrl().startsWith("#"))
+ 			    	 item.setCommand(pm.getPageLinksList().get(0).getPageLinkUrl());
+ 			     else
+ 			    	 item.setUrl(pm.getPageLinksList().get(0).getPageLinkUrl());
+			     menuModel.addElement(item);  
+ 			 }
+			 else
+			 {
+				 DefaultSubMenu  MainItem = new DefaultSubMenu (pm.getPageLinkMasterName());  
+				 MainItem.setIcon("ui-icon-triangle-1-sw");  
+
+				 for(PageLinksDTO p : pm.getPageLinksList())
+				 {
+				     DefaultMenuItem item = new DefaultMenuItem(p.getPageLinkName());
+ 			    	 item.setUrl(p.getPageLinkUrl());
+	 			     MainItem.addElement(item);
+				 } 
+			     menuModel.addElement(MainItem);  
+			 }
+		 }
 	}
 
 	public void redirectToMenu(String pageTo)

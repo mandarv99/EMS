@@ -15,16 +15,23 @@
     <class>com.ems.datamodel.entity.SuperCategoryTkt</class>
     <class>com.ems.datamodel.entity.EventTypes</class>
     <class>com.ems.datamodel.entity.ParticipantMaster</class>
+    <class>com.ems.datamodel.entity.Pagelinks</class>
+    <class>com.ems.datamodel.entity.UserTypePagelinks</class>
+    <class>com.ems.datamodel.entity.UserTypePagelinksPK</class>
+    <class>com.ems.datamodel.entity.PagelinksMaster</class>
     <properties>
-<!--        <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://10.1.6.21:1433;databaseName=db_events"/>
+       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://10.1.6.21:1433;databaseName=db_events"/>
         <property name="javax.persistence.jdbc.user" value="sa"/>
         <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
         <property name="javax.persistence.jdbc.password" value="!5ury4"/>
         <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-        <property name="javax.persistence.schema-generation.database.action" value="create"/>-->
+        <property name="javax.persistence.schema-generation.database.action" value="create"/>
+ 
+            
       <property name="hibernate.id.new_generator_mappings" value="false"/>
-      <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2008Dialect"/>
-      <property name="hibernate.cache.use_second_level_cache" value="true"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServer2008Dialect" />  
+      
+       <property name="hibernate.cache.use_second_level_cache" value="true"/>
       <property name="hibernate.cache.use_query_cache" value="false"/>
       <property name="hibernate.show_sql" value="false"/>
     </properties>

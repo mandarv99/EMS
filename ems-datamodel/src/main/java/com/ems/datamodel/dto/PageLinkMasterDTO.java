@@ -9,7 +9,9 @@
 
 package com.ems.datamodel.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author snehalr
@@ -31,7 +33,9 @@ public class PageLinkMasterDTO extends AbstractDTO {
 	private String imageName;
 	private String linkUrl;
 	private int noOfLinks;
+	private int pagelinkMasterType;
 	
+	private List<PageLinksDTO> pageLinksList; 
 
 	public String toString() {
 		String strObj = "\n" + " pageLinkMasterId :" + getPageLinkMasterId()
@@ -43,6 +47,11 @@ public class PageLinkMasterDTO extends AbstractDTO {
 				+ getUpdatedBy();
 
 		return strObj;
+	}
+	
+	public PageLinkMasterDTO()
+	{
+		pageLinksList = new ArrayList<PageLinksDTO>();
 	}
 
 	public Integer getParentMasterId() {
@@ -114,6 +123,22 @@ public class PageLinkMasterDTO extends AbstractDTO {
 
 	public void setNoOfLinks(int noOfLinks) {
 		this.noOfLinks = noOfLinks;
+	}
+
+	public List<PageLinksDTO> getPageLinksList() {
+		return pageLinksList;
+	}
+
+	public void setPageLinksList(List<PageLinksDTO> pageLinksList) {
+		this.pageLinksList = pageLinksList;
+	}
+
+	public int getPagelinkMasterType() {
+		return pagelinkMasterType;
+	}
+
+	public void setPagelinkMasterType(int pagelinkMasterType) {
+		this.pagelinkMasterType = pagelinkMasterType;
 	}
 
 }

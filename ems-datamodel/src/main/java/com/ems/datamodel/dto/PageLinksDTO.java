@@ -32,9 +32,7 @@ public class PageLinksDTO extends AbstractDTO{
     private Integer pageLinkType;
     private Boolean pageLinkAllowed;
     
-   
-
-	public String toString() {
+ 	public String toString() {
         String strObj="\n" + " pageLinkId :" + getPageLinkId()+
                       "\n" + " pageLinkName :"+ getPageLinkName()+
                       "\n" + " pageLinkUrl :"+ getPageLinkUrl()+
@@ -116,5 +114,4 @@ public class PageLinksDTO extends AbstractDTO{
 	public void setPageLinkAllowed(Boolean pageLinkAllowed) {
 		this.pageLinkAllowed = pageLinkAllowed;
 	}
-    
 }
