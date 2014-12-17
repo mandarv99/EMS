@@ -20,12 +20,12 @@
             		<p:message for="discountName" />
             		                    
                     <p:outputLabel value="#{msg.StartDate} "  styleClass="star"/>
-                    <p:calendar id="disStartDate" value="#{eventBean.discountMasterDTO.discountStartDate}" mode="popup" showOn="button" required="true"
+                    <p:calendar id="disStartDate" value="#{eventBean.discountMasterDTO.discountStartDate}"   required="true"
                                 label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="dd-MMM-yyyy" readonlyInput="true" />                     
              		<p:message for="disStartDate" />
              		                   
                     <p:outputLabel value="#{msg.EndDate} "  styleClass="star" />
-                    <p:calendar id="disEndDate" value="#{eventBean.discountMasterDTO.discountEndDate}" mode="popup" showOn="button" required="true"
+                    <p:calendar id="disEndDate" value="#{eventBean.discountMasterDTO.discountEndDate}"  required="true"
                                 label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="dd-MMM-yyyy" readonlyInput="true" />                  
        		      	<p:message for="disEndDate" />
        		                         

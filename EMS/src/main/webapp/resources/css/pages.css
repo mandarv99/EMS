@@ -231,7 +231,7 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  /* for drop down width*/
  .ui-selectonemenu  
  {
-  	width: 220px !important;
+  	width: 210px !important;
  	vertical-align: bottom ;
  	-moz-box-shadow: inset 0 0px 0px gray;
     -webkit-box-shadow: inset 0 0px 0px  gray !important;
@@ -242,6 +242,7 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
 	border-right-width: 1px;
 	border-right-color: #D2D2D2;
 	border-right-style: solid;
+	background: none !important;
  }
  .ui-selectonemenu-items-wrapper
  {

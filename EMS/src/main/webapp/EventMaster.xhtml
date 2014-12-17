@@ -22,12 +22,12 @@
 				<p:message for="eventName" />	             
 	           
 	            <h:outputLabel value="#{msg.StartDate} " styleClass="star" />
-	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}" mode="popup" showOn="button" required="true"
+	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}"  required="true"
 	                        label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="dd-MMM-yyyy hh:mm a" readonlyInput="true"/>
 	           <p:message for="startDate" />	
 	           				
 	            <h:outputLabel value="#{msg.EndDate} " styleClass="star" />
-	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" mode="popup" showOn="button" required="true" 
+	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" required="true" 
 	                        label="#{msg.EndDate}" title="#{msg.EndDate}" pattern="dd-MMM-yyyy hh:mm a" readonlyInput="true"/>                                             
 	           	<p:message for="endDate" />	
 	           

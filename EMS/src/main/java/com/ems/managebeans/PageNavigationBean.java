@@ -11,6 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.menu.MenuModel;
+
 import com.ems.datamodel.dto.CompanyDetailsDTO;
 import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.OrganizerUserDTO;
@@ -29,6 +31,7 @@ public class PageNavigationBean implements Serializable
 	private String backAction;
 	private SignUpDTO loggedInUserDTO;
 	private int pageSize;
+	private MenuModel menuModel;
 	
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
@@ -98,6 +101,14 @@ public class PageNavigationBean implements Serializable
 		this.pageSize = pageSize;
 	}
 	
+	public MenuModel getMenuModel() {
+		return menuModel;
+	}
+
+	public void setMenuModel(MenuModel menuModel) {
+		this.menuModel = menuModel;
+	}
+
 	// constructor
 	public PageNavigationBean()
 	{
@@ -108,6 +119,7 @@ public class PageNavigationBean implements Serializable
     {
 		loggedInUserDTO = getLoginBean().getLoggedInUserDTO();
 		pageSize = 15;
+		generateMenuForUser();
     }
 	 
 	public Object getSessionObject(String objName) 
@@ -116,6 +128,12 @@ public class PageNavigationBean implements Serializable
 	    ExternalContext extCtx = ctx.getExternalContext();
 	    Map<String, Object> sessionMap = extCtx.getSessionMap();
 	    return sessionMap.get(objName);
+	}
+	
+	// to generate the menu
+	private void generateMenuForUser()
+	{
+		
 	}
 
 	public void redirectToMenu(String pageTo)
