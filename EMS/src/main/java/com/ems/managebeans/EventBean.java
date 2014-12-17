@@ -5,6 +5,18 @@
  */
 package com.ems.managebeans;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+
+import org.primefaces.event.FlowEvent;
+
 import com.ems.datamodel.dao.CompanyDetailsDAO;
 import com.ems.datamodel.dao.EventMasterDAO;
 import com.ems.datamodel.dao.EventTypeDAO;
@@ -16,18 +28,6 @@ import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.EventTypesDTO;
 import com.ems.datamodel.dto.SuperCategoryTktDTO;
 import com.ems.datamodel.dto.TicketDTO;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.event.FlowEvent;
 
 @ManagedBean(name = "eventBean")
 @ViewScoped
@@ -49,10 +49,21 @@ public class EventBean extends AbstractMB {
     private List<EventTypesDTO> eventTypesDTOList;
     private CompanyDetailsDAO companyDetailsDAO;
     private List<CompanyDetailsDTO> companyDetailsDTOList;
-    @ManagedProperty(value = "#{loginBean}")
-    private LoginBean loginBean;
-    private TicketDAO ticketDAO;
+
+    @ManagedProperty(value="#{pageNavBean}")
+  	private PageNavigationBean pageNavBean ;
     
+   
+	private TicketDAO ticketDAO;
+    
+	public PageNavigationBean getPageNavBean() {
+		return pageNavBean;
+	}
+
+	public void setPageNavBean(PageNavigationBean pageNavBean) {
+		this.pageNavBean = pageNavBean;
+	}
+
     @PostConstruct
     public void init() {
         
@@ -66,11 +77,13 @@ public class EventBean extends AbstractMB {
         superTicketCategoryDTOList = new ArrayList<>();
         ticketDTOList = new ArrayList<>();
         superTicketCategoryDTOList = new ArrayList<>();
+        
         discountMasterDTO = new DiscountMasterDTO();
+         
         eventTypeDAO = new EventTypeDAO();
         eventTypesDTOList = eventTypeDAO.getEventTypesList();
         companyDetailsDAO = new CompanyDetailsDAO();
-        setCompanyDetailsDTOList(companyDetailsDAO.getCompanyDetailsList(getLoginBean().getLoginUserId()));
+        setCompanyDetailsDTOList(companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId()));
         superCategoryDAO = new SuperCategoryDAO();
         ticketDAO = new TicketDAO();
         
@@ -99,7 +112,7 @@ public class EventBean extends AbstractMB {
     
     public void saveEvent() {
         try {
-            eventMasterDTO.setAddedBy(loginBean.getLoginUserId());
+            eventMasterDTO.setAddedBy(pageNavBean.getLoggedInUserDTO().getUserId());
             if (eventMasterDAO.insertEventMaster(eventMasterDTO)) {
                 displayInfoMessageToUser("Event added successfully");
             }
@@ -220,25 +233,11 @@ public class EventBean extends AbstractMB {
         this.companyDetailsDTOList = companyDetailsDTOList;
     }
 
-    /**
-     * @return the loginBean
-     */
-    public LoginBean getLoginBean() {
-        return loginBean;
-    }
-
-    /**
-     * @param loginBean the loginBean to set
-     */
-    public void setLoginBean(LoginBean loginBean) {
-        this.loginBean = loginBean;
-    }
-    
     public void insertSuperCategory() {
         try {
             if (eventMasterDTO != null && eventMasterDTO.getEventId() != null) {
                 superCategoryTktDTO.setEventId(eventMasterDTO.getEventId());
-                superCategoryTktDTO.setUpdatedBy(loginBean.getLoginUserId());
+                superCategoryTktDTO.setUpdatedBy(pageNavBean.getLoggedInUserDTO().getUserId());
                 superCategoryTktDTO.setUpdatedOn(new Date());
                 if (superCategoryDAO.insertSuperCategory(superCategoryTktDTO)) {
                     displayInfoMessageToUser("Super category inserted successfully");
@@ -278,8 +277,8 @@ public class EventBean extends AbstractMB {
                 ticket.setDiscountMaster(discountMasterDTO);
             }
             ticket.setEventId(eventMasterDTO.getEventId());
-            discountMasterDTO.setModifiedBy(loginBean.getLoginUserId());
-            ticket.setModifiedBy(loginBean.getLoginUserId());
+            discountMasterDTO.setModifiedBy(pageNavBean.getLoggedInUserDTO().getUserId());
+            ticket.setModifiedBy(pageNavBean.getLoggedInUserDTO().getUserId());
             if (ticketDAO.insertTicketMaster(ticket)) {
                 displayInfoMessageToUser("Ticket added successfully");
                 ticketDTOList = ticketDAO.getTicketList(eventMasterDTO.getEventId());
@@ -303,6 +302,7 @@ public class EventBean extends AbstractMB {
                 displayInfoMessageToUser("Ticket updated successfully");
                 ticketDTOList = ticketDAO.getTicketList(eventMasterDTO.getEventId());
                 ticket = new TicketDTO();
+                discountMasterDTO = new DiscountMasterDTO();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -343,4 +343,25 @@ public class EventBean extends AbstractMB {
             displayInfoMessageToUser("Event updated successfully");
         }
     }
+    
+    public void processCriteriaValue(AjaxBehaviorEvent event)
+    {
+    	discountMasterDTO.setCriteriaValues(null);
+     	if(discountMasterDTO.getCriteriaType()==1)
+    	{
+    		discountMasterDTO.setMaxValue(ticket.getTicketPrice().intValue());  		
+     	}
+    	else if(discountMasterDTO.getCriteriaType()==2)
+    	{
+    		discountMasterDTO.setMaxValue(100);
+    	}
+     }
+    
+    public void validateCriteriaValue(AjaxBehaviorEvent event)
+    {
+      	if(discountMasterDTO.getCriteriaValues() !=null && discountMasterDTO.getCriteriaValues()  > discountMasterDTO.getMaxValue())
+      	{
+      		displayErrorMessageToUser("Maximum Discount which can be availed :  "+ discountMasterDTO.getMaxValue());
+       	}
+    }    
 }

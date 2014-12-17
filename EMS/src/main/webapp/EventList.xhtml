@@ -34,11 +34,15 @@
                             </p:column>
 
                             <p:column headerText="#{msg.StartDate}">
-                                <h:outputText value="#{eventMaster.eventStartDatetime}"  />
+                                <h:outputText value="#{eventMaster.eventStartDatetime}"  >
+                                	<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a"/>
+                                </h:outputText>
                             </p:column>
 
                             <p:column headerText="#{msg.EndDate}">
-                                <h:outputText value="#{eventMaster.eventEndDatetime}"  />
+                                <h:outputText value="#{eventMaster.eventEndDatetime}" >
+                                	<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a"/>
+                                </h:outputText>
                             </p:column>
 
                             <p:column headerText="#{msg.EventLocation}">

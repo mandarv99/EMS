@@ -19,6 +19,9 @@ public class DiscountMasterDTO extends AbstractDTO {
     private int eventId;
     private int ticketId;
     private String discountName;
+    private int criteriaType;
+    private int maxValue;
+
 
     @Override
     public String toString() {
@@ -164,4 +167,20 @@ public class DiscountMasterDTO extends AbstractDTO {
     public void setDiscountName(String discountName) {
         this.discountName = discountName;
     }
+
+	public int getCriteriaType() {
+		return criteriaType;
+	}
+
+	public void setCriteriaType(int criteriaType) {
+		this.criteriaType = criteriaType;
+	}
+
+	public int getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(int maxValue) {
+		this.maxValue = maxValue;
+	}
 }

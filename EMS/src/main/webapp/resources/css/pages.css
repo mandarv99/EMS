@@ -248,6 +248,11 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  	 width: 100% !important;
  }
  
+ .ui-selectonemenu-item.ui-selectonemenu-list-item.ui-state-hover {
+    background: #D2D2D2;
+}
+ 
+ 
  /*for search button row*/
  .buttonRow
  {
@@ -259,6 +264,8 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  	background-color: transparent;
  }
  
+ /* WIZARD*/
+ 
  .ui-wizard
  {
  	height:auto;
@@ -268,7 +275,54 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  {
  	height:auto;
  }
-  
+ 
+ .ui-wizard-step-title
+ {
+	 background :none !important;
+	 background-color:  #C3C3C3 !important;
+	 border-color : #2E608C !important; 
+ }
+ 
+ .ui-wizard-step-title.ui-state-default.ui-state-highlight 
+ {
+	 background :none !important;
+	 background-color:  #5F83B9 !important;
+	 border-color : #2E608C !important; 
+	 color : white;
+ }
+ 
+ /* calendar */
+.ui-datepicker
+{
+	background-color: white !important;
+}
+.ui-slider 
+{
+ 	background-color: #C3C3C3 !important;
+}
+.ui-slider-handle
+{
+	background :none !important;
+	background-color: #D84646 !important;
+}  
+
+.ui-datepicker td span, .ui-datepicker td a
+{
+	background :none !important;
+	background-color: #E1E1E1 !important;
+	border-color : #2E608C !important;
+	border-width: 1px !important;
+}
+
+.ui-datepicker .ui-datepicker-current-day .ui-state-highlight, .ui-datepicker .ui-datepicker-current-day .ui-state-default
+{
+	background :none !important;
+	background-color: #5F83B9 !important;
+	border-color : #2E608C !important;
+	border-width: 1px !important;
+	color:white;
+}
+
 .ui-icon-calendar
 {
   	background-image: url(../../resources/images/calendaricon.png) !important;
@@ -277,9 +331,108 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
 	background-position: center center !important;
 }
 
-.ui-datepicker-trigger .ui-button
+.ui-datepicker-trigger .ui-button-text
 {
  	background:  none !important;
+ 	display:none !important;
 }
- 
+
+.ui-datepicker-trigger .ui-button-icon-only
+{
+  	width:0px !important;
+  	margin-left:10px;
+}
   
+  /** MESSAGES **/
+    
+.ui-messages-error
+{
+	color : #b94a48;
+ 	font-size: 12px;
+}
+
+.ui-messages-info 
+{
+	color : #3AAEDE;
+  	font-size: 12px;
+}
+
+.ui-message-error
+{
+	color : #b94a48;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 10pt;
+}
+
+.ui-message-info 
+{
+	color : #3AAEDE;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 10pt;
+}
+  
+   
+  /** CHECK BOX **/
+.ui-chkbox .ui-chkbox-box
+{
+	width: 27px;
+	height: 27px;
+	background-color : transparent !important;
+	background-image: url(../../resources/images/checkbox_bg.png) !important;
+	border : none;
+}
+
+.ui-icon.ui-chkbox-icon
+{
+	width: 27px;
+	height: 27px;
+	background-image: url(../../resources/images/checkbox_bg_icon.png) !important;
+	overflow: visible;
+	border : none;
+}
+
+.ui-icon-check
+{
+	background-position: 0px;
+}
+
+  
+  /** RADIO BUTTON **/
+
+.ui-radiobutton
+{
+	width: 27px;
+	height: 27px;
+}
+.ui-radiobutton .ui-radiobutton-box{
+	background: url(../../resources/images/radioBtn.png) no-repeat !important;
+	width: 27px;
+	height: 27px;
+	border : none;
+}
+
+.ui-radiobutton .ui-radiobutton-box.ui-state-active{
+	background: url(../../resources/images/radioBtnSelected.png) no-repeat !important;
+	width: 27px;
+	height: 27px;
+	border : none;
+}
+
+.radioIcon .ui-icon  
+{
+	background-image: none !important;
+	height: 0px;
+	width: 0px;
+}
