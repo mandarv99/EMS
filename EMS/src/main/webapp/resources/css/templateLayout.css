@@ -170,3 +170,82 @@ body {
 	padding: 4px 4px 6px 4px;
 }
   
+  
+/* for menubar */
+
+.ui-menu
+{
+	padding : 0px;	
+}
+.ui-menubar
+{
+	border : none;
+}
+
+.ui-menubar .ui-menuitem-link
+{
+	width:80px;
+	text-transform: capitalize;
+	font-size: 14px;
+	font-weight: bold;
+	color: #2E608C;
+}
+
+ul li.ui-menuitem-active>a{
+    background-image: none !important;
+    background-color:#D10D10  !important;    
+}
+
+li ul li.ui-menuitem-active>a{
+    background-image: none !important;
+    background-color: #A5E6F8 !important;    
+}
+
+.ui-menubar .ui-menuitem-link.ui-state-hover
+{
+	color:white;
+	font-weight: bold;
+	text-transform: capitalize;
+	font-size: 14px;
+	border-radius: 8px;
+}
+
+
+/* for page menu td*/
+.menuTd
+{
+	padding-right:70px; 
+	vertical-align:bottom; 
+}
+
+
+/* for logout links */
+.right 
+{
+ 	width:65px;
+	color:white;
+ 	font-weight: bold;
+ 	font-size: 14px;
+	padding-top:60px;
+	background-color: #1a82f7;
+ 	background-repeat: repeat-x;
+ 	text-align: center;
+	
+	/* Safari 4-5, Chrome 1-9*/
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#2F2727));
+	/* Safari 5.1, Chrome 10+*/
+	background: -webkit-linear-gradient(bottom, #2F2727, #1a82f7);
+	/*  Firefox 3.6+*/
+	background: -moz-linear-gradient(bottom, #2F2727, #1a82f7);
+	/*  IE 10*/
+	background: -ms-linear-gradient(bottom, #2F2727, #1a82f7);
+	 /*Opera 11.10+*/
+	 background: -o-linear-gradient(bottom, #2F2727, #1a82f7);
+}
+	
+	
+.loginTopLink
+{
+	 font-weight: bold;
+ 	 font-size: 14px;
+} 

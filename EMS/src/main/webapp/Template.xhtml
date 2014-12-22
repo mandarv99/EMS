@@ -20,8 +20,19 @@
 	    
         <ui:define name="menu">
 	            <h:form>
-	                <p:menubar model="#{pageNavBean.menuModel}" autoDisplay="true"  id="mainMenu"/>
-	            </h:form>
+	            
+	             <table align="right">
+			        <tr>
+			            <td class="menuTd"> 
+			            	<p:menubar model="#{pageNavBean.menuModel}" autoDisplay="true"  id="mainMenu"  />
+			            </td>
+			            <td class="right"> 
+			            	<p:commandLink  immediate="true" action="#{loginBean.logout()}" value="LOGOUT"  style="color:white;" styleClass="loginTopLink" />
+			           </td>
+			        </tr>
+			    </table>
+	            
+ 	            </h:form>
 		</ui:define>
 		
 		<ui:define name="welcomeText">

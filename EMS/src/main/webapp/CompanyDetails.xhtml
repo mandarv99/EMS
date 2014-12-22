@@ -32,7 +32,7 @@
                         <p:message for="CompanyName" />
                          
                         <h:outputLabel value="#{msg.TypeAccount}" for="typeAccount" />
-                        <p:selectOneRadio id="typeAccount" value="#{companyDetailsBean.companyDetails.typeOfAccount}">
+                        <p:selectOneRadio id="typeAccount" value="#{companyDetailsBean.companyDetails.typeOfAccount}"  styleClass="radioIcon">
                             <f:selectItem itemValue="1" itemLabel="#{msg.Current}"/>
                             <f:selectItem itemValue="0" itemLabel="#{msg.Savings}"/>
                         </p:selectOneRadio>

@@ -26,13 +26,13 @@
 	                        label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="dd-MMM-yyyy hh:mm a" readonlyInput="true"/>
 	           <p:message for="startDate" />	
 	           				
-	            <h:outputLabel value="#{msg.EndDate} " styleClass="star" />
+	            <h:outputLabel value="#{msg.EndDate} " styleClass="star" for="endDate"/>
 	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" required="true" 
 	                        label="#{msg.EndDate}" title="#{msg.EndDate}" pattern="dd-MMM-yyyy hh:mm a" readonlyInput="true"/>                                             
 	           	<p:message for="endDate" />	
 	           
-	            <h:outputLabel value="#{msg.EventDesc} " styleClass="star" />
-	            <p:editor id="eventDesc" value="#{eventBean.eventMasterDTO.eventDescription}" required="true"  
+	            <h:outputLabel value="#{msg.EventDesc} " styleClass="star" for="eventDesc" />
+	            <p:editor id="eventDesc" value="#{eventBean.eventMasterDTO.eventDescription}" required="true"  requiredMessage="#{msg.EventDesc} is Required"
 	            validatorMessage="#{msg.EventDesc}" style="width:450px;" />
 	            <p:message for="eventDesc" />	
 	            

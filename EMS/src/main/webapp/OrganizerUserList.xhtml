@@ -66,12 +66,12 @@
                                 <h:outputText value="#{organizerUser.userTypeName}"  />
                             </p:column>
 
-                            <p:column headerText="#{msg.edit}">
+                            <p:column headerText="#{msg.edit}"  style="width:5%;">
                                 <p:commandButton update=":organizerUserSearchForm" icon="ui-icon-pencil" title="Edit" immediate="true"  process="@this"
                                   action="#{pageNavBean.redirectPageToAddOrganizerUser(organizerUser)}" />                                    
                              </p:column>
                              
-                            <p:column headerText="#{msg.delete}">
+                            <p:column headerText="#{msg.delete}"  style="width:5%;">
                                 <p:commandButton update=":organizerUserSearchForm" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" 
                                 actionListener="#{organizerUserBean.deleteOrganizerUser(organizerUser)}">                                    
                                     <p:confirm header="Confirmation" message="Are you sure,you want to delete the user?" icon="ui-icon-alert" />                                    

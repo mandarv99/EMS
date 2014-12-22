@@ -43,30 +43,30 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
 	/*color: #cccccc;*/
 	width: 200px !important;
 	height: 22px  !important;
-	border: 1px solid #D2D2D2 !important;
+	
 	font-family: Helvetica neue, Calibri, Roboto !important;
-	-moz-box-shadow: inset 0 0px 0px gray;
+	/* border: 1px solid #D2D2D2 !important;
+	 -moz-box-shadow: inset 0 0px 0px gray;
     -webkit-box-shadow: inset 0 0px 0px  gray !important;
-    box-shadow: inset 0 0px 0px  gray !important;	
+    box-shadow: inset 0 0px 0px  gray !important;	 */
  }
  
  /* to change fon size of text input */
  .ui-widget-header .ui-inputfield,
 .ui-widget-content .ui-inputfield {
-/*	color: #cccccc;
-	font-weight: bold;*/
+ 
     font-size: 13px;
  }
 
 
  /* to remove blue border from highlighted textbox*/
-.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus 
+./* ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus 
 {
 	-moz-box-shadow: inset 0 0px 0px gray;
     -webkit-box-shadow: inset 0 0px 0px  gray;
     box-shadow: inset 0 0px 0px gray; 
     border: none;
-}
+} */
 
 /********************** html placeholder style ********************/
 ::-webkit-input-placeholder {

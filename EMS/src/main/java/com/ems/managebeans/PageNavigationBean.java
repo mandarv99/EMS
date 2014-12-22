@@ -144,8 +144,7 @@ public class PageNavigationBean implements Serializable
 	{
 		 List<PageLinkMasterDTO> pageLinkDTOList = null;
 		 pageLinkDTOList = pageDAO.getPageLinkListForUserType(loggedInUserDTO.getUserType());
-		 System.out.println(pageLinkDTOList.size());
-		 
+ 		 
 		 menuModel =  new DefaultMenuModel();
 		 
 		 for(PageLinkMasterDTO pm : pageLinkDTOList)
@@ -162,7 +161,7 @@ public class PageNavigationBean implements Serializable
 			 else
 			 {
 				 DefaultSubMenu  MainItem = new DefaultSubMenu (pm.getPageLinkMasterName());  
-				 MainItem.setIcon("ui-icon-triangle-1-sw");  
+				 //MainItem.setIcon("ui-icon-triangle-1-sw");  
 
 				 for(PageLinksDTO p : pm.getPageLinksList())
 				 {
