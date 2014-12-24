@@ -17,6 +17,7 @@ public class SignUpDTO extends AbstractDTO {
     private int userId;
     private String userTypeName;
     private int statusId;
+    private String oldPassword;
 
     @Override
     public String toString() {
@@ -155,6 +156,14 @@ public class SignUpDTO extends AbstractDTO {
 
 	public void setStatusId(int statusId) {
 		this.statusId = statusId;
+	}
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
 	}
 
   

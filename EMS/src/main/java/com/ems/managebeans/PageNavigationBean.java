@@ -276,4 +276,20 @@ public class PageNavigationBean implements Serializable
  			ec.redirect(red);
  		} catch (IOException e) { e.printStackTrace();	}
  	}
+ 	
+ 	public void redirectPageToResetPassword(OrganizerUserDTO organizerUserDTO)
+ 	{
+ 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+ 		if(organizerUserDTO!=null)
+ 		{
+ 			SignUpDTO resetPasswordUserDto = new SignUpDTO();
+ 			resetPasswordUserDto.setEmailAddress(organizerUserDTO.getEmailAddress());
+	    		ec.getFlash().put("resetPasswordUserDto", resetPasswordUserDto);
+ 		}
+ 		try {
+ 			String red= "ResetPassword.xhtml";
+ 			ec.redirect(red);
+ 		} catch (IOException e) { e.printStackTrace();	}
+ 	}
+ 	
 }

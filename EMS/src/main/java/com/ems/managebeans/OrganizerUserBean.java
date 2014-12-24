@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import com.ems.datamodel.dao.UserTypeDAO;
 import com.ems.datamodel.dao.UsersDAO;
@@ -30,8 +31,7 @@ public class OrganizerUserBean extends AbstractMB {
 	private static final long serialVersionUID = 3839715729656889361L;
 	private OrganizerUserDTO organizerUserDTO;
     private List<UserTypeDTO> userTypeDTOList;
-    private ResetPasswordDTO resetPasswordDTO;
-
+    private SignUpDTO resetPasswordDTO;
     private OrganizerUserDTO selectedOrganizerUserDTO;
     private List<OrganizerUserDTO> userList ;
      
@@ -52,16 +52,31 @@ public class OrganizerUserBean extends AbstractMB {
         userTypeDTOList = userType.getUserTypeList();
         userList = new ArrayList<>();
         selectedOrganizerUserDTO = new OrganizerUserDTO();
-        resetPasswordDTO  = new ResetPasswordDTO();
+        resetPasswordDTO  = new SignUpDTO();
         getDataFromRequestMap();
         searchOrganizerUser();
     }
 
     private void getDataFromRequestMap()
     {
-    	Object obj= getObjectFromFlash("organizerUserDTO");
-    	if(obj!=null)
-    		this.organizerUserDTO = (OrganizerUserDTO) obj;
+    	String pageName=FacesContext.getCurrentInstance().getViewRoot().getViewId();  
+		if(pageName!=null)
+		{
+			if(pageName.equalsIgnoreCase("/AddOrganizerUser.xhtml"))
+			{
+		    	Object obj= getObjectFromFlash("organizerUserDTO");
+		    	if(obj!=null)
+		    		this.organizerUserDTO = (OrganizerUserDTO) obj;
+			}
+			else if(pageName.equalsIgnoreCase("/ResetPassword.xhtml"))
+			{
+				Object obj= getObjectFromFlash("resetPasswordUserDto");
+		    	if(obj!=null)
+		    		this.resetPasswordDTO = (SignUpDTO) obj;
+		    	else
+		    		resetPasswordDTO.setEmailAddress(pageNavBean.getLoggedInUserDTO().getEmailAddress());
+			}
+		}
     }
 
  
@@ -99,11 +114,11 @@ public class OrganizerUserBean extends AbstractMB {
 		this.userList = userList;
 	}
 	
-	public ResetPasswordDTO getResetPasswordDTO() {
+	public SignUpDTO getResetPasswordDTO() {
 		return resetPasswordDTO;
 	}
 
-	public void setResetPasswordDTO(ResetPasswordDTO resetPasswordDTO) {
+	public void setResetPasswordDTO(SignUpDTO resetPasswordDTO) {
 		this.resetPasswordDTO = resetPasswordDTO;
 	}
 
@@ -187,7 +202,7 @@ public class OrganizerUserBean extends AbstractMB {
     
     /********************* RESET PASSWORD************************/
     
-    public void resetPassword()
+   /* public void resetPassword()
     {
         try {
              if (pageNavBean.getLoggedInUserDTO() != null)
@@ -197,7 +212,21 @@ public class OrganizerUserBean extends AbstractMB {
                 signUpDTO.setPassword(getResetPasswordDTO().getPassword());
                 new UsersDAO().updateUserPassword(signUpDTO);
                 displayInfoMessageToUser("Password Reset Successfully");
-                resetPasswordDTO = new ResetPasswordDTO();
+                resetPasswordDTO = new SignUpDTO();
+             }  
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+     }*/
+    
+    public void resetPassword()
+    {
+        try {
+             if (resetPasswordDTO != null)
+             {                
+                new UsersDAO().updateUserPassword(resetPasswordDTO);
+                displayInfoMessageToUser("Password Reset Successfully");
+                resetPasswordDTO = new SignUpDTO();
              }  
         } catch (Exception e) {
             e.printStackTrace();

@@ -101,7 +101,7 @@
             <p:selectBooleanCheckbox id="wantEarlybird" value="#{eventBean.ticket.discount}">
                 <p:ajax event="change" process="wantEarlybird ticketPrice" update="addDiscountCB ticketPriceMsg" />
             </p:selectBooleanCheckbox>            
-            <p:commandButton id="addDiscountCB" value="#{msg.AddDiscount}" oncomplete="if(!args.validationFailed)PF('DiscountDlg').show();" process="ticketPrice" 
+            <p:commandButton id="addDiscountCB"   icon="ui-icon-circle-plus" value="#{msg.AddDiscount}" oncomplete="if(!args.validationFailed)PF('DiscountDlg').show();" process="ticketPrice" 
             update="ticketPriceMsg"  disabled="#{!eventBean.ticket.discount}"/>  
              
             <h:outputLabel value="#{msg.Refundable}"/>
@@ -134,10 +134,10 @@
        
        <f:facet name="footer">
 	       <p:outputPanel id="btnPanel"  styleClass="buttonRow" >
-		        <p:commandButton value="#{msg.save}" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
-		        <p:commandButton value="#{msg.update}" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
+		        <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
+		        <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
 		       <p:spacer height="5" width="10" />   
-		        <p:commandButton value="#{msg.AddSuperCategory}" type="button" onclick="PF('SuperCategoryDlg').show(); 
+		        <p:commandButton value="#{msg.AddSuperCategory}"  icon="ui-icon-circle-plus" type="button" onclick="PF('SuperCategoryDlg').show(); 
 			        return false;"/>  
  	        </p:outputPanel>
        </f:facet>
@@ -145,7 +145,7 @@
      </p:panel>
        
         <p:confirmDialog id="catDelConf" widgetVar="catDelConfDlg" showEffect="fade" severity="alert" global="true">
-            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-circle-check"/>
             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
         </p:confirmDialog>
  

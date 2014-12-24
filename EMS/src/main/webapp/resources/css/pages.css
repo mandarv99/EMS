@@ -208,6 +208,7 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  	border-width: 1px;
 	border-color: #3AAEDE;
 	background-color: #A5E6F8;
+	border-radius : 8px;
  }
  
  /* for dialog */
@@ -436,4 +437,11 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
 	background-image: none !important;
 	height: 0px;
 	width: 0px;
+}
+
+
+.ui-selectonemenu-trigger.ui-state-default
+/*.ui-state-error .ui-icon, .ui-state-error-text .ui-icon*/
+{
+	background: none !important;
 }

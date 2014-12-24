@@ -23,7 +23,7 @@
                 
                
 			<p:panel border="0" id="buttonRow" styleClass="buttonRow" style="text-align:center;">	             
-                <p:commandButton value="#{msg.Ok}" icon="ui-icon-check" action="#{eventBean.insertSuperCategory()}" process="superCategoryFormId" update=":eventForm:superCategory superCategoryFormId :eventForm:msg1" oncomplete="if(!args.validationFailed)PF('SuperCategoryDlg').hide();"/>
+                <p:commandButton value="#{msg.Ok}" icon="ui-icon-circle-check" action="#{eventBean.insertSuperCategory()}" process="superCategoryFormId" update=":eventForm:superCategory superCategoryFormId :eventForm:msg1" oncomplete="if(!args.validationFailed)PF('SuperCategoryDlg').hide();"/>
                  <p:spacer height="5" width="10" />   
                 <p:commandButton value="#{msg.cancel}" icon="ui-icon-close" onclick="PF('SuperCategoryDlg').hide();" type="button" immediate="false" />                              
 			</p:panel>

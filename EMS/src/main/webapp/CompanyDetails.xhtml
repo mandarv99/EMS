@@ -78,8 +78,8 @@
                				
 				<f:facet name="footer">
         			<p:outputPanel id="btnPanel"  styleClass="buttonRow" >
-	        			 <p:commandButton value="#{msg.save}" icon="ui-icon-check" action="#{companyDetailsBean.saveCompanyDetails()}" update=":companyDetailsForm" rendered="#{!(companyDetailsBean.companyDetails.id!=-9)}"/>
-	                    <p:commandButton value="#{msg.update}" icon="ui-icon-check"  action="#{companyDetailsBean.updateCompanyDetails()}" update=":companyDetailsForm" rendered="#{(companyDetailsBean.companyDetails.id!=-9)}"/>
+	        			 <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{companyDetailsBean.saveCompanyDetails()}" update=":companyDetailsForm" rendered="#{!(companyDetailsBean.companyDetails.id!=-9)}"/>
+	                    <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check"  action="#{companyDetailsBean.updateCompanyDetails()}" update=":companyDetailsForm" rendered="#{(companyDetailsBean.companyDetails.id!=-9)}"/>
 	                    <p:spacer height="5" width="10" />   
 	                    <p:commandButton value="#{msg.reset}" action="#{companyDetailsBean.resetCompanyDetails()}" update=":companyDetailsForm" immediate="true"
 	                    icon="ui-icon-arrowrefresh-1-s">
