@@ -7,7 +7,11 @@ package com.ems.datamodel.dto;
 
 public class SignUpDTO extends AbstractDTO {
 
-    private String emailAddress;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5865983997131525110L;
+	private String emailAddress;
     private String password;
     private String confirmPassword;
     private String firstName;
@@ -18,7 +22,8 @@ public class SignUpDTO extends AbstractDTO {
     private String userTypeName;
     private int statusId;
     private String oldPassword;
-
+    private int adminRights;
+    
     @Override
     public String toString() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -164,6 +169,14 @@ public class SignUpDTO extends AbstractDTO {
 
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
+	}
+
+	public int getAdminRights() {
+		return adminRights;
+	}
+
+	public void setAdminRights(int adminRights) {
+		this.adminRights = adminRights;
 	}
 
   

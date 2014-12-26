@@ -4,25 +4,27 @@
  */
 package com.ems.managebeans;
 
-import com.ems.datamodel.dao.CompanyDetailsDAO;
-import com.ems.datamodel.dao.TicketDAO;
-import com.ems.datamodel.dao.UsersDAO;
-import com.ems.datamodel.dto.CompanyDetailsDTO;
-import com.ems.datamodel.dto.SignUpDTO;
-import com.ems.datamodel.dto.TicketDTO;
-import java.io.IOException;
 import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import org.primefaces.context.RequestContext;
+
+import com.ems.datamodel.dao.CompanyDetailsDAO;
+import com.ems.datamodel.dao.UsersDAO;
+import com.ems.datamodel.dto.CompanyDetailsDTO;
+import com.ems.datamodel.dto.SignUpDTO;
 
 @ManagedBean(name = "emailConfirmationBean")
 @ViewScoped
 public class EmailConfirmationBean extends AbstractMB {
     
-    private String emailId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7993905688190821691L;
+	private String emailId;
     private String password;
     private int userId;
     private SignUpDTO signUpDTO;
@@ -44,7 +46,7 @@ public class EmailConfirmationBean extends AbstractMB {
         CompanyDetailsDAO companyDetailsdao = new CompanyDetailsDAO();
         CompanyDetailsDTO companyDetails = new CompanyDetailsDTO();
         companyDetails.setCompanyName("Default");
-        companyDetailsdao.insertCompanyDetails(companyDetails, signUpDTO.getUserId());
+        companyDetailsdao.insertCompanyDetails(companyDetails, signUpDTO.getUserId() , signUpDTO.getUserId());
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);        
         FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");        
     }

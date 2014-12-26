@@ -5,9 +5,6 @@
  */
 package com.ems.managebeans;
 
-import com.ems.datamodel.dao.CompanyDetailsDAO;
-import com.ems.datamodel.dto.CompanyDetailsDTO;
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +16,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
+
+import com.ems.datamodel.dao.CompanyDetailsDAO;
+import com.ems.datamodel.dto.CompanyDetailsDTO;
 
 @ManagedBean(name = "companyDetailsBean")
 @ViewScoped
@@ -44,7 +44,7 @@ public class CompanyDetailsBean extends AbstractMB {
     {
         companyDetails = new CompanyDetailsDTO();
         companyDetailsDAO = new CompanyDetailsDAO();
-        companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
+        companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getSuperUserId());
         
        getDataFromRequestMap();
     }
@@ -86,9 +86,9 @@ public class CompanyDetailsBean extends AbstractMB {
 
     public void saveCompanyDetails() {
         try {
-            companyDetailsDAO.insertCompanyDetails(companyDetails, pageNavBean.getLoggedInUserDTO().getUserId());
+            companyDetailsDAO.insertCompanyDetails(companyDetails, pageNavBean.getLoggedInUserDTO().getUserId() , pageNavBean.getLoggedInUserDTO().getSuperUserId());
             displayInfoMessageToUser("Company details added successfully");
-            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
+            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getSuperUserId());
             resetCompanyDetails();
             pageNavBean.redirectPageToSearchCompany();
         } catch (Exception e) {
@@ -100,7 +100,7 @@ public class CompanyDetailsBean extends AbstractMB {
         try {
             companyDetailsDAO.updateCompanyDetails(companyDetails, pageNavBean.getLoggedInUserDTO().getUserId());
             displayInfoMessageToUser("Company details updated successfully");
-            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
+            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getSuperUserId());
             resetCompanyDetails();
             pageNavBean.redirectPageToSearchCompany();
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class CompanyDetailsBean extends AbstractMB {
             this.companyDetails = companyDetails;
             companyDetailsDAO.deleteCompanyDetails(companyDetails);
             displayInfoMessageToUser("Company details deleted successfully");
-            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId());
+            companyDetailsList = companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getSuperUserId());
             resetCompanyDetails();
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,6 +143,5 @@ public class CompanyDetailsBean extends AbstractMB {
         if (!accountNo.toLowerCase().equals(confirmAccountNo.toLowerCase())) {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account No does not match", null));
         }
-
     }
 }

@@ -26,7 +26,7 @@ public class EventMasterDTO extends AbstractDTO {
     private String eventCategory;
     private String eventDescription;
     private String eventUrl;
-    private byte[] eventHeaderImage;
+    private String eventHeaderImage;
     private String eventAddress;
     private boolean bibNumbering;
     private Integer requireDisclaimer;
@@ -203,14 +203,14 @@ public class EventMasterDTO extends AbstractDTO {
     /**
      * @return the eventHeaderImage
      */
-    public byte[] getEventHeaderImage() {
+    public String getEventHeaderImage() {
         return eventHeaderImage;
     }
 
     /**
      * @param eventHeaderImage the eventHeaderImage to set
      */
-    public void setEventHeaderImage(byte[] eventHeaderImage) {
+    public void setEventHeaderImage(String eventHeaderImage) {
         this.eventHeaderImage = eventHeaderImage;
     }
 

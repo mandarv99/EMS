@@ -29,8 +29,11 @@ import com.ems.datamodel.dto.SignUpDTO;
 @SessionScoped
 public class PageNavigationBean implements Serializable 
 {
-	private static final long serialVersionUID = 1L;
-
+ 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7169467320037225256L;
 	private String page = null;
 	private String importParameter;
 	private String header;
@@ -174,36 +177,7 @@ public class PageNavigationBean implements Serializable
 		 }
 	}
 
-	public void redirectToMenu(String pageTo)
-	{
-		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		try {
-			String red= "Menu.xhtml";
-			page = pageTo;
-			//System.out.println("page : " + page);
-			if(page != null)
-			{
-				switch (page)
-				{
-					case "home" : 
-							header = "Titbit CMS Management";
-							break;
-					case "contentMgmt" :
-							backLabel = "CMS Mangement";
-							backAction = "home";
-							header = "Content Mangement";
-							break;
-					 
-				
-					default : break;
-				}
-				
-			}
-			ec.redirect(red);
-		} catch (IOException e) { e.printStackTrace();	}
-	}
 
-	
 	// open edit company details page
 	public void redirectPageToEditCompany(CompanyDetailsDTO companyDetails)
 	{
@@ -284,7 +258,8 @@ public class PageNavigationBean implements Serializable
  		{
  			SignUpDTO resetPasswordUserDto = new SignUpDTO();
  			resetPasswordUserDto.setEmailAddress(organizerUserDTO.getEmailAddress());
-	    		ec.getFlash().put("resetPasswordUserDto", resetPasswordUserDto);
+ 			resetPasswordUserDto.setUserId(organizerUserDTO.getUserId());
+	    	ec.getFlash().put("resetPasswordUserDto", resetPasswordUserDto);
  		}
  		try {
  			String red= "ResetPassword.xhtml";

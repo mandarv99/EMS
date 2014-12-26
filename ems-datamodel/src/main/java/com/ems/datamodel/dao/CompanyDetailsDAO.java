@@ -15,17 +15,22 @@ import java.util.Map;
 
 public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
 
-    public CompanyDetailsDAO() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1870110896165331081L;
+
+	public CompanyDetailsDAO() {
         super(CompanyDetails.class);
     }
 
-    public List<CompanyDetailsDTO> getCompanyDetailsList(int addedBy) {
+    public List<CompanyDetailsDTO> getCompanyDetailsList(int superUserId) {
         List<CompanyDetailsDTO> companyDetailsDTOList = new ArrayList<CompanyDetailsDTO>();
         try {
             beginTransaction();
             Map<String, Object> parameters = new HashMap<String, Object>();
-            parameters.put("addedBy", addedBy);
-            List<CompanyDetails> companyDetailsList = super.findResults("CompanyDetails.findByAddedBy", parameters);
+            parameters.put("superUserId", superUserId);
+            List<CompanyDetails> companyDetailsList = super.findResults("CompanyDetails.findBySuperUserId", parameters);
             for (CompanyDetails companyDetails : companyDetailsList) {
                 CompanyDetailsDTO companyDetailsDTO = new CompanyDetailsDTO();
                 companyDetailsDTO.setAddress1(companyDetails.getAddress1());
@@ -48,7 +53,7 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
         return companyDetailsDTOList;
     }
 
-    public void insertCompanyDetails(CompanyDetailsDTO companyDetailsDTO, int userId) {
+    public void insertCompanyDetails(CompanyDetailsDTO companyDetailsDTO, int userId , int superUserId) {
         try {
             beginTransaction();
             CompanyDetails companyDetails = new CompanyDetails();
@@ -63,6 +68,7 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
             companyDetails.setPhone1(companyDetailsDTO.getPhoneNo());
             companyDetails.setAddedBy(userId);
             companyDetails.setAddedOn(new Date());
+            companyDetails.setSuperUserId(superUserId);
             super.save(companyDetails);
         } catch (Exception e) {
             e.printStackTrace();
@@ -84,8 +90,8 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
             companyDetails.setCompanyName(companyDetailsDTO.getCompanyName());
             companyDetails.setIFSCcode(companyDetailsDTO.getIfscCode());
             companyDetails.setPhone1(companyDetailsDTO.getPhoneNo());
-            companyDetails.setAddedBy(userId);
-            companyDetails.setAddedOn(new Date());
+           // companyDetails.setAddedBy(userId);
+           // companyDetails.setAddedOn(new Date());
             super.save(companyDetails);
         } catch (Exception e) {
             e.printStackTrace();

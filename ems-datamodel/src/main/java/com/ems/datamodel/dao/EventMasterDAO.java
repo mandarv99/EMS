@@ -5,6 +5,12 @@
  */
 package com.ems.datamodel.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.ems.datamodel.dto.DiscountMasterDTO;
 import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.TicketDTO;
@@ -13,14 +19,15 @@ import com.ems.datamodel.entity.DiscountMaster;
 import com.ems.datamodel.entity.EventMaster;
 import com.ems.datamodel.entity.SuperCategoryTkt;
 import com.ems.datamodel.entity.TicketMaster;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class EventMasterDAO extends GenericDAO<EventMaster> {
 
-    public EventMasterDAO() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -203790128008665235L;
+
+	public EventMasterDAO() {
         super(EventMaster.class);
     }
 
@@ -139,6 +146,7 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
             eventMaster.setRequiredSittingArrangement(eventMasterDTO.isIsSittingArrangmentRequired());
             eventMaster.setEventUrl("dhd");
             eventMaster.setAddedBy(eventMasterDTO.getAddedBy());
+            eventMaster.setAddedOn(new Date());
             CompanyDetailsDAO companyDetailsDAO = new CompanyDetailsDAO();
             CompanyDetails companyDetails = companyDetailsDAO.getCompanyDetails(eventMasterDTO.getCompanyId());
             eventMaster.setCompanyId(companyDetails);

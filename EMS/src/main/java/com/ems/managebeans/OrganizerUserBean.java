@@ -16,7 +16,6 @@ import javax.faces.context.FacesContext;
 import com.ems.datamodel.dao.UserTypeDAO;
 import com.ems.datamodel.dao.UsersDAO;
 import com.ems.datamodel.dto.OrganizerUserDTO;
-import com.ems.datamodel.dto.ResetPasswordDTO;
 import com.ems.datamodel.dto.SignUpDTO;
 import com.ems.datamodel.dto.UserTypeDTO;
 import com.ems.util.CommonUtil;
@@ -68,23 +67,28 @@ public class OrganizerUserBean extends AbstractMB {
 		    	if(obj!=null)
 		    		this.organizerUserDTO = (OrganizerUserDTO) obj;
 			}
+			// for Reset Password Page
 			else if(pageName.equalsIgnoreCase("/ResetPassword.xhtml"))
 			{
+				resetPasswordDTO  = new SignUpDTO();
 				Object obj= getObjectFromFlash("resetPasswordUserDto");
-		    	if(obj!=null)
+		    	// if user selected from search list
+				if(obj!=null)
 		    		this.resetPasswordDTO = (SignUpDTO) obj;
-		    	else
+		    	// for logged in user ( from menu)
+				else
+		    	{
+		    		resetPasswordDTO.setUserId(pageNavBean.getLoggedInUserDTO().getUserId());
 		    		resetPasswordDTO.setEmailAddress(pageNavBean.getLoggedInUserDTO().getEmailAddress());
+		    	}
 			}
 		}
     }
 
- 
     public OrganizerUserDTO getOrganizerUserDTO() {
         return organizerUserDTO;
     }
 
- 
     public void setOrganizerUserDTO(OrganizerUserDTO organizerUserDTO) {
         this.organizerUserDTO = organizerUserDTO;
     }
@@ -135,8 +139,7 @@ public class OrganizerUserBean extends AbstractMB {
     
     public void searchOrganizerUser() {
         try {
-            userList = userDAO.searchOrganizerUser(selectedOrganizerUserDTO.getFirstName(), selectedOrganizerUserDTO.getLastName(), 
-            		selectedOrganizerUserDTO.getUserTypeId(), pageNavBean.getLoggedInUserDTO().getUserId());
+            userList = userDAO.searchOrganizerUser(selectedOrganizerUserDTO , pageNavBean.getLoggedInUserDTO());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,8 +157,7 @@ public class OrganizerUserBean extends AbstractMB {
             userDAO.deleteOrganizerUser(organizerUserDTO);
             displayInfoMessageToUser("User deleted successfully");
             organizerUserDTO = new OrganizerUserDTO();
-            userList = userDAO.searchOrganizerUser(selectedOrganizerUserDTO.getFirstName(), selectedOrganizerUserDTO.getLastName(), 
-            		selectedOrganizerUserDTO.getUserTypeId(), pageNavBean.getLoggedInUserDTO().getUserId());
+            userList = userDAO.searchOrganizerUser(selectedOrganizerUserDTO , pageNavBean.getLoggedInUserDTO());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,7 +173,7 @@ public class OrganizerUserBean extends AbstractMB {
                 organizerUserDTO = new OrganizerUserDTO();
                 return;
             }
-            organizerUserDTO.setSuperUserId(pageNavBean.getLoggedInUserDTO().getUserId());
+            organizerUserDTO.setSuperUserId(pageNavBean.getLoggedInUserDTO().getSuperUserId());
             organizerUserDTO.setPassword(CommonUtil.generateRandomPassword());
             int result = userDAO.insertUser(organizerUserDTO);
             if (result > 0) {
@@ -201,24 +203,7 @@ public class OrganizerUserBean extends AbstractMB {
     }
     
     /********************* RESET PASSWORD************************/
-    
-   /* public void resetPassword()
-    {
-        try {
-             if (pageNavBean.getLoggedInUserDTO() != null)
-             {                
-                SignUpDTO signUpDTO = new SignUpDTO();
-                signUpDTO = pageNavBean.getLoggedInUserDTO() ;
-                signUpDTO.setPassword(getResetPasswordDTO().getPassword());
-                new UsersDAO().updateUserPassword(signUpDTO);
-                displayInfoMessageToUser("Password Reset Successfully");
-                resetPasswordDTO = new SignUpDTO();
-             }  
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-     }*/
-    
+
     public void resetPassword()
     {
         try {
@@ -227,6 +212,7 @@ public class OrganizerUserBean extends AbstractMB {
                 new UsersDAO().updateUserPassword(resetPasswordDTO);
                 displayInfoMessageToUser("Password Reset Successfully");
                 resetPasswordDTO = new SignUpDTO();
+                pageNavBean.redirectPageToSearchUsers();
              }  
         } catch (Exception e) {
             e.printStackTrace();

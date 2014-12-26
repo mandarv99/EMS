@@ -38,7 +38,6 @@ public class LoginBean extends AbstractMB {
 	 * 
 	 */
 	private static final long serialVersionUID = -5479420716043825631L;
-	private static final String STAY_IN_THE_SAME_PAGE = null;
     private static final String EVENT_LIST_PAGE = "EventList.xhtml";
     private LoginDTO loginDTO;
     private String recoverEmail;

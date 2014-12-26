@@ -39,7 +39,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "CompanyDetails.findByBankName", query = "SELECT c FROM CompanyDetails c WHERE c.bankName = :bankName"),
     @NamedQuery(name = "CompanyDetails.findByBranchName", query = "SELECT c FROM CompanyDetails c WHERE c.branchName = :branchName"),
     @NamedQuery(name = "CompanyDetails.findByAddedOn", query = "SELECT c FROM CompanyDetails c WHERE c.addedOn = :addedOn"),
-    @NamedQuery(name = "CompanyDetails.findByAddedBy", query = "SELECT c FROM CompanyDetails c WHERE c.addedBy = :addedBy")})
+    @NamedQuery(name = "CompanyDetails.findByAddedBy", query = "SELECT c FROM CompanyDetails c WHERE c.addedBy = :addedBy"),
+    @NamedQuery(name = "CompanyDetails.findBySuperUserId", query = "SELECT c FROM CompanyDetails c WHERE c.superUserId = :superUserId")})
 public class CompanyDetails implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,6 +71,8 @@ public class CompanyDetails implements Serializable {
     private Date addedOn;
     @Column(name = "added_by")
     private Integer addedBy;
+    @Column(name = " super_user_id")
+    private Integer superUserId;
 
     public CompanyDetails() {
     }
@@ -181,7 +184,15 @@ public class CompanyDetails implements Serializable {
         this.addedBy = addedBy;
     }
 
-    @Override
+    public Integer getSuperUserId() {
+		return superUserId;
+	}
+
+	public void setSuperUserId(Integer superUserId) {
+		this.superUserId = superUserId;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (companyId != null ? companyId.hashCode() : 0);

@@ -7,6 +7,7 @@ package com.ems.datamodel.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +27,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "UserType.findAll", query = "SELECT u FROM UserType u"),
     @NamedQuery(name = "UserType.findByUserTypeId", query = "SELECT u FROM UserType u WHERE u.userTypeId = :userTypeId"),
     @NamedQuery(name = "UserType.findByUserTypeExSuperUser", query = "SELECT u FROM UserType u WHERE u.userTypeId <> 1"),
-    @NamedQuery(name = "UserType.findByUserTypeName", query = "SELECT u FROM UserType u WHERE u.userTypeName = :userTypeName")})
+    @NamedQuery(name = "UserType.findByUserTypeName", query = "SELECT u FROM UserType u WHERE u.userTypeName = :userTypeName"),
+    @NamedQuery(name = "UserType.findByAdminrights", query = "SELECT u FROM UserType u WHERE u.adminrights = :adminrights")})
+
 public class UserType implements Serializable {
 
     @OneToMany(mappedBy = "userTypeId")
@@ -39,7 +42,9 @@ public class UserType implements Serializable {
     @Basic(optional = false)
     @Column(name = "user_type_name")
     private String userTypeName;
-
+    @Column(name = "adminrights")
+    private Short adminrights;
+  
     public UserType() {
     }
 
@@ -68,6 +73,15 @@ public class UserType implements Serializable {
         this.userTypeName = userTypeName;
     }
 
+    public Short getAdminrights() {
+        return adminrights;
+    }
+
+    public void setAdminrights(Short adminrights) {
+        this.adminrights = adminrights;
+    }
+
+  
     @Override
     public int hashCode() {
         int hash = 0;

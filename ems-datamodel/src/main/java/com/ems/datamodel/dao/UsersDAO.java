@@ -5,23 +5,30 @@
  */
 package com.ems.datamodel.dao;
 
-import com.ems.datamodel.dto.OrganizerUserDTO;
-import com.ems.datamodel.dto.SignUpDTO;
-import com.ems.datamodel.entity.Users;
-import com.ems.datamodel.entity.Users_;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.ems.datamodel.dto.OrganizerUserDTO;
+import com.ems.datamodel.dto.SignUpDTO;
+import com.ems.datamodel.entity.Users;
+import com.ems.datamodel.entity.Users_;
+
 public class UsersDAO extends GenericDAO<Users> {
 
-    public UsersDAO() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8481354276611834305L;
+
+	public UsersDAO() {
         super(Users.class);
     }
 
@@ -60,8 +67,9 @@ public class UsersDAO extends GenericDAO<Users> {
             	userDetails.setSuperUserId(users.getSuperUserId());
             	userDetails.setUserType(users.getUserTypeId().getUserTypeId());
             	userDetails.setUserTypeName(users.getUserTypeId().getUserTypeName());
+            	userDetails.setAdminRights(users.getUserTypeId().getAdminrights());
             	userDetails.setStatusId(users.getStatusId());
-            	userDetails.setSuperUserId(users.getSuperUserId());
+            	userDetails.setSuperUserId(users.getSuperUserId() > 0 ? users.getSuperUserId() : users.getUserId());
             	userDetails.setEmailAddress(users.getEmail());
             }
         } catch (Exception e) {
@@ -215,6 +223,7 @@ public class UsersDAO extends GenericDAO<Users> {
             user.setEmail(organizerUserDTO.getEmailAddress());
             user.setFirstName(organizerUserDTO.getFirstName());
             user.setLastName(organizerUserDTO.getLastName());
+            user.setPassChangeInNextLogin(organizerUserDTO.isChangeInNextLogin());
             UserTypeDAO userTypeDAO = new UserTypeDAO();
             user.setUserTypeId(userTypeDAO.getUserType(organizerUserDTO.getUserTypeId()));
             update(user);
@@ -239,31 +248,39 @@ public class UsersDAO extends GenericDAO<Users> {
         }
     }
 
-    public List<OrganizerUserDTO> searchOrganizerUser(String firstName, String lastName, int userTypeId, int superUserId) {
+    public List<OrganizerUserDTO> searchOrganizerUser(OrganizerUserDTO searchUser, SignUpDTO loggedInUser) {
         List<OrganizerUserDTO> userList = new ArrayList<OrganizerUserDTO>();
         try {
             beginTransaction();
             EntityManager em = getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery query = cb.createQuery(Users.class);
+            CriteriaQuery<Users> query = cb.createQuery(Users.class);
             Root<Users> users = query.from(Users.class);
             List<Predicate> predicateList = new ArrayList<Predicate>();
-            if (firstName != null) {
-                predicateList.add(cb.like(users.get(Users_.firstName), firstName + "%"));
+            if (searchUser.getFirstName() != null) {
+                predicateList.add(cb.like(users.get(Users_.firstName), searchUser.getFirstName() + "%"));
             }
-            if (lastName != null) {
-                predicateList.add(cb.like(users.get(Users_.lastName), lastName + "%"));
+            if (searchUser.getLastName() != null) {
+                predicateList.add(cb.like(users.get(Users_.lastName), searchUser.getLastName() + "%"));
             }
-            if (userTypeId != 0) {
-                predicateList.add(cb.equal(users.get(Users_.userTypeId), userTypeId));
+            if (searchUser.getUserTypeId() != 0) {
+                predicateList.add(cb.equal(users.get(Users_.userTypeId), searchUser.getUserTypeId()));
             }
-            if (superUserId != 0) {
-                predicateList.add(cb.equal(users.get(Users_.superUserId), superUserId));
-            }
-            predicateList.add(cb.notEqual(users.get(Users_.userTypeId), 1));
+            // for super admin & admin - list all users
+            if (loggedInUser.getAdminRights()==1) {
+                Predicate p1 = cb.equal( users.get(Users_.superUserId), loggedInUser.getSuperUserId()  );
+                Predicate p2 = cb.equal( users.get(Users_.userId), loggedInUser.getSuperUserId()  );
+         		predicateList.add( cb.or( p1, p2 ));
+           }
+           // for other user types list only that user
+            if (loggedInUser.getAdminRights() == 0 ) {
+        	   predicateList.add(cb.equal(users.get(Users_.userId), loggedInUser.getUserId()));
+           }
+            //predicateList.add(cb.notEqual(users.get(Users_.userTypeId), 1));
             Predicate[] predicates = new Predicate[predicateList.size()];
             predicateList.toArray(predicates);
             query.where(predicates);
+              
             List<Users> usersEnList = em.createQuery(query).getResultList();
             for (Users user : usersEnList) {
                 OrganizerUserDTO organizerUserDTO = new OrganizerUserDTO();
@@ -274,7 +291,7 @@ public class UsersDAO extends GenericDAO<Users> {
                 organizerUserDTO.setSuperUserId(user.getSuperUserId());
                 organizerUserDTO.setUserTypeId(user.getUserTypeId().getUserTypeId());
                 organizerUserDTO.setUserTypeName(user.getUserTypeId().getUserTypeName());
-                organizerUserDTO.setChangeInNextLogin(user.getPassChangeInNextLogin());
+                organizerUserDTO.setChangeInNextLogin(user.getPassChangeInNextLogin() !=null ? user.getPassChangeInNextLogin() : false );
                 organizerUserDTO.setUserId(user.getUserId());
                 userList.add(organizerUserDTO);
             }

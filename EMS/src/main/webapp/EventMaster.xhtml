@@ -45,8 +45,8 @@
 	                             title="#{msg.EventLocation}" required="true" label="#{msg.EventLocation}"/>
 	            <p:message for="eventLocation" />
 	            
-	            <h:outputLabel value="#{msg.EventType} " styleClass="star" />
-	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="true" label="#{msg.EventType}" >
+	            <h:outputLabel value="#{msg.EventType} "  />
+	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="false" label="#{msg.EventType}" >
 	                <f:selectItem itemValue=" " itemLabel="--SELECT--"></f:selectItem>
 	                <f:selectItems value="#{eventBean.eventTypesDTOList}" var="eventType" 
 	                               itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType.eventTypeId}"/>
@@ -83,8 +83,8 @@
 	            
 	            <h:outputLabel value="#{msg.EventStatus}" />
 	            <p:selectOneMenu id="eventStatus" value="#{eventBean.eventMasterDTO.eventStatus}" required="true" label="#{msg.EventStatus}" >               
-	                <f:selectItem itemValue="2" itemLabel="InActive" />
-	                <f:selectItem itemValue="1" itemLabel="Active"/>
+	                <f:selectItem itemValue="2" itemLabel="#{msg.inActive}" />
+	                <f:selectItem itemValue="1" itemLabel="#{msg.active}"/>
 	
 	            </p:selectOneMenu>     
 				<p:message for="eventStatus" />

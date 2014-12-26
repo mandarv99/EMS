@@ -23,14 +23,11 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "UserTypePagelinks.findAll", query = "SELECT u FROM UserTypePagelinks u"),
     @NamedQuery(name = "UserTypePagelinks.findByUserTypeId", query = "SELECT u FROM UserTypePagelinks u WHERE u.userTypePagelinksPK.userTypeId = :userTypeId"),
-    @NamedQuery(name = "UserTypePagelinks.findByPagelinkid", query = "SELECT u FROM UserTypePagelinks u WHERE u.userTypePagelinksPK.pagelinkid = :pagelinkid"),
-    @NamedQuery(name = "UserTypePagelinks.findByAdminrights", query = "SELECT u FROM UserTypePagelinks u WHERE u.adminrights = :adminrights")})
-public class UserTypePagelinks implements Serializable {
+    @NamedQuery(name = "UserTypePagelinks.findByPagelinkid", query = "SELECT u FROM UserTypePagelinks u WHERE u.userTypePagelinksPK.pagelinkid = :pagelinkid")})
+ public class UserTypePagelinks implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected UserTypePagelinksPK userTypePagelinksPK;
-    @Column(name = "adminrights")
-    private Short adminrights;
     @JoinColumn(name = "user_type_id", referencedColumnName = "user_type_id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private UserType userType;
@@ -55,14 +52,6 @@ public class UserTypePagelinks implements Serializable {
 
     public void setUserTypePagelinksPK(UserTypePagelinksPK userTypePagelinksPK) {
         this.userTypePagelinksPK = userTypePagelinksPK;
-    }
-
-    public Short getAdminrights() {
-        return adminrights;
-    }
-
-    public void setAdminrights(Short adminrights) {
-        this.adminrights = adminrights;
     }
 
     public UserType getUserType() {

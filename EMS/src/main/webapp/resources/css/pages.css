@@ -7,6 +7,13 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
  	font-size: 12px;
  }
 
+/* override the headertext css for pages */
+#headerText
+{
+	text-align: left;
+	width : 70%;
+}
+
 #centerSection
 {
 	 margin: 10% 0px; 	 

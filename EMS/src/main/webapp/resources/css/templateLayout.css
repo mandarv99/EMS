@@ -27,39 +27,6 @@ body {
 	background-repeat: no-repeat;
 	background-position: center;
 }
-
-/* #headerText 
-{
-   	padding-top: 10px;
-  	margin : auto;
-  	position: relative; 
- 	height: 27px;
-	z-index: 20;
-	font-family: "Segoe UI", "Segoe UI Light", "Segoe Script", "Segoe Print";
-	color: #FFF;
-	font-size: 29px;
-	font-weight: lighter;
-	vertical-align: middle;
-	width : 80%;
- } 
-
-#welcomeText
-{
-   	margin : auto;
-  	position: relative; 
- 	height: 27px;
-	z-index: 20;
-	font-family: "Segoe UI", "Segoe UI Light", "Segoe Script", "Segoe Print";
-	color: #FFF;
-	font-size: 29px;
-	font-weight: lighter;
-	vertical-align: middle;
-	text-align: center;
-	float: right;
-	width : 20%;
-	padding-right: 10px;
-}
- */
  
  /*for table*/
  #headerText 
@@ -75,7 +42,7 @@ body {
 	font-size: 29px;
 	font-weight: lighter;
 	vertical-align: middle;
-	width : 70%;
+	text-align: center;
  } 
 
 #welcomeText

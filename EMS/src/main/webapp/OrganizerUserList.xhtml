@@ -13,7 +13,7 @@
    		<ui:define name="headerText"> #{msg.OrganizerUser}</ui:define>
          
             <ui:define name="content">                               
-                     <h:form id="organizerUserSearchForm">
+                   <h:form id="organizerUserSearchForm">
  
 	  				<p:panel id="panel" styleClass="Content"  >	
 	
@@ -21,20 +21,24 @@
 	                                	
              		<p:messages id="messages" />
  
-  						<h:panelGrid id="organizerDetails" columns="2" columnClasses="leftContentStyleSrch , rightContentStyle" 
-					 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">	
-					 	    <p:outputLabel value="#{msg.FirstName}"  />
+  					<h:panelGrid id="organizerDetails" columns="2" columnClasses="leftContentStyleSrch , rightContentStyle" 
+					 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent"
+					 rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}">	
+					 	    <h:outputLabel value="#{msg.FirstName}"  />
                             <p:inputText id="firstName" value="#{organizerUserBean.selectedOrganizerUserDTO.firstName}" title="#{msg.FirstName}" label="#{msg.FirstName}"/>
-                            <p:outputLabel value="#{msg.LastName}"/>
+                           
+                            <h:outputLabel value="#{msg.LastName}"/>
                             <p:inputText id="lastName" value="#{organizerUserBean.selectedOrganizerUserDTO.lastName}" title="#{msg.LastName}" label="#{msg.LastName}" />
-                            <p:outputLabel value="#{msg.UserType}" />
+                           
+                            <h:outputLabel value="#{msg.UserType}" />
                             <p:selectOneMenu id="userType" value="#{organizerUserBean.selectedOrganizerUserDTO.userTypeId}" label="#{msg.UserType}" >
                                 <f:selectItem itemLabel="--SELECT--" itemValue=""></f:selectItem>
                                 <f:selectItems value="#{organizerUserBean.userTypeDTOList}" var="userType" itemLabel="#{userType.userTypeName}" itemValue="#{userType.userTypeId}"/>
                             </p:selectOneMenu>                            
-                        </h:panelGrid>
+                      </h:panelGrid>
                         
-                       <p:panel border="0" id="buttonRow" styleClass="buttonRow">	 
+                       <p:panel border="0" id="buttonRow" styleClass="buttonRow"
+					  rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}">	 
 	                        <p:commandButton value="#{msg.Search}" icon="ui-icon-search" action="#{organizerUserBean.searchOrganizerUser()}" update=":organizerUserSearchForm"  />
 	                        <p:spacer height="5" width="10" />                        
  	                        <p:commandButton value="#{msg.AddUser}" icon="ui-icon-person" ajax="false" action="#{pageNavBean.redirectPageToAddOrganizerUser(null)}" />                        
@@ -44,7 +48,7 @@
 	                        </p:commandButton>
                         </p:panel>
                         
-                        <p:spacer height="15" width="5" />
+                        <p:spacer height="15" width="5"  rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}" />	 
                         
                         <p:dataTable id ="userList" value="#{organizerUserBean.userList}" var="organizerUser" rowKey="#{organizerUser.userId}" 
                         style="text-align: center;" paginator="#{organizerUserBean.userList.size() > pageNavBean.pageSize}" 
@@ -71,7 +75,7 @@
                                   action="#{pageNavBean.redirectPageToAddOrganizerUser(organizerUser)}" />                                    
                              </p:column>
                              
-                            <p:column headerText="#{msg.delete}"  style="width:5%;">
+                            <p:column headerText="#{msg.delete}"  style="width:5%;" rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}">
                                 <p:commandButton update=":organizerUserSearchForm" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" 
                                 actionListener="#{organizerUserBean.deleteOrganizerUser(organizerUser)}">                                    
                                     <p:confirm header="Confirmation" message="Are you sure,you want to delete the user?" icon="ui-icon-alert" />                                    

@@ -35,7 +35,7 @@ public class EventBeanList extends AbstractMB {
     public void init()
     {
         eventMasterDAO = new EventMasterDAO();
-        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getUserId()));
+        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
         setEventMasterDTO(new EventMasterDTO());
     }
 
@@ -69,7 +69,7 @@ public class EventBeanList extends AbstractMB {
     
     public void deleteEvent(int eventId){
         eventMasterDAO.deleteEventMaster(eventId);
-        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getUserId()));
+        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
     }
 
 	public PageNavigationBean getPageNavBean() {

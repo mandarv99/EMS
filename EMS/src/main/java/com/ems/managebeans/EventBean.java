@@ -53,8 +53,7 @@ public class EventBean extends AbstractMB {
     @ManagedProperty(value="#{pageNavBean}")
   	private PageNavigationBean pageNavBean ;
     
-   
-	private TicketDAO ticketDAO;
+   	private TicketDAO ticketDAO;
     
 	public PageNavigationBean getPageNavBean() {
 		return pageNavBean;
@@ -83,7 +82,7 @@ public class EventBean extends AbstractMB {
         eventTypeDAO = new EventTypeDAO();
         eventTypesDTOList = eventTypeDAO.getEventTypesList();
         companyDetailsDAO = new CompanyDetailsDAO();
-        setCompanyDetailsDTOList(companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getUserId()));
+        setCompanyDetailsDTOList(companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
         superCategoryDAO = new SuperCategoryDAO();
         ticketDAO = new TicketDAO();
         

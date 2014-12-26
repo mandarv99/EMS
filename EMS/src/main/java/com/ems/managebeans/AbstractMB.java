@@ -13,7 +13,11 @@ import com.ems.util.MessageUtil;
 
 public class AbstractMB implements Serializable {
 
-    MessageUtil messageUtil = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4798690935925318529L;
+	MessageUtil messageUtil = null;
 
     public AbstractMB() {
         super();

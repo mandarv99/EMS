@@ -36,7 +36,8 @@
                             <p:message for="lastName" />
                                                         
                             <h:outputLabel value="#{msg.Email}" styleClass="star"  />
-                            <p:inputText id="email" value="#{organizerUserBean.organizerUserDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}">
+                            <p:inputText id="email" value="#{organizerUserBean.organizerUserDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}"
+                            disabled="#{(organizerUserBean.organizerUserDTO.userId!=0)}" >
                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                             </p:inputText>
                              <p:message for="email" />
@@ -46,7 +47,8 @@
                              <p:message for="changeInNextLogin" />
                              
                             <h:outputLabel value="#{msg.UserType}" styleClass="star" />
-                            <p:selectOneMenu id="userType" value="#{organizerUserBean.organizerUserDTO.userTypeId}" required="true" label="#{msg.UserType}" >
+                            <p:selectOneMenu id="userType" value="#{organizerUserBean.organizerUserDTO.userTypeId}" required="true" label="#{msg.UserType}" 
+							disabled="#{(organizerUserBean.organizerUserDTO.userId!=0)}" >
                                 <f:selectItem itemLabel="--SELECT--" itemValue=""></f:selectItem>
                                 <f:selectItems value="#{organizerUserBean.userTypeDTOList}" var="userType" itemLabel="#{userType.userTypeName}" itemValue="#{userType.userTypeId}"/>
                             </p:selectOneMenu>

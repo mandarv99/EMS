@@ -49,9 +49,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "EventMaster.findByAddedBy", query = "SELECT c FROM EventMaster c WHERE c.addedBy = :addedBy")})
 public class EventMaster implements Serializable {
 
-    @Lob
     @Column(name = "event_header_image")
-    private byte[] eventHeaderImage;
+    private String eventHeaderImage;
     @Column(name = "photo_url")
     private String photoUrl;
     @Column(name = "is_free_event")
@@ -198,11 +197,11 @@ public class EventMaster implements Serializable {
         this.eventUrl = eventUrl;
     }
 
-    public byte[] getEventHeaderImage() {
+    public String getEventHeaderImage() {
         return eventHeaderImage;
     }
 
-    public void setEventHeaderImage(byte[] eventHeaderImage) {
+    public void setEventHeaderImage(String eventHeaderImage) {
         this.eventHeaderImage = eventHeaderImage;
     }
 
