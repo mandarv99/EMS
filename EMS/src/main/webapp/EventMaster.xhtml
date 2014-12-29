@@ -22,13 +22,13 @@
 				<p:message for="eventName" />	             
 	           
 	            <h:outputLabel value="#{msg.StartDate} " styleClass="star" />
-	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}"  required="true"
-	                        label="#{msg.StartDate}" title="#{msg.StartDate}" pattern="dd-MMM-yyyy hh:mm a" readonlyInput="true"/>
+	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}"  required="true" mindate="#{pageNavBean.nextDay}" 
+ 	                        label="#{msg.StartDate}" title="#{msg.StartDate}"  readonlyInput="true" pattern="MM/dd/yyyy HH:mm"/>
 	           <p:message for="startDate" />	
 	           				
 	            <h:outputLabel value="#{msg.EndDate} " styleClass="star" for="endDate"/>
-	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" required="true" 
-	                        label="#{msg.EndDate}" title="#{msg.EndDate}" pattern="dd-MMM-yyyy hh:mm a" readonlyInput="true"/>                                             
+	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" required="true" mindate="#{pageNavBean.nextDay}" 
+	            pattern="MM/dd/yyyy HH:mm"    label="#{msg.EndDate}" title="#{msg.EndDate}"  readonlyInput="true"/>                                             
 	           	<p:message for="endDate" />	
 	           
 	            <h:outputLabel value="#{msg.EventDesc} " styleClass="star" for="eventDesc" />
@@ -45,13 +45,13 @@
 	                             title="#{msg.EventLocation}" required="true" label="#{msg.EventLocation}"/>
 	            <p:message for="eventLocation" />
 	            
-	            <h:outputLabel value="#{msg.EventType} "  />
-	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="false" label="#{msg.EventType}" >
+	            <h:outputLabel value="#{msg.EventType} " rendered="false" />
+	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="false" label="#{msg.EventType}" rendered="false">
 	                <f:selectItem itemValue=" " itemLabel="--SELECT--"></f:selectItem>
 	                <f:selectItems value="#{eventBean.eventTypesDTOList}" var="eventType" 
 	                               itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType.eventTypeId}"/>
 	            </p:selectOneMenu>   
-	             <p:message for="eventType" />
+	             <p:message for="eventType" rendered="false" />
 	           
 	            <h:outputLabel value="#{msg.CompanyName}"/>
 	            <p:selectOneMenu id="companyName" value="#{eventBean.eventMasterDTO.companyId}" required="true" label="#{msg.CompanyName}" >

@@ -2,6 +2,10 @@ package com.ems.managebeans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +46,8 @@ public class PageNavigationBean implements Serializable
 	private SignUpDTO loggedInUserDTO;
 	private int pageSize;
 	private MenuModel menuModel;
+	private Date today;
+	private Date nextDay;
 	
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
@@ -120,6 +126,14 @@ public class PageNavigationBean implements Serializable
 		this.menuModel = menuModel;
 	}
 
+	public Date getToday() {
+		return today;
+	}
+
+	public void setToday(Date today) {
+		this.today = today;
+	}
+
 	// constructor
 	public PageNavigationBean()
 	{
@@ -131,6 +145,18 @@ public class PageNavigationBean implements Serializable
 		loggedInUserDTO = getLoginBean().getLoggedInUserDTO();
 		pageSize = 15;
 		pageDAO =  new PageLinkDAO();
+
+		// set today and next day values
+		Calendar cal = Calendar.getInstance();
+		setToday(cal.getTime());
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.add(Calendar.DATE , 1);
+ 				
+		setNextDay(cal.getTime());
+		 
 		generateMenuForUser();
     }
 	 
@@ -266,5 +292,13 @@ public class PageNavigationBean implements Serializable
  			ec.redirect(red);
  		} catch (IOException e) { e.printStackTrace();	}
  	}
+
+	public Date getNextDay() {
+		return nextDay;
+	}
+
+	public void setNextDay(Date nextDay) {
+		this.nextDay = nextDay;
+	}
  	
 }

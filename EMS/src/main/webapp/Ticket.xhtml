@@ -73,12 +73,12 @@
             <p:message for="superCategory" />
             
             <h:outputLabel value="#{msg.SalesStartDate}" styleClass="star" />
-            <p:calendar id="salesStartDate" value="#{eventBean.ticket.salesStartDate}" required="true"
+            <p:calendar id="salesStartDate" value="#{eventBean.ticket.salesStartDate}" required="true"  mindate="#{pageNavBean.today}" 
                         label="#{msg.SalesStartDate}" title="#{msg.SalesStartDate}" pattern="dd-MMM-yyyy" readonlyInput="true"/>            
              <p:message for="salesStartDate" />
                         
             <h:outputLabel value="#{msg.SalesEndDate}" styleClass="star" />
-            <p:calendar id="salesEndDate" value="#{eventBean.ticket.salesEndDate}" required="true" 
+            <p:calendar id="salesEndDate" value="#{eventBean.ticket.salesEndDate}" required="true"   mindate="#{pageNavBean.today}" 
                         label="#{msg.SalesEndDate}" title="#{msg.SalesEndDate}" pattern="dd-MMM-yyyy" readonlyInput="true" />                                                                             
               <p:message for="salesEndDate" />
                          

@@ -14,7 +14,7 @@
             <ui:define name="headerText">#{msg.EventDetails}</ui:define>
             
             <ui:define name="content">
-                <h:form id="eventForm">       
+                  <h:form id="eventForm">       
                     <p:wizard flowListener="#{eventBean.onFlowProcess}">     
                          
                         <p:tab id="event" title="#{msg.EventDetails}" >                                                     
@@ -24,11 +24,10 @@
                             <ui:include src="Ticket.xhtml"/>                                                    
                         </p:tab>
                     </p:wizard>
-   
-
-                </h:form>  
-                <ui:include src="SuperCategory.xhtml"/>
-                <ui:include src="Discount.xhtml"/>
+                  </h:form>  
+ 
+            <ui:include src="SuperCategory.xhtml"/>
+            <ui:include src="Discount.xhtml"/>
 
             </ui:define>
         </ui:composition>

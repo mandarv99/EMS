@@ -109,17 +109,6 @@ public class EventBean extends AbstractMB {
         this.eventMasterDTO = eventMasterDTO;
     }
     
-    public void saveEvent() {
-        try {
-            eventMasterDTO.setAddedBy(pageNavBean.getLoggedInUserDTO().getUserId());
-            if (eventMasterDAO.insertEventMaster(eventMasterDTO)) {
-                displayInfoMessageToUser("Event added successfully");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * @return the ticket
      */
@@ -189,21 +178,7 @@ public class EventBean extends AbstractMB {
     public void setDiscountMasterDTO(DiscountMasterDTO discountMasterDTO) {
         this.discountMasterDTO = discountMasterDTO;
     }
-    
-    public String onFlowProcess(FlowEvent event) {
-        if (event.getOldStep().equals("event")) {
-            if (eventMasterDTO != null && eventMasterDTO.getEventId() == null) {
-                saveEvent();
-            } else {
-                updateEvent();
-                superTicketCategoryDTOList = superCategoryDAO.getSuperCategoryList(eventMasterDTO.getEventId());
-                superCategoryTktDTO = new SuperCategoryTktDTO();
-                ticketDTOList = ticketDAO.getTicketList(eventMasterDTO.getEventId());
-            }
-        }
-        return event.getNewStep();
-    }
-
+ 
     /**
      * @return the eventTypesDTOList
      */
@@ -231,6 +206,46 @@ public class EventBean extends AbstractMB {
     public void setCompanyDetailsDTOList(List<CompanyDetailsDTO> companyDetailsDTOList) {
         this.companyDetailsDTOList = companyDetailsDTOList;
     }
+
+    
+    public void saveEvent() {
+        try {
+            eventMasterDTO.setAddedBy(pageNavBean.getLoggedInUserDTO().getUserId());
+            if (eventMasterDAO.insertEventMaster(eventMasterDTO)) {
+                displayInfoMessageToUser("Event added successfully");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    public String onFlowProcess(FlowEvent event) {
+        if (event.getOldStep().equals("event"))
+        {
+            if (eventMasterDTO != null && eventMasterDTO.getEventId() == null)
+            {
+                saveEvent();
+            }
+            else
+            {
+            	// validate event start and end date
+            	if(eventMasterDTO.getEventStartDatetime().after(eventMasterDTO.getEventEndDatetime()) || eventMasterDTO.getEventStartDatetime().equals(eventMasterDTO.getEventEndDatetime()))
+            	{
+            		displayErrorMessageToUser("Please Check Event Start and End Date");
+            		return event.getOldStep();
+            	}
+            	
+                updateEvent();
+                superTicketCategoryDTOList = superCategoryDAO.getSuperCategoryList(eventMasterDTO.getEventId());
+                superCategoryTktDTO = new SuperCategoryTktDTO();
+                ticketDTOList = ticketDAO.getTicketList(eventMasterDTO.getEventId());
+            }
+        }
+        return event.getNewStep();
+    }
+
+
 
     public void insertSuperCategory() {
         try {
