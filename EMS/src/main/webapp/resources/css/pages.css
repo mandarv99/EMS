@@ -452,3 +452,17 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
 {
 	background: none !important;
 }
+
+/* for tooltip */
+.ui-tooltip
+{
+	padding:0px;
+	margin-left:10px
+}
+
+.ui-tooltip,.qtip
+{
+	 font-size:11.5px;
+	 line-height:12px;
+	 font-family: Helvetica neue, Calibri, Roboto !important;
+}

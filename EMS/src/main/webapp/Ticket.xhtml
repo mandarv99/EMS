@@ -140,11 +140,19 @@
        
        <f:facet name="footer">
 	       <p:outputPanel id="btnPanel"  styleClass="buttonRow" >
-		        <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
-		        <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
+		        <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanel" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
+		        <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanel" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
 		       <p:spacer height="5" width="10" />   
 		        <p:commandButton value="#{msg.AddSuperCategory}"  icon="ui-icon-circle-plus" type="button" onclick="PF('SuperCategoryDlg').show(); 
-			        return false;"/>  
+			     return false;"/>
+			        
+			   <p:commandButton value="Back" icon="ui-icon-circle-check" onclick="PF('wiz').back();"/>    
+			  
+			   <p:commandButton  value="Next1" icon="ui-icon-circle-check" immediate="true" process="@this"  rendered="#{eventBean.ticketDTOList.size() !=0 }"
+			   onclick="PF('wiz').loadStep(PF('wiz').cfg.steps[2], true)"/>  
+			   
+			   <p:commandButton  value="Next0" icon="ui-icon-circle-check"  rendered="#{eventBean.ticketDTOList.size() ==0 }"
+			  onclick="PF('wiz').next();"/>    
  	        </p:outputPanel>
        </f:facet>
        

@@ -85,7 +85,6 @@ public class EventBean extends AbstractMB {
         setCompanyDetailsDTOList(companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
         superCategoryDAO = new SuperCategoryDAO();
         ticketDAO = new TicketDAO();
-        
     }
 
     private void getDataFromRequestMap()
@@ -242,7 +241,7 @@ public class EventBean extends AbstractMB {
                 ticketDTOList = ticketDAO.getTicketList(eventMasterDTO.getEventId());
             }
         }
-        return event.getNewStep();
+         return event.getNewStep();
     }
 
 
@@ -377,5 +376,6 @@ public class EventBean extends AbstractMB {
       	{
       		displayErrorMessageToUser("Maximum Discount which can be availed :  "+ discountMasterDTO.getMaxValue());
        	}
-    }    
+    }
+
 }
