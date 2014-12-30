@@ -4,10 +4,10 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" >
 
-
-         <ui:composition template="Template.xhtml">
+        <ui:composition template="Template.xhtml">
             <ui:define name="title">#{msg.OrganizerUser}</ui:define>
          
        		<ui:define name="headerText"> #{msg.OrganizerUser}</ui:define>
@@ -21,6 +21,10 @@
 		          		</f:facet>
 		             
 		             	<p:scrollPanel mode="native" >
+  						
+	  						<pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
+	            			<pe:tooltip  myPosition="left center" atPosition="right center" for="changeInNextLogin" value="#{msg.NeedChangeInNextLogin}" />  
+	            			<pe:tooltip  myPosition="left center" atPosition="right center" for="userType" value="#{msg.UserType}" />  
 
 						<p:messages id="messages" redisplay="false" globalOnly="true" />
                          <h:panelGrid id="organizerDetails" columns="3" columnClasses="leftContentStyle , rightContentStyle" 

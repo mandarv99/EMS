@@ -38,7 +38,6 @@ public class LoginBean extends AbstractMB {
 	 * 
 	 */
 	private static final long serialVersionUID = -5479420716043825631L;
-    private static final String EVENT_LIST_PAGE = "EventList.xhtml";
     private LoginDTO loginDTO;
     private String recoverEmail;
     private SignUpDTO signUpDTO;
@@ -52,8 +51,11 @@ public class LoginBean extends AbstractMB {
     }
 
     @PostConstruct
-    public void init() {
+    public void init()
+    {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
         loginDTO = new LoginDTO();
         signUpDTO = new SignUpDTO();
     }
@@ -62,9 +64,10 @@ public class LoginBean extends AbstractMB {
     public String checkLoginStatus()
     {
         try {
-             if (loginDTO != null)
+            if (loginDTO != null)
             {
                 loggedInUserDTO = null;
+
                 loggedInUserDTO = userDAOService.findUserAllData(loginDTO.getEmailAddress(), loginDTO.getPassword());
                 if (loggedInUserDTO != null)
                 {
@@ -73,8 +76,12 @@ public class LoginBean extends AbstractMB {
                         displayErrorMessageToUser("Please confirm your Account");
                         return "login.xhtml";
                     }
-                    //displayInfoMessageToUser("Login successfully");
-                    setLoginUserId((int) loggedInUserDTO.getUserId());
+                    else
+                    {
+                    	//displayInfoMessageToUser("Login successfully");
+                    	setLoginUserId((int) loggedInUserDTO.getUserId());
+                    	redirectToDashBoard();
+                    }
                   } 
                 else
                 {
@@ -92,7 +99,7 @@ public class LoginBean extends AbstractMB {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return EVENT_LIST_PAGE;
+        return null;
     }
 
     // to logout user
@@ -128,6 +135,16 @@ public class LoginBean extends AbstractMB {
   			  } catch (IOException e) { e.printStackTrace();}	  		
   	}
 
+  	 //to redirect page to dashboard
+  	public void redirectToDashBoard()
+  	{
+  		 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+   		 try {
+  				String red= "EventList.xhtml";
+   				ec.redirect(red);
+  			  } catch (IOException e) { e.printStackTrace();}	  		
+  	}
+  	
     public void saveOrganizer()
     {
         try {

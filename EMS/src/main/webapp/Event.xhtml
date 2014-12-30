@@ -4,7 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core" >
+ 
     <h:head>              
     </h:head>
     <h:body>
@@ -15,15 +16,18 @@
             
             <ui:define name="content">
                   <h:form id="eventForm">       
+                    
                     <p:wizard flowListener="#{eventBean.onFlowProcess}">     
-                         
-                        <p:tab id="event" title="#{msg.EventDetails}" >                                                     
+ 
+                         <p:tab id="event" title="#{msg.EventDetails}" >                                                     
                             <ui:include src="EventMaster.xhtml"/>
                         </p:tab>       
                         <p:tab id="ticketDetails" title="#{msg.TicketCategory}">
                             <ui:include src="Ticket.xhtml"/>                                                    
                         </p:tab>
+                        
                     </p:wizard>
+                    
                   </h:form>  
  
             <ui:include src="SuperCategory.xhtml"/>

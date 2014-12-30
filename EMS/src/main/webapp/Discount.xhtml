@@ -4,11 +4,15 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" >
+      
 
     <ui:composition>
         <p:dialog id="discountDialog" widgetVar="DiscountDlg" dynamic="true" modal="true" resizable="false" header="#{msg.Discount}"  visible="#{facesContext.validationFailed}">      
             <h:form id="discountForm">
+            
+            <pe:tooltip  myPosition="left center" atPosition="right center" for="criteriaValue" value="#{msg.Criteria}" />  
                
              <p:messages id="messages" redisplay="false" globalOnly="true" />
               

@@ -2,8 +2,6 @@ package com.ems.managebeans;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -39,11 +37,7 @@ public class PageNavigationBean implements Serializable
 	 */
 	private static final long serialVersionUID = -7169467320037225256L;
 	private String page = null;
-	private String importParameter;
-	private String header;
-	private String backLabel;
-	private String backAction;
-	private SignUpDTO loggedInUserDTO;
+   	private SignUpDTO loggedInUserDTO;
 	private int pageSize;
 	private MenuModel menuModel;
 	private Date today;
@@ -69,39 +63,7 @@ public class PageNavigationBean implements Serializable
 	public void setPage(String page) {
 		this.page = page;
 	}
-
-	public String getImportParameter() {
-		return importParameter;
-	}
-
-	public void setImportParameter(String importParameter) {
-		this.importParameter = importParameter;
-	}
-
-	public String getHeader() {
-		return header;
-	}
-
-	public void setHeader(String header) {
-		this.header = header;
-	}
-
-	public String getBackLabel() {
-		return backLabel;
-	}
-
-	public void setBackLabel(String backLabel) {
-		this.backLabel = backLabel;
-	}
-
-	public String getBackAction() {
-		return backAction;
-	}
-
-	public void setBackAction(String backAction) {
-		this.backAction = backAction;
-	}
-
+	
 	public SignUpDTO getLoggedInUserDTO() {
 		return loggedInUserDTO;
 	}
@@ -143,21 +105,28 @@ public class PageNavigationBean implements Serializable
 	public void init()
     {
 		loggedInUserDTO = getLoginBean().getLoggedInUserDTO();
-		pageSize = 15;
-		pageDAO =  new PageLinkDAO();
-
-		// set today and next day values
-		Calendar cal = Calendar.getInstance();
-		setToday(cal.getTime());
-		cal.set(Calendar.HOUR, 0);
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.add(Calendar.DATE , 1);
- 				
-		setNextDay(cal.getTime());
-		 
-		generateMenuForUser();
+		
+		/*if(loggedInUserDTO == null)
+		{
+			redirectToLogin();
+ 		}
+		else
+		{*/
+			pageSize = 15;
+			pageDAO =  new PageLinkDAO();
+			// set today and next day values
+			Calendar cal = Calendar.getInstance();
+			setToday(cal.getTime());
+			cal.set(Calendar.HOUR, 0);
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.add(Calendar.DATE , 1);
+	 				
+			setNextDay(cal.getTime());
+			 
+			generateMenuForUser();
+		//}
     }
 	 
 	public Object getSessionObject(String objName) 
@@ -203,6 +172,17 @@ public class PageNavigationBean implements Serializable
 		 }
 	}
 
+	 //to redirect page for authenticated User
+  	public void redirectToLogin()
+  	{
+  		 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+  		 loggedInUserDTO = new SignUpDTO();
+   		 try {
+  				String red= "/EMS/login.xhtml";
+   				ec.redirect(red);
+  		 } catch (IOException e) { e.printStackTrace();}	  		
+  	}
+  	
 
 	// open edit company details page
 	public void redirectPageToEditCompany(CompanyDetailsDTO companyDetails)

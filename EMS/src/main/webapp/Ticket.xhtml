@@ -4,12 +4,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+	 xmlns:pe="http://primefaces.org/ui/extensions" >
 
     <ui:composition >             
     <p:panel id="panelTicket" styleClass="Content"  >	
     	<p:scrollPanel mode="native" >
     		
+  		<pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
+ 	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="superCategory" value="#{msg.SuperCategory}"/>  
+	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="wantEarlybird" value="#{msg.WantEarlybird}"/>  
+      	 <pe:tooltip  myPosition="left center" atPosition="right center" for="refundable" value="#{msg.Refundable}"/>  
+ 
 	     <p:messages id="msg1" redisplay="false" globalOnly="true" />
         	
        	<p:dataTable id="ticketDetailsList" value="#{eventBean.ticketDTOList}" var="ticketDTO" style="text-align: center;padding-top:5px;" paginatorPosition="bottom"
@@ -124,7 +130,7 @@
           	<p:message for="minTicketsPerTrans" />
             
             <h:outputLabel value="#{msg.Disclaimer}" styleClass="star" />
-            <p:inputTextarea id="disclaimertkt" value="#{eventBean.ticket.disclaimer}" 
+            <p:inputTextarea id="disclaimertkt" value="#{eventBean.ticket.disclaimer}" rows="5" cols="10"
                              title="#{msg.Disclaimer}" required="true" label="#{msg.Disclaimer}"/>   
           	<p:message for="disclaimertkt" />
                                       

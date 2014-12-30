@@ -4,8 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" >
  
      <ui:composition template="Template.xhtml">
         <ui:define name="title">#{msg.OrganizerUser}</ui:define>
@@ -18,7 +18,10 @@
 	  				<p:panel id="panel" styleClass="Content"  >	
 	
 	             	<p:scrollPanel mode="native" >
-	                                	
+	                         
+	                <pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
+	                <pe:tooltip  myPosition="left center" atPosition="right center" for="userType" value="#{msg.UserType}" />  
+	                       	
              		<p:messages id="messages" />
  
   					<h:panelGrid id="organizerDetails" columns="2" columnClasses="leftContentStyleSrch , rightContentStyle" 
@@ -71,12 +74,12 @@
                             </p:column>
 
                             <p:column headerText="#{msg.edit}"  style="width:5%;">
-                                <p:commandButton update=":organizerUserSearchForm" icon="ui-icon-pencil" title="Edit" immediate="true"  process="@this"
+                                <p:commandButton update=":organizerUserSearchForm" icon="ui-icon-pencil"  immediate="true"  process="@this"
                                   action="#{pageNavBean.redirectPageToAddOrganizerUser(organizerUser)}" />                                    
                              </p:column>
                              
                             <p:column headerText="#{msg.delete}"  style="width:5%;" rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}">
-                                <p:commandButton update=":organizerUserSearchForm" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" 
+                                <p:commandButton update=":organizerUserSearchForm" icon="ui-icon-trash"  immediate="true"  process="@this" 
                                 actionListener="#{organizerUserBean.deleteOrganizerUser(organizerUser)}">                                    
                                     <p:confirm header="Confirmation" message="Are you sure,you want to delete the user?" icon="ui-icon-alert" />                                    
                                 </p:commandButton>                                

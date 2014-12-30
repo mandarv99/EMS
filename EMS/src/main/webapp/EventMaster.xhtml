@@ -4,22 +4,33 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions" >
 
     <ui:composition>                         
     
-    	<p:panel id="panelEvent" styleClass="Content"  >	
-    		<p:scrollPanel mode="native" >
+    	<p:panel id="panelEvent" styleClass="Content" >	
+    		<p:scrollPanel mode="native">
+    		
+  	             <pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="companyName" value="#{msg.CompanyName}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="eventDesc" value="#{msg.EventDesc}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="freeEvent" value="#{msg.FreeEvent}"/>  
+	       		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSittingArrang" value="#{msg.ReqSittingArrang}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSignDis" value="#{msg.ReqSignDis}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="speParticiNum" value="#{msg.SpeParticiNum}"/>  
+	      		 <pe:tooltip  myPosition="left center" atPosition="right center" for="TktCatgrouping" value="#{msg.TktCatgrouping}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="eventStatus" value="#{msg.EventStatus}"/>  
     		 
-	        <p:messages id="msg" redisplay="false" globalOnly="true" />
+    	        <p:messages id="msg" redisplay="false" globalOnly="true" />
 	
-		         <h:panelGrid id="eventMasterDetails" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
+		       <h:panelGrid id="eventMasterDetails" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
 					 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">	
 					 	
 	            <h:outputLabel value="#{msg.EventName}" styleClass="star" />
-	            <p:inputText id="eventName" value="#{eventBean.eventMasterDTO.eventName}" title="#{msg.EventName}"  required="true" 
+	            <p:inputText id="eventName" value="#{eventBean.eventMasterDTO.eventName}" title="#{msg.eventNameTT}"  required="true" 
 	                         label="#{msg.EventName}"/>
-				<p:message for="eventName" />	             
+ 				<p:message for="eventName" />	             
 	           
 	            <h:outputLabel value="#{msg.StartDate} " styleClass="star" />
 	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}"  required="true" mindate="#{pageNavBean.nextDay}" 
@@ -37,56 +48,57 @@
 	            <p:message for="eventDesc" />	
 	            
 	            <h:outputLabel value="#{msg.FreeEvent}"/>
-	            <p:selectBooleanCheckbox id="freeEvent" value="#{eventBean.eventMasterDTO.paidEvent}"/>
+	            <p:selectBooleanCheckbox id="freeEvent" value="#{eventBean.eventMasterDTO.paidEvent}"  />
 				 <p:message for="freeEvent" />	
 	 
 	            <h:outputLabel value="#{msg.EventLocation} " styleClass="star" />
 	            <p:inputTextarea id="eventLocation" value="#{eventBean.eventMasterDTO.eventAddress}" 
-	                             title="#{msg.EventLocation}" required="true" label="#{msg.EventLocation}"/>
+	                             title="#{msg.EventLocation}" required="true"  requiredMessage="#{msg.EventLocation} is Required" />
 	            <p:message for="eventLocation" />
 	            
 	            <h:outputLabel value="#{msg.EventType} " rendered="false" />
-	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="false" label="#{msg.EventType}" rendered="false">
-	                <f:selectItem itemValue=" " itemLabel="--SELECT--"></f:selectItem>
-	                <f:selectItems value="#{eventBean.eventTypesDTOList}" var="eventType" 
-	                               itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType.eventTypeId}"/>
-	            </p:selectOneMenu>   
-	             <p:message for="eventType" rendered="false" />
+  	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="false" title="#{msg.EventType}" 
+		            rendered="false" >
+		                <f:selectItem itemValue=" " itemLabel="--SELECT--" />
+		                <f:selectItems value="#{eventBean.eventTypesDTOList}" var="eventType" 
+		                               itemLabel="#{eventType.eventTypeName}" itemValue="#{eventType.eventTypeId}"/>
+		            </p:selectOneMenu>  
+ 	             <p:message for="eventType" rendered="false" />
 	           
 	            <h:outputLabel value="#{msg.CompanyName}"/>
-	            <p:selectOneMenu id="companyName" value="#{eventBean.eventMasterDTO.companyId}" required="true" label="#{msg.CompanyName}" >
+	            <p:selectOneMenu id="companyName" value="#{eventBean.eventMasterDTO.companyId}" required="true" title="#{msg.CompanyName}"  label="#{msg.CompanyName}">
 	                <f:selectItems value="#{eventBean.companyDetailsDTOList}" var="companyDetails" 
 	                               itemLabel="#{companyDetails.companyName}" itemValue="#{companyDetails.id}" />
 	            </p:selectOneMenu> 
 	             <p:message for="companyName" />
 	              
 	            <h:outputLabel value="#{msg.ReqSittingArrang}"/>
-	            <p:selectBooleanCheckbox id="reqSittingArrang" value="#{eventBean.eventMasterDTO.isSittingArrangmentRequired}"/>
+	            <p:selectBooleanCheckbox id="reqSittingArrang" value="#{eventBean.eventMasterDTO.isSittingArrangmentRequired}"  />
 	             <p:message for="reqSittingArrang" />
 	             
 	            <h:outputLabel value="#{msg.ReqSignDis}" />
-	            <p:selectOneRadio value="#{eventBean.eventMasterDTO.requireDisclaimer}" id="reqSignDis" styleClass="radioIcon">
-	                <f:selectItem itemValue="0" itemLabel="Applicable to all tickets"/>
-	                <f:selectItem itemValue="1" itemLabel="Only specific tickets"/>
-	                <f:selectItem itemValue="2" itemLabel="not required"/>
+	            <p:selectOneRadio value="#{eventBean.eventMasterDTO.requireDisclaimer}" id="reqSignDis" styleClass="radioIcon" title="#{msg.ReqSignDis}">
+	                <f:selectItem itemValue="0" itemLabel="Applicable to all tickets"   />
+	                <f:selectItem itemValue="1" itemLabel="Only specific tickets"  />
+	                <f:selectItem itemValue="2" itemLabel="not required"  />
 	                <p:ajax process="@this" update="disclaimer" listener="#{eventBean.onDisclaimerChange()}" />
 	            </p:selectOneRadio>
 	            <p:message for="reqSignDis" />
 	            
 	            <h:outputLabel value="#{msg.SpeParticiNum}" />
-	            <p:selectBooleanCheckbox id="speParticiNum" value="#{eventBean.eventMasterDTO.bibNumbering}"/>
+	            <p:selectBooleanCheckbox id="speParticiNum" value="#{eventBean.eventMasterDTO.bibNumbering}" title="#{msg.SpeParticiNum}"/>
 	             <p:message for="speParticiNum" />
 	             
 	            <h:outputLabel value="#{msg.TktCatgrouping}"/>
-	            <p:selectBooleanCheckbox id="TktCatgrouping" value="#{eventBean.eventMasterDTO.tktGroupingCategory}"/>
+	            <p:selectBooleanCheckbox id="TktCatgrouping" value="#{eventBean.eventMasterDTO.tktGroupingCategory}" title="#{msg.TktCatgrouping}" />
 	            <p:message for="TktCatgrouping" />
 	            
 	            <h:outputLabel value="#{msg.EventStatus}" />
-	            <p:selectOneMenu id="eventStatus" value="#{eventBean.eventMasterDTO.eventStatus}" required="true" label="#{msg.EventStatus}" >               
-	                <f:selectItem itemValue="2" itemLabel="#{msg.inActive}" />
-	                <f:selectItem itemValue="1" itemLabel="#{msg.active}"/>
-	
-	            </p:selectOneMenu>     
+	            <p:selectOneMenu id="eventStatus" value="#{eventBean.eventMasterDTO.eventStatus}" required="true" title="#{msg.EventStatus}" 
+	            alt="#{msg.EventStatus}">               
+	                <f:selectItem itemValue="2" itemLabel="#{msg.inActive}"  />
+	                <f:selectItem itemValue="1" itemLabel="#{msg.active}"  />
+ 	            </p:selectOneMenu>     
 				<p:message for="eventStatus" />
 	
 	            <h:outputLabel value="#{msg.Disclaimer}" />

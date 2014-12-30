@@ -5,6 +5,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+       
 
     <ui:composition template="Template.xhtml">
         <ui:define name="title">#{msg.CompanyDetails}</ui:define>
@@ -21,8 +22,8 @@
           		</f:facet>
              
              	<p:scrollPanel mode="native" >
-                                	
-             		<p:messages id="messages" />
+                     
+               		<p:messages id="messages" />
                      
                     <p:dataTable id ="userList" value="#{companyDetailsBean.companyDetailsList}" var="companyDetails" rowKey="#{companyDetails.id}" 
                     style="text-align: center;padding-top:10px;" paginator="#{companyDetailsBean.companyDetailsList.size() > pageNavBean.pageSize}" rows="#{pageNavBean.pageSize}"  paginatorPosition="bottom">
@@ -44,11 +45,11 @@
 
                         <p:column headerText="#{msg.edit}"  style="width:5%;">
                             <p:commandButton actionListener="#{pageNavBean.redirectPageToEditCompany(companyDetails)}"
-                             icon="ui-icon-pencil" title="#{msg.edit}" immediate="true"  process="@this" />
+                             icon="ui-icon-pencil"  immediate="true"  process="@this" />
                          </p:column>
 
                         <p:column headerText="#{msg.delete}" rendered="#{companyDetailsBean.companyDetailsList.size() > 1}"  style="width:5%;">
-                            <p:commandButton update="userList" icon="ui-icon-trash" title="#{msg.delete}" immediate="true"  process="@this" 
+                            <p:commandButton update="userList" icon="ui-icon-trash"   immediate="true"  process="@this" 
                             actionListener="#{companyDetailsBean.deleteCompanyDetails(companyDetails)}" >                                
                                 <p:confirm header="Confirmation" message="Are you sure,you want to delete the Company Details?"  icon="ui-icon-alert" />                                
                             </p:commandButton>                                
