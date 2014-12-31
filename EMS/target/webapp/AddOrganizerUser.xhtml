@@ -4,46 +4,82 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" >
 
-    <h:head>      
-    </h:head>
-    <h:body>
         <ui:composition template="Template.xhtml">
             <ui:define name="title">#{msg.OrganizerUser}</ui:define>
+         
+       		<ui:define name="headerText"> #{msg.OrganizerUser}</ui:define>
+            
             <ui:define name="content">                               
-                <p:fieldset legend="#{msg.OrganizerUser}">
-                    <h:form id="organizerUserForm">
-                        <p:focus context=":organizerUserForm:organizerDetails"/>  
-                        <p:messages closable="true" id="message"/>
-                        <p:panelGrid columns="2" id="organizerDetails">
-                            <p:outputLabel value="#{msg.FirstName}"  />
-                            <p:inputText id="firstName" value="#{organizerUserBean.organizerUserDTO.firstName}" title="#{msg.FirstName}"  required="true" label="#{msg.FirstName}"/>
-                            <p:outputLabel value="#{msg.LastName}"/>
+                <h:form id="organizerUserForm">
+                	<p:panel id="panel" styleClass="Content"  >	
+        	 		
+		        		<f:facet name="header">
+		         			 <p:commandButton value="#{msg.back}" icon="ui-icon-arrowthick-1-w"  action="#{pageNavBean.redirectPageToSearchUsers}" process="@this" immediate="true" />
+		          		</f:facet>
+		             
+		             	<p:scrollPanel mode="native" >
+  						
+	  						<pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
+	            			<pe:tooltip  myPosition="left center" atPosition="right center" for="changeInNextLogin" value="#{msg.NeedChangeInNextLogin}" />  
+	            			<pe:tooltip  myPosition="left center" atPosition="right center" for="userType" value="#{msg.UserType}" />  
+
+						<p:messages id="messages" redisplay="false" globalOnly="true" />
+                         <h:panelGrid id="organizerDetails" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
+					 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">	
+							
+                            <h:outputLabel value="#{msg.FirstName}" styleClass="star"   />
+                            <p:inputText id="firstName" value="#{organizerUserBean.organizerUserDTO.firstName}" title="#{msg.FirstName}" 
+                            required="true" label="#{msg.FirstName}"/>
+                            <p:message for="firstName" />
+                            
+                            <h:outputLabel value="#{msg.LastName}" styleClass="star" />
                             <p:inputText id="lastName" value="#{organizerUserBean.organizerUserDTO.lastName}" title="#{msg.LastName}" required="true" label="#{msg.LastName}" />
-                            <p:outputLabel value="#{msg.Email}"  />
-                            <p:inputText id="email" value="#{organizerUserBean.organizerUserDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}">
+                            <p:message for="lastName" />
+                                                        
+                            <h:outputLabel value="#{msg.Email}" styleClass="star"  />
+                            <p:inputText id="email" value="#{organizerUserBean.organizerUserDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}"
+                            disabled="#{(organizerUserBean.organizerUserDTO.userId!=0)}" >
                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                             </p:inputText>
-                            <p:outputLabel value="#{msg.NeedChangeInNextLogin}"  />
+                             <p:message for="email" />
+                                                        
+                            <h:outputLabel value="#{msg.NeedChangeInNextLogin}"  />
                             <p:selectBooleanCheckbox id="changeInNextLogin" value="#{organizerUserBean.organizerUserDTO.changeInNextLogin}" />                       
-                            <p:outputLabel value="#{msg.UserType}" />
-                            <p:selectOneMenu id="userType" value="#{organizerUserBean.organizerUserDTO.userTypeId}" required="true" label="#{msg.UserType}" >
+                             <p:message for="changeInNextLogin" />
+                             
+                            <h:outputLabel value="#{msg.UserType}" styleClass="star" />
+                            <p:selectOneMenu id="userType" value="#{organizerUserBean.organizerUserDTO.userTypeId}" required="true" label="#{msg.UserType}" 
+							disabled="#{(organizerUserBean.organizerUserDTO.userId!=0)}" >
                                 <f:selectItem itemLabel="--SELECT--" itemValue=""></f:selectItem>
                                 <f:selectItems value="#{organizerUserBean.userTypeDTOList}" var="userType" itemLabel="#{userType.userTypeName}" itemValue="#{userType.userTypeId}"/>
                             </p:selectOneMenu>
-                        </p:panelGrid>
-                        <br/>
-                        <p:commandButton value="#{msg.save}" action="#{organizerUserBean.saveOrganizerUser()}" update=":organizerUserForm" rendered="#{!(organizerUserBean.organizerUserDTO.userId!=0)}" />
-                        <p:commandButton value="#{msg.update}" action="#{organizerUserBean.updateOrganizerUser()}" update=":organizerUserForm"  rendered="#{(organizerUserBean.organizerUserDTO.userId!=0)}"  />
-                        &nbsp;&nbsp;&nbsp;
-                        <p:commandButton value="#{msg.reset}" action="#{organizerUserBean.resetOrganizerUser()}" update=":organizerUserForm" immediate="true">
-                            <p:resetInput target=":organizerUserForm:organizerDetails" />
-                        </p:commandButton>
+                            <p:message for="userType" />
+                            
+                        </h:panelGrid>
+                         
+                      </p:scrollPanel>
                       
+                      <f:facet name="footer">
+	        			<p:outputPanel id="btnPanel"  styleClass="buttonRow" >
+		        			<p:commandButton value="#{msg.save}"  icon="ui-icon-circle-check" action="#{organizerUserBean.saveOrganizerUser()}" update=":organizerUserForm" rendered="#{!(organizerUserBean.organizerUserDTO.userId!=0)}" />
+	                        <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check" action="#{organizerUserBean.updateOrganizerUser()}" update=":organizerUserForm"  rendered="#{(organizerUserBean.organizerUserDTO.userId!=0)}"  />
+	                        <p:spacer height="5" width="10" />
+		                   
+		                    <p:commandButton value="#{msg.ResetPassword}" icon="ui-icon-arrowrefresh-1-s" action="#{pageNavBean.redirectPageToResetPassword(organizerUserBean.organizerUserDTO)}" rendered="#{(organizerUserBean.organizerUserDTO.userId!=0)}"    />
+   	
+		                     <p:commandButton value="#{msg.reset}" action="#{organizerUserBean.resetOrganizerUser()}" update=":organizerUserForm" immediate="true" rendered="#{!(organizerUserBean.organizerUserDTO.userId!=0)}"
+	                         icon="ui-icon-arrowrefresh-1-s">
+	                            <p:resetInput target=":organizerUserForm:organizerDetails" />
+	                        </p:commandButton>
+                        </p:outputPanel>
+        			</f:facet>
+        		
+                      </p:panel>
                     </h:form>               
-                </p:fieldset>
+
             </ui:define>
         </ui:composition>
-    </h:body>
-</html>
+ </html>

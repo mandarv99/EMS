@@ -6,30 +6,68 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition>
-        <p:dialog id="SignupDialog" widgetVar="SignupDlg" modal="true" resizable="false" header="#{msg.Signup}"  visible="#{facesContext.validationFailed}">
+    <ui:composition template="LoginTemplate.xhtml">
+       <ui:define name="title">#{msg.signUp}</ui:define>
+        
+       <ui:define name="content">       
+		<p:panel id="mainPanelSignUp" styleClass="mainBackGround"  >	
+						
+ 		<p:panel id="panelSignUp" style="background-color:#FFFFFF;" styleClass="Content" >		
+       
             <h:form id="SignupForm">
                 <p:messages closable="true" />
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="#{msg.FirstName}  *" />
-                    <p:inputText id="firstName" value="#{loginBean.signUpDTO.firstName}" title="#{msg.FirstName}"  required="true" label="#{msg.FirstName}"/>
-                    <p:outputLabel value="#{msg.LastName}  *" />
-                    <p:inputText id="lastName" value="#{loginBean.signUpDTO.lastName}" title="#{msg.LastName}" required="true" label="#{msg.LastName}" />
-                    <p:outputLabel value="#{msg.Email}  *"  />
-                    <p:inputText id="email" value="#{loginBean.signUpDTO.emailAddress}" title="#{msg.Email}" required="true" label="#{msg.Email}">
-                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                <h:panelGrid columns="3"  columnClasses="loginStyle1, loginStyle2,loginStyle2" 
+					width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">
+					
+                   	<h:graphicImage value="/resources/images/user_icon.png" width="22" id="fNmImg"/>
+					<p:inputText value="#{loginBean.signUpDTO.firstName}"
+                                 id="firstName"
+                                 required="true"
+                                 label="#{msg.FirstName}"  tabindex="0"  />
+ 					<p:watermark value="First Name" for="firstName" />
+ 					
+ 					<h:graphicImage value="/resources/images/user_icon.png" width="22" id="lNmImg"/>
+					<p:inputText value="#{loginBean.signUpDTO.lastName}"
+                                 id="lastName"
+                                 required="true"
+                                 label="#{msg.LastName}"  tabindex="1"  />
+ 					<p:watermark value="Last Name" for="lastName" />
+                    
+                    <h:graphicImage value="/resources/images/e_mail.png" width="22" id="emailImg"/>
+					<p:inputText value="#{loginBean.signUpDTO.emailAddress}"
+                                 id="email"
+                                 required="true"
+                                 label="#{msg.Email}"  tabindex="2"  >
+                       <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                     </p:inputText>
-                    <p:outputLabel value="#{msg.Password}  *" />
-                    <p:password id="password" value="#{loginBean.signUpDTO.password}" match="confirmPassword"  title="#{msg.Password}" required="true" label="#{msg.Password}" feedback="true" inline="true"/>
-                    <p:outputLabel value="#{msg.ConfirmPassword}  *" />
-                    <p:password id="confirmPassword" value="#{loginBean.signUpDTO.confirmPassword}" required="true" title="#{msg.ConfirmPassword}" label="#{msg.ConfirmPassword}" />                                           
-                </p:panelGrid>
-                <br/>
-                <p:commandButton value="#{msg.Signup}" action="#{loginBean.saveOrganizer()}" process=":SignupForm" update=":SignupForm" oncomplete="if(!args.validationFailed)PF('SignupDlg').hide();"/>
-                <p:commandButton value="#{msg.cancel}" onclick="PF('SignupDlg').hide();
-                        return false;" immediate="false" />                  
-            </h:form>
-        </p:dialog>
-    </ui:composition>
-
+ 					<p:watermark value="Email" for="email" />
+                    
+                    <h:graphicImage value="/resources/images/password_icon.png" width="22" id="passImg"/>
+					<p:password  value="#{loginBean.signUpDTO.password}"  
+                                 id="password"
+                                 required="true"  feedback="true" inline="true"
+                                 label="#{msg.Password}"  tabindex="3"  match="confirmPassword"  />
+  					<p:watermark value="Password" for="password" />
+ 					
+ 					<h:graphicImage value="/resources/images/password_icon.png" width="22" id="conPassImg"/>
+					<p:password  value="#{loginBean.signUpDTO.confirmPassword}" 
+                                 id="confirmPassword"
+                                 required="true"  
+                                 label="#{msg.ConfirmPassword}"  tabindex="4"    />
+  					<p:watermark value="Confirm Password" for="confirmPassword" />
+                                                                 
+                </h:panelGrid>
+              
+				<p:spacer height="10" width="5"/>
+       
+     			<p:commandLink  process=":SignupForm" update=":SignupForm" action="#{loginBean.saveOrganizer()}" 
+		 			styleClass="imageLinks" >
+		 				 	 <h:graphicImage value="/resources/images/signup.png" styleClass="imageLinks" />	
+	 	 			</p:commandLink>	
+              	</h:form>
+ 
+			 </p:panel>
+			</p:panel>
+		 </ui:define>
+     </ui:composition>
 </html>

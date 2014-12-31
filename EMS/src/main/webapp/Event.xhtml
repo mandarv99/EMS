@@ -17,7 +17,7 @@
             <ui:define name="content">
                   <h:form id="eventForm">       
                     
-                    <p:wizard flowListener="#{eventBean.onFlowProcess}">     
+                    <p:wizard flowListener="#{eventBean.onFlowProcess}" showNavBar="false" widgetVar="wiz" id="wiz">     
  
                          <p:tab id="event" title="#{msg.EventDetails}" >                                                     
                             <ui:include src="EventMaster.xhtml"/>
@@ -26,6 +26,9 @@
                             <ui:include src="Ticket.xhtml"/>                                                    
                         </p:tab>
                         
+                         <p:tab id="participant" title="PARTICIPANT">
+                             <p:outputLabel value="hello"/>     
+                          </p:tab>
                     </p:wizard>
                     
                   </h:form>  

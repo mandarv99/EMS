@@ -20,7 +20,7 @@
                         <f:selectItem itemValue="0" itemLabel="#{msg.Female}"/>
                     </p:selectOneRadio>
                     <p:outputLabel value="#{msg.DOB}" for="dob" />
-                    <p:calendar value="#{participantsBean.participantAttributeDTO.DOB}" mode="popup" showOn="button" required="true" label="#{msg.DOB}" title="#{msg.DOB}"/>
+                    <p:calendar value="#{participantsBean.participantAttributeDTO.DOB}"  required="true" label="#{msg.DOB}" title="#{msg.DOB}"/>
                     <p:outputLabel value="#{msg.Address1}" for="address1" />
                     <p:inputTextarea id="address1" value="#{participantsBean.participantAttributeDTO.address1}" title="#{msg.Address1}" required="true" label="#{msg.Address1}"/>
                     <p:outputLabel value="#{msg.Address2}" for="address2" />

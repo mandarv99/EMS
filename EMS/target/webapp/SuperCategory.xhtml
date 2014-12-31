@@ -8,19 +8,31 @@
 
     <ui:composition>
 
-        <p:dialog id="superCategoryId" widgetVar="SuperCategoryDlg" width="400px" height="400px" modal="true" resizable="false" header="#{msg.SuperCategory}"  visible="#{facesContext.validationFailed}" dynamic="true">            
+        <p:dialog id="superCategoryId" widgetVar="SuperCategoryDlg" width="450px" height="400px" modal="true" resizable="false" header="#{msg.SuperCategory}" 
+         visible="#{facesContext.validationFailed}" dynamic="true">            
             <h:form id="superCategoryFormId">
+               
                 <p:messages closable="true" />
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="#{msg.SuperCategoryName}  *" />
-                    <p:inputText id="firstName" value="#{eventBean.superCategoryTktDTO.superCategoryName}" title="#{msg.SuperCategoryName}"  required="true" label="#{msg.SuperCategoryName}"/>                    
-                </p:panelGrid>
-                <br/>                
-                <p:commandButton value="#{msg.submit}" action="#{eventBean.insertSuperCategory()}" process="superCategoryFormId" update=":eventForm:superCategory superCategoryFormId :eventForm:msg1" oncomplete="if(!args.validationFailed)PF('SuperCategoryDlg').hide();"/>
-                &nbsp;&nbsp;&nbsp;
-                <p:commandButton value="#{msg.cancel}" onclick="PF('SuperCategoryDlg').hide();" type="button" immediate="false" />                              
-                <br/>                
-                <p:dataTable id ="superCategoryList" value="#{eventBean.superTicketCategoryDTOList}" var="superTicketCategoryDTO" rowKey="#{superTicketCategoryDTO.superCategotyId}" style="text-align: center;" paginator="true" rows="25">
+ 				
+ 				<h:panelGrid id="superCategory" columns="2" columnClasses="leftContentStyle , rightContentStyle" 
+					width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">		  
+					<h:outputLabel value="#{msg.SuperCategoryName}"  styleClass="star"/>
+                    <p:inputText id="firstName" value="#{eventBean.superCategoryTktDTO.superCategoryName}" title="#{msg.SuperCategoryName}"  
+                    required="true" label="#{msg.SuperCategoryName}"/>                    
+                </h:panelGrid>
+                
+               
+			<p:panel border="0" id="buttonRow" styleClass="buttonRow" style="text-align:center;">	             
+                <p:commandButton value="#{msg.Ok}" icon="ui-icon-circle-check" action="#{eventBean.insertSuperCategory()}" process="superCategoryFormId" update=":eventForm:superCategory superCategoryFormId :eventForm:msg1" oncomplete="if(!args.validationFailed)PF('SuperCategoryDlg').hide();"/>
+                 <p:spacer height="5" width="10" />   
+                <p:commandButton value="#{msg.cancel}" icon="ui-icon-close" onclick="PF('SuperCategoryDlg').hide();" type="button" immediate="false" />                              
+			</p:panel>
+			       
+			  <p:spacer height="10" width="5" />  
+			         
+                <p:dataTable id ="superCategoryList" value="#{eventBean.superTicketCategoryDTOList}" var="superTicketCategoryDTO"
+                 rowKey="#{superTicketCategoryDTO.superCategotyId}" style="text-align: center;" paginator="#{eventBean.superTicketCategoryDTOList.size() > pageNavBean.pageSize}"  
+				rows="#{pageNavBean.pageSize}"  paginatorPosition="bottom">
                     <p:column headerText="#{msg.SuperCategoryName}">
                         <h:outputText value="#{superTicketCategoryDTO.superCategoryName}"  />
                     </p:column>

@@ -108,6 +108,13 @@
 	        </h:panelGrid>   
 	        
        	 </p:scrollPanel>
+       	 
+       	 <f:facet name="footer">
+	       <p:outputPanel id="btnPanel1"  styleClass="buttonRow" >
+		        <p:commandButton value="Next" icon="ui-icon-circle-check"  onclick="PF('wiz').next();"/>  
+	        </p:outputPanel>
+       </f:facet>
+       
         </p:panel>
                                              
     </ui:composition>

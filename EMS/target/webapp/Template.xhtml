@@ -7,37 +7,39 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />           
-        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
-        <title><ui:insert name="title"></ui:insert></title>        
+        <title></title>        
     </h:head>
 
-    <h:body>        
-        <div id="topMenus">
-            <h:form>
-                <p:menubar styleClass="left-menus" >
-                    <p:menuitem value="Dashboard" url=""/>                        
-                    <p:submenu label="Manage">
-                        <p:menuitem value="Users" url="OrganizerUserList.xhtml"/>
-                        <p:menuitem value="Company" url="CompanyDetails.xhtml"/>
-                        <p:menuitem value="Event" url="EventList.xhtml"/>
-                    </p:submenu>
-                    <p:menuitem value="Event Statistics" url=""/>
-                    <p:menuitem value="Logout" url=""/>
-                </p:menubar>
-            </h:form>
-        </div>
-        <div id="centerSection" class="left_content">
-            <ui:insert name="content"></ui:insert>
-            <h:form>
-                <p:dialog modal="true" id="statusdlg" showHeader="false" widgetVar="statusDialog" draggable="false" closable="false" resizable="false" style="background: none;border: none!important;width: 35px!important; height: 35px!important;padding: 0px!important;z-index: 100!important;box-shadow: none!important;" appendTo="@(body)">  
-                    <p:graphicImage value="/images/ajax-loader.gif" style="background-color: transparent; width: 35px; height: 35px;"  />
-                </p:dialog>
-            </h:form>
-        </div>
-        <div id="bottom">
-            <h:outputText value="©Copyright 2014 EMS" />
-        </div>
-
+    <h:body>     
+    
+        <ui:composition template="MainTemplate.xhtml">
+    
+    	 <ui:define name="css">
+ 	    	<link href="./resources/css/pages.css" rel="stylesheet" type="text/css" />
+	    </ui:define>
+	    
+        <ui:define name="menu">
+	            <h:form>
+	            
+	             <table align="right">
+			        <tr>
+			            <td class="menuTd"> 
+			            	<p:menubar model="#{pageNavBean.menuModel}" autoDisplay="true"  id="mainMenu"  />
+			            </td>
+			            <td class="right"> 
+			            	<p:commandLink  immediate="true" action="#{loginBean.logout()}" value="LOGOUT"  style="color:white;" styleClass="loginTopLink" />
+			           </td>
+			        </tr>
+			    </table>
+	            
+ 	            </h:form>
+		</ui:define>
+		
+		<ui:define name="welcomeText">
+		          Welcome #{pageNavBean.loggedInUserDTO.firstName}
+		</ui:define>
+		
+		</ui:composition>
     </h:body>
 
 </html>
