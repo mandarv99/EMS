@@ -14,13 +14,13 @@
     		
   	             <pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
 	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="companyName" value="#{msg.CompanyName}"/>  
-	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="eventDesc" value="#{msg.EventDesc}"/>  
-	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="freeEvent" value="#{msg.FreeEvent}"/>  
-	       		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSittingArrang" value="#{msg.ReqSittingArrang}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="eventDesc" value="#{msg.EventDescTT}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="freeEvent" value="#{msg.FreeEventTT}" />  
+	       		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSittingArrang" value="#{msg.ReqSittingArrang}"  rendered="false"/>  
 	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSignDis" value="#{msg.ReqSignDis}"/>  
-	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="speParticiNum" value="#{msg.SpeParticiNum}"/>  
-	      		 <pe:tooltip  myPosition="left center" atPosition="right center" for="TktCatgrouping" value="#{msg.TktCatgrouping}"/>  
-	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="eventStatus" value="#{msg.EventStatus}"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="speParticiNum" value="#{msg.SpeParticiNum}"  rendered="false"/>  
+	      		 <pe:tooltip  myPosition="left center" atPosition="right center" for="TktCatgrouping" value="#{msg.TktCatgrouping}"  rendered="false"/>  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="eventStatus" value="#{msg.EventStatus}"  rendered="false"/>  
     		 
     	        <p:messages id="msg" redisplay="false" globalOnly="true" />
 	
@@ -34,12 +34,12 @@
 	           
 	            <h:outputLabel value="#{msg.StartDate} " styleClass="star" />
 	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}"  required="true" mindate="#{pageNavBean.nextDay}" 
- 	                        label="#{msg.StartDate}" title="#{msg.StartDate}"  readonlyInput="true" pattern="MM/dd/yyyy HH:mm"/>
+ 	                        label="#{msg.StartDate}" title="#{msg.StartDateTT}"  readonlyInput="true" pattern="MM/dd/yyyy HH:mm"/>
 	           <p:message for="startDate" />	
 	           				
 	            <h:outputLabel value="#{msg.EndDate} " styleClass="star" for="endDate"/>
 	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" required="true" mindate="#{pageNavBean.nextDay}" 
-	            pattern="MM/dd/yyyy HH:mm"    label="#{msg.EndDate}" title="#{msg.EndDate}"  readonlyInput="true"/>                                             
+	            pattern="MM/dd/yyyy HH:mm"    label="#{msg.EndDate}" title="#{msg.EndDateTT}"  readonlyInput="true"/>                                             
 	           	<p:message for="endDate" />	
 	           
 	            <h:outputLabel value="#{msg.EventDesc} " styleClass="star" for="eventDesc" />
@@ -53,7 +53,7 @@
 	 
 	            <h:outputLabel value="#{msg.EventLocation} " styleClass="star" />
 	            <p:inputTextarea id="eventLocation" value="#{eventBean.eventMasterDTO.eventAddress}" 
-	                             title="#{msg.EventLocation}" required="true"  requiredMessage="#{msg.EventLocation} is Required" />
+	                             title="#{msg.EventLocationTT}" required="true"  requiredMessage="#{msg.EventLocation} is Required" />
 	            <p:message for="eventLocation" />
 	            
 	            <h:outputLabel value="#{msg.EventType} " rendered="false" />
@@ -72,9 +72,9 @@
 	            </p:selectOneMenu> 
 	             <p:message for="companyName" />
 	              
-	            <h:outputLabel value="#{msg.ReqSittingArrang}"/>
-	            <p:selectBooleanCheckbox id="reqSittingArrang" value="#{eventBean.eventMasterDTO.isSittingArrangmentRequired}"  />
-	             <p:message for="reqSittingArrang" />
+	            <h:outputLabel value="#{msg.ReqSittingArrang}"  rendered="false"/>
+	            <p:selectBooleanCheckbox id="reqSittingArrang" value="#{eventBean.eventMasterDTO.isSittingArrangmentRequired}"   rendered="false"/>
+	             <p:message for="reqSittingArrang"  rendered="false"/>
 	             
 	            <h:outputLabel value="#{msg.ReqSignDis}" />
 	            <p:selectOneRadio value="#{eventBean.eventMasterDTO.requireDisclaimer}" id="reqSignDis" styleClass="radioIcon" title="#{msg.ReqSignDis}">
@@ -85,21 +85,21 @@
 	            </p:selectOneRadio>
 	            <p:message for="reqSignDis" />
 	            
-	            <h:outputLabel value="#{msg.SpeParticiNum}" />
-	            <p:selectBooleanCheckbox id="speParticiNum" value="#{eventBean.eventMasterDTO.bibNumbering}" title="#{msg.SpeParticiNum}"/>
-	             <p:message for="speParticiNum" />
+	            <h:outputLabel value="#{msg.SpeParticiNum}"  rendered="false" />
+	            <p:selectBooleanCheckbox id="speParticiNum" value="#{eventBean.eventMasterDTO.bibNumbering}" title="#{msg.SpeParticiNum}"  rendered="false"/>
+	             <p:message for="speParticiNum"  rendered="false"/>
 	             
-	            <h:outputLabel value="#{msg.TktCatgrouping}"/>
-	            <p:selectBooleanCheckbox id="TktCatgrouping" value="#{eventBean.eventMasterDTO.tktGroupingCategory}" title="#{msg.TktCatgrouping}" />
-	            <p:message for="TktCatgrouping" />
+	            <h:outputLabel value="#{msg.TktCatgrouping}"  rendered="false"/>
+	            <p:selectBooleanCheckbox id="TktCatgrouping" value="#{eventBean.eventMasterDTO.tktGroupingCategory}" title="#{msg.TktCatgrouping}"  rendered="false"/>
+	            <p:message for="TktCatgrouping"  rendered="false"/>
 	            
-	            <h:outputLabel value="#{msg.EventStatus}" />
+	            <h:outputLabel value="#{msg.EventStatus}"  rendered="false"/>
 	            <p:selectOneMenu id="eventStatus" value="#{eventBean.eventMasterDTO.eventStatus}" required="true" title="#{msg.EventStatus}" 
-	            alt="#{msg.EventStatus}">               
+	            alt="#{msg.EventStatus}"  rendered="false">               
 	                <f:selectItem itemValue="2" itemLabel="#{msg.inActive}"  />
 	                <f:selectItem itemValue="1" itemLabel="#{msg.active}"  />
  	            </p:selectOneMenu>     
-				<p:message for="eventStatus" />
+				<p:message for="eventStatus"  rendered="false"/>
 	
 	            <h:outputLabel value="#{msg.Disclaimer}" />
 	            <p:inputTextarea id="disclaimer" value="#{eventBean.eventMasterDTO.desclaimer}" 
@@ -108,14 +108,12 @@
 	        </h:panelGrid>   
 	        
        	 </p:scrollPanel>
-       	 
-       	 <f:facet name="footer">
-	       <p:outputPanel id="btnPanel1"  styleClass="buttonRow" >
-		        <p:commandButton value="Next" icon="ui-icon-circle-check"  onclick="PF('wiz').next();"/>  
-	        </p:outputPanel>
-       </f:facet>
-       
         </p:panel>
-                                             
+       	 
+ 	  <p:outputPanel id="btnPanel1"  styleClass="ui-wizard-navbar" >
+		    <p:commandButton value="Next" icon="ui-icon-arrowthick-1-e"  onclick="PF('wiz').next();"/>  
+	  </p:outputPanel>
+  
+                                               
     </ui:composition>
 </html>
