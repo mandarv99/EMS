@@ -300,6 +300,11 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
 	 color : white;
  }
  
+ .ui-wizard-navbar
+ {
+ 	padding-top : 5px;
+ }
+ 
  /* calendar */
 .ui-datepicker
 {
@@ -451,4 +456,18 @@ http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-ty
 /*.ui-state-error .ui-icon, .ui-state-error-text .ui-icon*/
 {
 	background: none !important;
+}
+
+/* for tooltip */
+.ui-tooltip
+{
+	padding:0px;
+	margin-left:10px
+}
+
+.ui-tooltip,.qtip
+{
+	 font-size:11.5px;
+	 line-height:12px;
+	 font-family: Helvetica neue, Calibri, Roboto !important;
 }
