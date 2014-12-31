@@ -24,10 +24,14 @@
           		</f:facet>
              
              	<p:scrollPanel mode="native" >
-             		<pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
-             		<pe:tooltip  myPosition="left center" atPosition="right center" for="typeAccount" value="#{msg.TypeAccount}" />
-             		<pe:tooltip  myPosition="left center" atPosition="right center" for="address1" value="#{msg.Address1}" />
-             		<pe:tooltip  myPosition="left center" atPosition="right center" for="address2" value="#{msg.Address2}" />        
+             		<pe:tooltip global="true" myPosition="left center" atPosition="right center"
+             		 showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
+             		<pe:tooltip  myPosition="left center" atPosition="right center" for="typeAccount" value="#{msg.TypeAccount}"
+             		 showEvent="focus mouseenter" hideEvent="blur mouseleave"  />
+             		<pe:tooltip  myPosition="left center" atPosition="right center" for="address1" value="#{msg.Address1}"
+             		 showEvent="focus mouseenter" hideEvent="blur mouseleave"  />
+             		<pe:tooltip  myPosition="left center" atPosition="right center" for="address2" value="#{msg.Address2}"
+             		 showEvent="focus mouseenter" hideEvent="blur mouseleave"  />        
              	
  					<p:messages id="messages" redisplay="false" globalOnly="true" />
                     

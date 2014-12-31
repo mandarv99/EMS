@@ -1,0 +1,473 @@
+/* CSS file 
+http://www.codeproject.com/Articles/762201/Adjusting-your-websites-to-fit-all-types-of-resolu
+*/
+ 
+ .ui-widget .ui-widget
+ {
+ 	font-size: 12px;
+ }
+
+/* override the headertext css for pages */
+#headerText
+{
+	text-align: left;
+	width : 70%;
+}
+
+#centerSection
+{
+	 margin: 10% 0px; 	 
+}
+ 
+.star:after {
+    content: "*";
+    color: red;
+    padding-left:5px;
+}
+ 
+.Content {	
+	margin: 0px auto;
+/*	width:320px;
+ 	height:600px;*/
+ 	height:auto; 
+	border-width: 1px;
+	border-color: #C3C3C3;
+	/*	padding-bottom : 5px; */
+	background-color:#FFFFFF;
+	padding : 0px;
+}
+
+.innerContent
+{
+	border: 0;
+	align:left;
+	padding-left:0px;
+	margin-top : 15px;
+}
+
+.ui-inputfield
+{
+	/*color: #cccccc;*/
+	width: 200px !important;
+	height: 22px  !important;
+	
+	font-family: Helvetica neue, Calibri, Roboto !important;
+	/* border: 1px solid #D2D2D2 !important;
+	 -moz-box-shadow: inset 0 0px 0px gray;
+    -webkit-box-shadow: inset 0 0px 0px  gray !important;
+    box-shadow: inset 0 0px 0px  gray !important;	 */
+ }
+ 
+ /* to change fon size of text input */
+ .ui-widget-header .ui-inputfield,
+.ui-widget-content .ui-inputfield {
+ 
+    font-size: 13px;
+ }
+
+
+ /* to remove blue border from highlighted textbox*/
+./* ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus 
+{
+	-moz-box-shadow: inset 0 0px 0px gray;
+    -webkit-box-shadow: inset 0 0px 0px  gray;
+    box-shadow: inset 0 0px 0px gray; 
+    border: none;
+} */
+
+/********************** html placeholder style ********************/
+::-webkit-input-placeholder {
+	color: #cccccc;
+    font-size: 12px;
+    font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+:-moz-placeholder {
+	color: #cccccc;
+    font-size: 12px;
+    font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+.ui-watermark {
+	color: #cccccc;
+    font-size: 12px;
+    font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+/****************************************************************/
+
+
+.leftContentStyle {
+  	height: 28px;
+	text-align: left;
+ 	padding-right: 5px;
+ 	width:30%;
+ 	font-size: 14px;
+}
+
+.rightContentStyle
+ {
+ 	height: 28px;
+  	padding-left: 5px;
+ 	width:25%;
+ 	font-size: 13px;
+}
+
+.leftContentStyleSrch
+{
+	height: 28px;
+	text-align: left;
+ 	padding-right: 5px;
+ 	width:10%;
+ 	font-size: 14px;
+}
+
+.buttonRow
+{
+	text-align:left;
+	border-width:0;
+	border-style:none;
+}
+
+.imageLinks
+{
+	width: 100%;
+	height:40px;
+	border:0; 
+	padding:0px;
+	font-size: 12px;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+.imageLinksSmall
+{
+	width: 40%;
+	height:30px;
+	border:0; 
+	padding:0px;
+	font-size: 12px;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: normal !important;
+}
+
+.separator 
+{
+	border:1px;
+	width:80%;
+	vertical-align:center;
+	border-color: gray;
+	background-color: gray;
+}
+
+.popupLinks
+{
+ 	border:0; 
+	padding:0px;
+	font-size: 13px !important;
+	font-family: Helvetica neue, Calibri, Roboto;
+	font-weight: bold !important;
+	color :#254d7e;
+	text-decoration: underline;
+}
+
+.popupLinks:hover
+{
+	text-decoration: underline;
+	cursor: hand;
+}
+
+/*  panel headers */
+.ui-panel .ui-panel-titlebar
+ {
+ 	background-color: #cccccc;
+ 	background-image: none;
+ 	height: 30px;
+ 	border-width: 1px;
+	border-color: #C3C3C3;
+ }
+ 
+ /*  panel footers */
+ .ui-panel .ui-panel-footer
+ {
+ 	background-color: #cccccc;
+ 	background-image: none;
+ 	height: 30px;
+ 	border-width: 1px;
+	border-color: #C3C3C3;
+ }
+ 
+ /* scrollpanel height*/
+ .ui-scrollpanel
+ {
+ 	/*height: 500px;*/
+ 	height:auto; 
+ 	border : none;
+ }
+ 
+ /* button background */ 
+.ui-widget .ui-button 
+ {
+ 	background: none;
+ 	background-image none;
+ 	border-width: 1px;
+	border-color: #3AAEDE;
+	background-color: #A5E6F8;
+	border-radius : 8px;
+ }
+ 
+ /* for dialog */
+ .ui-dialog-titlebar 
+ {
+ 	height: 24px;
+ 	font-size: 18px;
+ 	vertical-align: center;
+ }
+ 
+ .ui-dialog .ui-dialog-buttonpane
+ {
+ 	text-align:center;
+ }
+ 
+ .ui-dialog .ui-dialog-content
+ {
+ 	font-size:  15px;
+ }
+ 
+ /* for drop down width*/
+ .ui-selectonemenu  
+ {
+  	width: 210px !important;
+ 	vertical-align: bottom ;
+ 	-moz-box-shadow: inset 0 0px 0px gray;
+    -webkit-box-shadow: inset 0 0px 0px  gray !important;
+ }
+ 
+ .ui-selectonemenu .ui-selectonemenu-trigger
+ {
+	border-right-width: 1px;
+	border-right-color: #D2D2D2;
+	border-right-style: solid;
+	background: none !important;
+ }
+ .ui-selectonemenu-items-wrapper
+ {
+ 	 width: 100% !important;
+ }
+ 
+ .ui-selectonemenu-item.ui-selectonemenu-list-item.ui-state-hover {
+    background: #D2D2D2;
+}
+ 
+ 
+ /*for search button row*/
+ .buttonRow
+ {
+ 	text-align:left;
+ 	border-width:0;
+ 	border-style:none;
+ 	background: none;
+ 	padding-left: 10px;
+ 	background-color: transparent;
+ }
+ 
+ /* WIZARD*/
+ 
+ .ui-wizard
+ {
+ 	height:auto;
+ }
+ 
+  .ui-wizard-content
+ {
+ 	height:auto;
+ }
+ 
+ .ui-wizard-step-title
+ {
+	 background :none !important;
+	 background-color:  #C3C3C3 !important;
+	 border-color : #2E608C !important; 
+ }
+ 
+ .ui-wizard-step-title.ui-state-default.ui-state-highlight 
+ {
+	 background :none !important;
+	 background-color:  #5F83B9 !important;
+	 border-color : #2E608C !important; 
+	 color : white;
+ }
+ 
+ .ui-wizard-navbar
+ {
+ 	padding-top : 5px;
+ }
+ 
+ /* calendar */
+.ui-datepicker
+{
+	background-color: white !important;
+}
+.ui-slider 
+{
+ 	background-color: #C3C3C3 !important;
+}
+.ui-slider-handle
+{
+	background :none !important;
+	background-color: #D84646 !important;
+}  
+
+.ui-datepicker td span, .ui-datepicker td a
+{
+	background :none !important;
+	background-color: #E1E1E1 !important;
+	border-color : #2E608C !important;
+	border-width: 1px !important;
+}
+
+.ui-datepicker .ui-datepicker-current-day .ui-state-highlight, .ui-datepicker .ui-datepicker-current-day .ui-state-default
+{
+	background :none !important;
+	background-color: #5F83B9 !important;
+	border-color : #2E608C !important;
+	border-width: 1px !important;
+	color:white;
+}
+
+.ui-icon-calendar
+{
+  	background-image: url(../../resources/images/calendaricon.png) !important;
+	height: 24px;
+	width: 26px;
+	background-position: center center !important;
+}
+
+.ui-datepicker-trigger .ui-button-text
+{
+ 	background:  none !important;
+ 	display:none !important;
+}
+
+.ui-datepicker-trigger .ui-button-icon-only
+{
+  	width:0px !important;
+  	margin-left:10px;
+}
+  
+  /** MESSAGES **/
+    
+.ui-messages-error
+{
+	color : #b94a48;
+ 	font-size: 12px;
+}
+
+.ui-messages-info 
+{
+	color : #3AAEDE;
+  	font-size: 12px;
+}
+
+.ui-message-error
+{
+	color : #b94a48;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 10pt;
+}
+
+.ui-message-info 
+{
+	color : #3AAEDE;
+	border : none;
+	background-image: none;
+	background-color: transparent;
+	padding-top : 0px;
+	padding-bottom : 0px;
+	margin-top : 0px;
+	margin-bottom : 0px;
+	font-size: 10pt;
+}
+  
+   
+  /** CHECK BOX **/
+.ui-chkbox .ui-chkbox-box
+{
+	width: 27px;
+	height: 27px;
+	background-color : transparent !important;
+	background-image: url(../../resources/images/checkbox_bg.png) !important;
+	border : none;
+}
+
+.ui-icon.ui-chkbox-icon
+{
+	width: 27px;
+	height: 27px;
+	background-image: url(../../resources/images/checkbox_bg_icon.png) !important;
+	overflow: visible;
+	border : none;
+}
+
+.ui-icon-check
+{
+	background-position: 0px;
+}
+
+  
+  /** RADIO BUTTON **/
+
+.ui-radiobutton
+{
+	width: 27px;
+	height: 27px;
+}
+.ui-radiobutton .ui-radiobutton-box{
+	background: url(../../resources/images/radioBtn.png) no-repeat !important;
+	width: 27px;
+	height: 27px;
+	border : none;
+}
+
+.ui-radiobutton .ui-radiobutton-box.ui-state-active{
+	background: url(../../resources/images/radioBtnSelected.png) no-repeat !important;
+	width: 27px;
+	height: 27px;
+	border : none;
+}
+
+.radioIcon .ui-icon  
+{
+	background-image: none !important;
+	height: 0px;
+	width: 0px;
+}
+
+
+.ui-selectonemenu-trigger.ui-state-default
+/*.ui-state-error .ui-icon, .ui-state-error-text .ui-icon*/
+{
+	background: none !important;
+}
+
+/* for tooltip */
+.ui-tooltip
+{
+	padding:0px;
+	margin-left:10px
+}
+
+.ui-tooltip,.qtip
+{
+	 font-size:11.5px;
+	 line-height:12px;
+	 font-family: Helvetica neue, Calibri, Roboto !important;
+}

@@ -19,8 +19,10 @@
 	
 	             	<p:scrollPanel mode="native" >
 	                         
-	                <pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
-	                <pe:tooltip  myPosition="left center" atPosition="right center" for="userType" value="#{msg.UserType}" />  
+	                <pe:tooltip global="true" myPosition="left center" atPosition="right center"
+	                 showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
+	                <pe:tooltip  myPosition="left center" atPosition="right center" for="userType" value="#{msg.UserType}" 
+	                 showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
 	                       	
              		<p:messages id="messages" />
  

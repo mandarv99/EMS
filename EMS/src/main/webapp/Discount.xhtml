@@ -12,7 +12,8 @@
         <p:dialog id="discountDialog" widgetVar="DiscountDlg" dynamic="true" modal="true" resizable="false" header="#{msg.Discount}"  visible="#{facesContext.validationFailed}">      
             <h:form id="discountForm">
             
-            <pe:tooltip  myPosition="left center" atPosition="right center" for="criteriaValue" value="#{msg.Criteria}" />  
+            <pe:tooltip  myPosition="left center" atPosition="right center" for="criteriaValue" value="#{msg.Criteria}" 
+             showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
                
              <p:messages id="messages" redisplay="false" globalOnly="true" />
               

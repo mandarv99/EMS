@@ -12,9 +12,12 @@
     	<p:scrollPanel mode="native" >
     		
   		<pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
- 	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="superCategory" value="#{msg.SuperCategory}"/>  
-	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="wantEarlybird" value="#{msg.WantEarlybird}"/>  
-      	 <pe:tooltip  myPosition="left center" atPosition="right center" for="refundable" value="#{msg.Refundable}"/>  
+ 	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="superCategory" value="#{msg.SuperCategory}"
+ 	   	  showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
+	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="wantEarlybird" value="#{msg.WantEarlybird}"
+	   	  showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
+      	 <pe:tooltip  myPosition="left center" atPosition="right center" for="refundable" value="#{msg.Refundable}"
+      	  showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
  
 	     <p:messages id="msg1" redisplay="false" globalOnly="true" />
         	
@@ -55,7 +58,7 @@
 	                </p:commandButton>                                
 	            </p:column>
 	            <p:column headerText="#{msg.delete}">
-	                <p:commandButton update="ticketDetailsList @form:ticketDetails:TicketDetailsId @form:btnPanel" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" 
+	                <p:commandButton update="ticketDetailsList @form:ticketDetails:TicketDetailsId @form:btnPanel @form:btnPanelWiz" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" 
 	                actionListener="#{eventBean.deleteTicketDetails(ticketDTO.ticketCategoryId)}"  >                                    
 	                    <p:confirm header="Confirmation" message="Are you sure,you want to delete the Ticket?" icon="ui-icon-alert" />                                    
 	                </p:commandButton>                                
@@ -89,17 +92,17 @@
               <p:message for="salesEndDate" />
                          
             <h:outputLabel value="#{msg.AgeCriteriaFrom}" styleClass="star" />
-            <p:inputMask maxlength="2" mask="9?9" placeHolder=" " id="ageCriteriaFrom" value="#{eventBean.ticket.ageFrom}" 
+            <p:inputMask maxlength="2" mask="9?9" slotChar=" " id="ageCriteriaFrom" value="#{eventBean.ticket.ageFrom}" 
                          title="#{msg.AgeCriteriaFrom}" required="true" label="#{msg.AgeCriteriaFrom}"/>            
              <p:message for="ageCriteriaFrom" />
             
             <h:outputLabel value="#{msg.AgeCriteriaTo}" styleClass="star" />
-            <p:inputMask maxlength="2" mask="9?9" placeHolder=" " id="ageCriteriaTo" value="#{eventBean.ticket.ageTo}" 
+            <p:inputMask maxlength="2" mask="9?9" slotChar=" " id="ageCriteriaTo" value="#{eventBean.ticket.ageTo}" 
                          title="#{msg.AgeCriteriaTo}" required="true" label="#{msg.AgeCriteriaTo}"/>            
              <p:message for="ageCriteriaTo" />
              
             <h:outputLabel value="#{msg.TicketPrice}" styleClass="star" />
-            <p:inputMask maxlength="10" mask="9?999999999" placeHolder=" " id="ticketPrice" value="#{eventBean.ticket.ticketPrice}" 
+            <p:inputMask maxlength="10" mask="9?999999999" slotChar=" " id="ticketPrice" value="#{eventBean.ticket.ticketPrice}" 
                          title="#{msg.TicketPrice}" required="true" label="#{msg.TicketPrice}"/>            
              <p:message for="ticketPrice" id="ticketPriceMsg" />
              
@@ -115,17 +118,17 @@
              <p:message for="refundable" />
              
             <h:outputLabel value="#{msg.TotTicketsAvail}" for="totTicketsAvail" styleClass="star" />
-            <p:inputMask maxlength="2" mask="9?99999" placeHolder=" " id="totTicketsAvail" value="#{eventBean.ticket.totalTickets}" title="#{msg.TotTicketsAvail}"
+            <p:inputMask maxlength="2" mask="9?99999" slotChar=" " id="totTicketsAvail" value="#{eventBean.ticket.totalTickets}" title="#{msg.TotTicketsAvail}"
                          required="true" label="#{msg.TotTicketsAvail}"/>            
              <p:message for="totTicketsAvail" />
              
             <h:outputLabel value="#{msg.MaxTicketsPerTrans}" styleClass="star" />
-            <p:inputMask maxlength="2" mask="9?9" placeHolder="" id="maxTicketsPerTrans" value="#{eventBean.ticket.maxTicketsPerTransaction}"
+            <p:inputMask maxlength="2" mask="9?9" slotChar="" id="maxTicketsPerTrans" value="#{eventBean.ticket.maxTicketsPerTransaction}"
                          title="#{msg.MaxTicketsPerTrans}" required="true" label="#{msg.MaxTicketsPerTrans}"/>            
               <p:message for="maxTicketsPerTrans" />
               
             <h:outputLabel value="#{msg.MinTicketsPerTrans}" styleClass="star" />
-            <p:inputMask maxlength="2" mask="9?9" placeHolder="" id="minTicketsPerTrans" value="#{eventBean.ticket.minTicketsPerTransaction}" 
+            <p:inputMask maxlength="2" mask="9?9" slotChar="" id="minTicketsPerTrans" value="#{eventBean.ticket.minTicketsPerTransaction}" 
                          title="#{msg.MinTicketsPerTrans}" required="true" label="#{msg.MinTicketsPerTrans}"/>                                
           	<p:message for="minTicketsPerTrans" />
             
@@ -140,24 +143,29 @@
        
        <f:facet name="footer">
 	       <p:outputPanel id="btnPanel"  styleClass="buttonRow" >
-		        <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanel" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
-		        <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanel" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
-		       <p:spacer height="5" width="10" />   
+ 		        <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanelWiz" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
+		        <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanelWiz" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
+ 
+ 		       <p:spacer height="5" width="10" />   
 		        <p:commandButton value="#{msg.AddSuperCategory}"  icon="ui-icon-circle-plus" type="button" onclick="PF('SuperCategoryDlg').show(); 
 			     return false;"/>
-			        
-			   <p:commandButton value="Back" icon="ui-icon-circle-check" onclick="PF('wiz').back();"/>    
-			  
-			   <p:commandButton  value="Next1" icon="ui-icon-circle-check" immediate="true" process="@this"  rendered="#{eventBean.ticketDTOList.size() !=0 }"
-			   onclick="PF('wiz').loadStep(PF('wiz').cfg.steps[2], true)"/>  
-			   
-			   <p:commandButton  value="Next0" icon="ui-icon-circle-check"  rendered="#{eventBean.ticketDTOList.size() ==0 }"
-			  onclick="PF('wiz').next();"/>    
- 	        </p:outputPanel>
+		 	  	</p:outputPanel>
+ 
        </f:facet>
        
      </p:panel>
-       
+     
+      <p:outputPanel id="btnPanelWiz"  styleClass="ui-wizard-navbar" >
+		    <p:commandButton value="Back" icon="ui-icon-arrowthick-1-w" onclick="PF('wiz').back();" styleClass="ui-wizard-nav-back"/>    
+			  
+			<p:commandButton  value="Next1" icon="ui-icon-arrowthick-1-e" immediate="true" process="@this"  rendered="#{eventBean.ticketDTOList.size() !=0 }"
+			 onclick="PF('wiz').loadStep(PF('wiz').cfg.steps[2], true)"/>  
+			   
+			<p:commandButton  value="Next0" icon="ui-icon-arrowthick-1-e"  rendered="#{eventBean.ticketDTOList.size() ==0 }"
+			  onclick="PF('wiz').next();"/>    
+
+	  </p:outputPanel>
+ 
         <p:confirmDialog id="catDelConf" widgetVar="catDelConfDlg" showEffect="fade" severity="alert" global="true">
             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-circle-check"/>
             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
