@@ -52,9 +52,7 @@ public class TicketMaster implements Serializable {
     @Column(name = "ticket_price")
     private Double ticketPrice;
     @Column(name = "disclaimer")
-    private String disclaimer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketId")
-    private Collection<ParticipantMaster> participantMasterCollection;
+    private String disclaimer; 
     @JoinColumn(name = "super_categoty_id", referencedColumnName = "super_categoty_id")
     @ManyToOne
     private SuperCategoryTkt superCategotyId;
@@ -279,14 +277,6 @@ public class TicketMaster implements Serializable {
 
     public void setDisclaimer(String disclaimer) {
         this.disclaimer = disclaimer;
-    }
-
-    public Collection<ParticipantMaster> getParticipantMasterCollection() {
-        return participantMasterCollection;
-    }
-
-    public void setParticipantMasterCollection(Collection<ParticipantMaster> participantMasterCollection) {
-        this.participantMasterCollection = participantMasterCollection;
     }
 
     public SuperCategoryTkt getSuperCategotyId() {

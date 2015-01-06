@@ -52,14 +52,14 @@
 	                <h:outputText value="#{ticketDTO.minTicketsPerTransaction}"  />
 	            </p:column>
 	            <p:column headerText="#{msg.edit}">
-	                <p:commandButton update="@form:TicketDetailsId @form:btnPanel" icon="ui-icon-pencil" title="Edit" immediate="true"  process="@this">
+	                <p:commandButton update="@form:TicketDetailsId @form:btnPanel" icon="ui-icon-pencil"  immediate="true"  process="@this">
 	                    <p:resetInput target="@form:ticketDetails:TicketDetailsId" />
 	                    <f:setPropertyActionListener value="#{ticketDTO}" target="#{eventBean.ticket}" />
 	                    <f:setPropertyActionListener value="#{ticketDTO.discountMaster}" target="#{eventBean.discountMasterDTO}" />
 	                </p:commandButton>                                
 	            </p:column>
 	            <p:column headerText="#{msg.delete}">
-	                <p:commandButton update="ticketDetailsList @form:ticketDetails:TicketDetailsId @form:btnPanel @form:btnPanelWiz" icon="ui-icon-trash" title="Delete" immediate="true"  process="@this" 
+	                <p:commandButton update="ticketDetailsList @form:ticketDetails:TicketDetailsId @form:btnPanel @form:btnPanelWiz" icon="ui-icon-trash"  immediate="true"  process="@this" 
 	                actionListener="#{eventBean.deleteTicketDetails(ticketDTO.ticketCategoryId)}"  >                                    
 	                    <p:confirm header="Confirmation" message="Are you sure,you want to delete the Ticket?" icon="ui-icon-alert" />                                    
 	                </p:commandButton>                                
@@ -80,7 +80,8 @@
                 <f:selectItems value="#{eventBean.superTicketCategoryDTOList}" var="ticketcategory" 
                                itemLabel="#{ticketcategory.superCategoryName}" itemValue="#{ticketcategory.superCategotyId}"/>
             </p:selectOneMenu>                                             
-            <p:message for="superCategory" />
+              <p:commandButton value="#{msg.AddSuperCategory}"  icon="ui-icon-circle-plus" type="button" onclick="PF('SuperCategoryDlg').show(); 
+			     return false;"/>
             
             <h:outputLabel value="#{msg.SalesStartDate}" styleClass="star" />
             <p:calendar id="salesStartDate" value="#{eventBean.ticket.salesStartDate}" required="true"  mindate="#{pageNavBean.today}" 
@@ -146,11 +147,7 @@
 	       <p:outputPanel id="btnPanel"  styleClass="buttonRow" >
  		        <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{eventBean.saveTicketDetails()}"  update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanelWiz" rendered="#{eventBean.ticket.ticketCategoryId==null or eventBean.ticket.ticketCategoryId==0}"/>  
 		        <p:commandButton value="#{msg.update}" icon="ui-icon-circle-check" action="#{eventBean.updateTicketDetails()}" update="@form:ticketDetails:TicketDetailsId msg1 ticketDetailsList btnPanelWiz" rendered="#{eventBean.ticket.ticketCategoryId!=null and eventBean.ticket.ticketCategoryId!=0}"/>  
- 
- 		       <p:spacer height="5" width="10" />   
-		        <p:commandButton value="#{msg.AddSuperCategory}"  icon="ui-icon-circle-plus" type="button" onclick="PF('SuperCategoryDlg').show(); 
-			     return false;"/>
-		 	  	</p:outputPanel>
+  	 	  	</p:outputPanel>
  
        </f:facet>
        
@@ -159,10 +156,10 @@
       <p:outputPanel id="btnPanelWiz"  styleClass="ui-wizard-navbar" >
 		    <p:commandButton value="Back" icon="ui-icon-arrowthick-1-w" onclick="PF('wiz').back();" styleClass="ui-wizard-nav-back"/>    
 			  
-			<p:commandButton  value="Next1" icon="ui-icon-arrowthick-1-e" immediate="true" process="@this"  rendered="#{eventBean.ticketDTOList.size() !=0 }"
+			<p:commandButton  value="Next" icon="ui-icon-arrowthick-1-e" immediate="true" process="@this"  rendered="#{eventBean.ticketDTOList.size() !=0 }"
 			 onclick="PF('wiz').loadStep(PF('wiz').cfg.steps[2], true)"/>  
 			   
-			<p:commandButton  value="Next0" icon="ui-icon-arrowthick-1-e"  rendered="#{eventBean.ticketDTOList.size() ==0 }"
+			<p:commandButton  value="Next" icon="ui-icon-arrowthick-1-e"  rendered="#{eventBean.ticketDTOList.size() ==0 }"
 			  onclick="PF('wiz').next();"/>    
 
 	  </p:outputPanel>

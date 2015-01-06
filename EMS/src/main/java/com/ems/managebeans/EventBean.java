@@ -20,6 +20,8 @@ import org.primefaces.event.FlowEvent;
 import com.ems.datamodel.dao.CompanyDetailsDAO;
 import com.ems.datamodel.dao.EventMasterDAO;
 import com.ems.datamodel.dao.EventTypeDAO;
+import com.ems.datamodel.dao.ParticipantMasterDAO;
+import com.ems.datamodel.dao.ParticipantSpecimenMasterDAO;
 import com.ems.datamodel.dao.SuperCategoryDAO;
 import com.ems.datamodel.dao.TicketDAO;
 import com.ems.datamodel.dto.CompanyDetailsDTO;
@@ -28,16 +30,20 @@ import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.EventTypesDTO;
 import com.ems.datamodel.dto.SuperCategoryTktDTO;
 import com.ems.datamodel.dto.TicketDTO;
+import com.ems.datamodel.entity.ParticipantSpecimenMaster;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 @ManagedBean(name = "eventBean")
 @ViewScoped
 public class EventBean extends AbstractMB {
-    
+
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7671523986670245517L;
-	private EventMasterDTO eventMasterDTO;
+     *
+     */
+    private static final long serialVersionUID = 7671523986670245517L;
+    private EventMasterDTO eventMasterDTO;
     EventMasterDAO eventMasterDAO = null;
     private TicketDTO ticket;
     private List<TicketDTO> ticketDTOList;
@@ -49,49 +55,56 @@ public class EventBean extends AbstractMB {
     private List<EventTypesDTO> eventTypesDTOList;
     private CompanyDetailsDAO companyDetailsDAO;
     private List<CompanyDetailsDTO> companyDetailsDTOList;
+    private ParticipantSpecimenMasterDAO participantSpecimenMasterDAO;
+    private List<ParticipantSpecimenMaster> participantSpecimenMasterList;
+    private Map<Integer, Boolean> participantSpecimanMap;
+    private Map<Integer, Map<Integer, Boolean>> parentMap;
+    @ManagedProperty(value = "#{pageNavBean}")
+    private PageNavigationBean pageNavBean;
+    private TicketDAO ticketDAO;
+    private ParticipantMasterDAO participantMasterDAO;
 
-    @ManagedProperty(value="#{pageNavBean}")
-  	private PageNavigationBean pageNavBean ;
-    
-   	private TicketDAO ticketDAO;
-    
-	public PageNavigationBean getPageNavBean() {
-		return pageNavBean;
-	}
+    public PageNavigationBean getPageNavBean() {
+        return pageNavBean;
+    }
 
-	public void setPageNavBean(PageNavigationBean pageNavBean) {
-		this.pageNavBean = pageNavBean;
-	}
+    public void setPageNavBean(PageNavigationBean pageNavBean) {
+        this.pageNavBean = pageNavBean;
+    }
 
     @PostConstruct
     public void init() {
-        
-        eventMasterDAO = new EventMasterDAO();
-        eventMasterDTO = new EventMasterDTO();
 
+        eventMasterDAO = new EventMasterDAO();
+        eventMasterDTO = new EventMasterDTO();        
         getDataFromRequestMap();
-        
+
         ticket = new TicketDTO();
         superCategoryTktDTO = new SuperCategoryTktDTO();
         superTicketCategoryDTOList = new ArrayList<>();
         ticketDTOList = new ArrayList<>();
         superTicketCategoryDTOList = new ArrayList<>();
-        
+
         discountMasterDTO = new DiscountMasterDTO();
-         
+
         eventTypeDAO = new EventTypeDAO();
         eventTypesDTOList = eventTypeDAO.getEventTypesList();
         companyDetailsDAO = new CompanyDetailsDAO();
         setCompanyDetailsDTOList(companyDetailsDAO.getCompanyDetailsList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
         superCategoryDAO = new SuperCategoryDAO();
         ticketDAO = new TicketDAO();
+        participantSpecimanMap = new HashMap<>();
+        parentMap = new HashMap<>();
+        participantSpecimenMasterDAO = new ParticipantSpecimenMasterDAO();
+        participantMasterDAO = new ParticipantMasterDAO();
+        participantSpecimenMasterList = participantSpecimenMasterDAO.getParticipantSpecimenMasterList();
     }
 
-    private void getDataFromRequestMap()
-    {
-    	Object obj= getObjectFromFlash("eventMaster");
-    	if(obj!=null)
-    		this.eventMasterDTO = (EventMasterDTO) obj;
+    private void getDataFromRequestMap() {
+        Object obj = getObjectFromFlash("eventMaster");
+        if (obj != null) {
+            this.eventMasterDTO = (EventMasterDTO) obj;
+        }
     }
 
     /**
@@ -107,7 +120,7 @@ public class EventBean extends AbstractMB {
     public void setEventMasterDTO(EventMasterDTO eventMasterDTO) {
         this.eventMasterDTO = eventMasterDTO;
     }
-    
+
     /**
      * @return the ticket
      */
@@ -177,7 +190,7 @@ public class EventBean extends AbstractMB {
     public void setDiscountMasterDTO(DiscountMasterDTO discountMasterDTO) {
         this.discountMasterDTO = discountMasterDTO;
     }
- 
+
     /**
      * @return the eventTypesDTOList
      */
@@ -206,7 +219,6 @@ public class EventBean extends AbstractMB {
         this.companyDetailsDTOList = companyDetailsDTOList;
     }
 
-    
     public void saveEvent() {
         try {
             eventMasterDTO.setAddedBy(pageNavBean.getLoggedInUserDTO().getUserId());
@@ -218,33 +230,37 @@ public class EventBean extends AbstractMB {
         }
     }
 
-    
     public String onFlowProcess(FlowEvent event) {
-        if (event.getOldStep().equals("event"))
-        {
-            if (eventMasterDTO != null && eventMasterDTO.getEventId() == null)
-            {
+        if (event.getOldStep().equals("event")) {
+            if (eventMasterDTO != null && eventMasterDTO.getEventId() == null) {
                 saveEvent();
-            }
-            else
-            {
-            	// validate event start and end date
-            	if(eventMasterDTO.getEventStartDatetime().after(eventMasterDTO.getEventEndDatetime()) || eventMasterDTO.getEventStartDatetime().equals(eventMasterDTO.getEventEndDatetime()))
-            	{
-            		displayErrorMessageToUser("Please Check Event Start and End Date");
-            		return event.getOldStep();
-            	}
-            	
+            } else {
+                // validate event start and end date
+                if (eventMasterDTO.getEventStartDatetime().after(eventMasterDTO.getEventEndDatetime()) || eventMasterDTO.getEventStartDatetime().equals(eventMasterDTO.getEventEndDatetime())) {
+                    displayErrorMessageToUser("Please Check Event Start and End Date");
+                    return event.getOldStep();
+                }
+
                 updateEvent();
                 superTicketCategoryDTOList = superCategoryDAO.getSuperCategoryList(eventMasterDTO.getEventId());
                 superCategoryTktDTO = new SuperCategoryTktDTO();
                 ticketDTOList = ticketDAO.getTicketList(eventMasterDTO.getEventId());
             }
+        } else if (event.getNewStep().equals("participant")) {            
+            for (TicketDTO ticketDTO : ticketDTOList) {
+                participantSpecimanMap = participantMasterDAO.getParticipantMapByTicketId(ticketDTO.getTicketCategoryId());
+                 if(participantSpecimanMap==null || participantSpecimanMap.isEmpty()){
+                     participantSpecimanMap= new TreeMap<>();
+                     for (ParticipantSpecimenMaster participantSpecimenMaster : participantSpecimenMasterList) {
+                         participantSpecimanMap.put(participantSpecimenMaster.getParticipantSpecimenId(), Boolean.FALSE);
+                     }
+                }
+                parentMap.put(ticketDTO.getTicketCategoryId(), participantSpecimanMap);
+                participantSpecimanMap = new HashMap<>();
+            }
         }
-         return event.getNewStep();
+        return event.getNewStep();
     }
-
-
 
     public void insertSuperCategory() {
         try {
@@ -264,7 +280,7 @@ public class EventBean extends AbstractMB {
             e.printStackTrace();
         }
     }
-    
+
     public void deleteSuperCategory(int superCategotyId) {
         try {
             if (superCategoryTktDTO != null) {
@@ -279,7 +295,7 @@ public class EventBean extends AbstractMB {
             e.printStackTrace();
         }
     }
-    
+
     public void saveTicketDetails() {
         try {
             if (ticket.isDiscount() && discountMasterDTO == null) {
@@ -293,6 +309,7 @@ public class EventBean extends AbstractMB {
             discountMasterDTO.setModifiedBy(pageNavBean.getLoggedInUserDTO().getUserId());
             ticket.setModifiedBy(pageNavBean.getLoggedInUserDTO().getUserId());
             if (ticketDAO.insertTicketMaster(ticket)) {
+                participantMasterDAO.saveParticipantMaster(ticket.getTicketCategoryId(), participantSpecimenMasterList, eventMasterDTO, pageNavBean.getLoggedInUserDTO().getUserId());
                 displayInfoMessageToUser("Ticket added successfully");
                 ticketDTOList = ticketDAO.getTicketList(eventMasterDTO.getEventId());
                 ticket = new TicketDTO();
@@ -302,7 +319,7 @@ public class EventBean extends AbstractMB {
             e.printStackTrace();
         }
     }
-    
+
     public void updateTicketDetails() {
         try {
             if (ticket.isDiscount() && discountMasterDTO != null) {
@@ -321,10 +338,10 @@ public class EventBean extends AbstractMB {
             e.printStackTrace();
         }
     }
-    
+
     public void companyDetails() {
     }
-    
+
     public void deleteTicketDetails(int ticketCategoryId) {
         try {
             if (ticketDAO.deleteTicketMaster(ticketCategoryId)) {
@@ -336,45 +353,91 @@ public class EventBean extends AbstractMB {
             e.printStackTrace();
         }
     }
-    
+
     public void onDisclaimerChange() {
-        if(eventMasterDTO != null && eventMasterDTO.getRequireDisclaimer() == 0)
-             eventMasterDTO.setDisclaimerRequired(true);
-         else
-             eventMasterDTO.setDisclaimerRequired(false);
-      }
-    
+        if (eventMasterDTO != null && eventMasterDTO.getRequireDisclaimer() == 0) {
+            eventMasterDTO.setDisclaimerRequired(true);
+        } else {
+            eventMasterDTO.setDisclaimerRequired(false);
+        }
+    }
+
     public String editEvent(EventMasterDTO eventMaster) {
         this.eventMasterDTO = eventMaster;
         return "Event.xhtml ";
     }
-    
+
     public void updateEvent() {
         if (this.eventMasterDTO != null) {
             eventMasterDAO.updateEventMaster(eventMasterDTO);
             displayInfoMessageToUser("Event updated successfully");
         }
     }
-    
-    public void processCriteriaValue(AjaxBehaviorEvent event)
-    {
-    	discountMasterDTO.setCriteriaValues(null);
-     	if(discountMasterDTO.getCriteriaType()==1)
-    	{
-    		discountMasterDTO.setMaxValue(ticket.getTicketPrice().intValue());  		
-     	}
-    	else if(discountMasterDTO.getCriteriaType()==2)
-    	{
-    		discountMasterDTO.setMaxValue(100);
-    	}
-     }
-    
-    public void validateCriteriaValue(AjaxBehaviorEvent event)
-    {
-      	if(discountMasterDTO.getCriteriaValues() !=null && discountMasterDTO.getCriteriaValues()  > discountMasterDTO.getMaxValue())
-      	{
-      		displayErrorMessageToUser("Maximum Discount which can be availed :  "+ discountMasterDTO.getMaxValue());
-       	}
+
+    public void processCriteriaValue(AjaxBehaviorEvent event) {
+        discountMasterDTO.setCriteriaValues(null);
+        if (discountMasterDTO.getCriteriaType() == 1) {
+            discountMasterDTO.setMaxValue(ticket.getTicketPrice().intValue());
+        } else if (discountMasterDTO.getCriteriaType() == 2) {
+            discountMasterDTO.setMaxValue(100);
+        }
     }
 
+    public void validateCriteriaValue(AjaxBehaviorEvent event) {
+        if (discountMasterDTO.getCriteriaValues() != null && discountMasterDTO.getCriteriaValues() > discountMasterDTO.getMaxValue()) {
+            displayErrorMessageToUser("Maximum Discount which can be availed :  " + discountMasterDTO.getMaxValue());
+        }
+    }
+
+    /**
+     * @return the participantSpecimenMasterList
+     */
+    public List<ParticipantSpecimenMaster> getParticipantSpecimenMasterList() {
+        return participantSpecimenMasterList;
+    }
+
+    /**
+     * @param participantSpecimenMasterList the participantSpecimenMasterList to
+     * set
+     */
+    public void setParticipantSpecimenMasterList(List<ParticipantSpecimenMaster> participantSpecimenMasterList) {
+        this.participantSpecimenMasterList = participantSpecimenMasterList;
+    }
+
+    /**
+     * @return the participantSpecimanMap
+     */
+    public Map<Integer, Boolean> getParticipantSpecimanMap() {
+        return participantSpecimanMap;
+    }
+
+    /**
+     * @param participantSpecimanMap the participantSpecimanMap to set
+     */
+    public void setParticipantSpecimanMap(Map<Integer, Boolean> participantSpecimanMap) {
+        this.participantSpecimanMap = participantSpecimanMap;
+    }
+
+    /**
+     * @return the parentMap
+     */
+    public Map<Integer, Map<Integer, Boolean>> getParentMap() {
+        return parentMap;
+    }
+
+    /**
+     * @param parentMap the parentMap to set
+     */
+    public void setParentMap(Map<Integer, Map<Integer, Boolean>> parentMap) {
+        this.parentMap = parentMap;
+    }
+
+    public void saveParticipantDetails() {
+        try {
+            participantMasterDAO.saveParticipantMaster(parentMap, participantSpecimenMasterList, eventMasterDTO, pageNavBean.getLoggedInUserDTO().getUserId());
+            displayInfoMessageToUser("Participant Information Updated Successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

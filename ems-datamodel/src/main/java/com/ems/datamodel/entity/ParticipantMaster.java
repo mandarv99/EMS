@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,11 +31,14 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "ParticipantMaster.findByFieldName", query = "SELECT p FROM ParticipantMaster p WHERE p.fieldName = :fieldName"),
     @NamedQuery(name = "ParticipantMaster.findByFieldType", query = "SELECT p FROM ParticipantMaster p WHERE p.fieldType = :fieldType"),
     @NamedQuery(name = "ParticipantMaster.findByFieldRequired", query = "SELECT p FROM ParticipantMaster p WHERE p.fieldRequired = :fieldRequired"),
+    @NamedQuery(name = "ParticipantMaster.findByTicketId", query = "SELECT p FROM ParticipantMaster p WHERE p.ticketId = :ticketId"),
     @NamedQuery(name = "ParticipantMaster.findByModifiedOn", query = "SELECT p FROM ParticipantMaster p WHERE p.modifiedOn = :modifiedOn"),
     @NamedQuery(name = "ParticipantMaster.findByModifiedBy", query = "SELECT p FROM ParticipantMaster p WHERE p.modifiedBy = :modifiedBy")})
 public class ParticipantMaster implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue
     @Basic(optional = false)
     @Column(name = "participant_id")
     private Integer participantId;
@@ -49,12 +53,10 @@ public class ParticipantMaster implements Serializable {
     private Date modifiedOn;
     @Column(name = "modified_by")
     private Integer modifiedBy;
-    @JoinColumn(name = "ticket_id", referencedColumnName = "ticket_id")
-    @ManyToOne(optional = false)
-    private TicketMaster ticketId;
-    @JoinColumn(name = "participant_specimen_id", referencedColumnName = "participant_specimen_id")
-    @ManyToOne
-    private ParticipantSpecimenMaster participantSpecimenId;
+    @Column(name = "ticket_id", nullable = false)
+    private Integer ticketId;
+    @Column(name = "participant_specimen_id")
+    private Integer participantSpecimenId;
     @JoinColumn(name = "event_id", referencedColumnName = "event_id")
     @ManyToOne(optional = false)
     private EventMaster eventId;
@@ -114,19 +116,19 @@ public class ParticipantMaster implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
-    public TicketMaster getTicketId() {
+    public Integer getTicketId() {
         return ticketId;
     }
 
-    public void setTicketId(TicketMaster ticketId) {
+    public void setTicketId(Integer ticketId) {
         this.ticketId = ticketId;
     }
 
-    public ParticipantSpecimenMaster getParticipantSpecimenId() {
+    public Integer getParticipantSpecimenId() {
         return participantSpecimenId;
     }
 
-    public void setParticipantSpecimenId(ParticipantSpecimenMaster participantSpecimenId) {
+    public void setParticipantSpecimenId(Integer participantSpecimenId) {
         this.participantSpecimenId = participantSpecimenId;
     }
 
@@ -162,5 +164,4 @@ public class ParticipantMaster implements Serializable {
     public String toString() {
         return "com.ems.datamodel.entity.ParticipantMaster[ participantId=" + participantId + " ]";
     }
-    
 }

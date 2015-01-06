@@ -88,6 +88,7 @@ public class TicketDAO extends GenericDAO<TicketMaster> {
             ticketMaster.setEventId(eventMaster);
             ticketMaster.setDiscountMasterCollection(getDiscountMasterList(ticketDTO, ticketMaster));
             super.save(ticketMaster);
+            ticketDTO.setTicketCategoryId(ticketMaster.getTicketId());
             result = true;
         } catch (Exception e) {
             e.printStackTrace();

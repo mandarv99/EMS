@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" >
+
+    <ui:composition >             
+        <p:panel id="participantInformationPnl" styleClass="Content" >	            
+            <f:facet name="header">
+    			<h:outputLabel value="Select the fields which are mandatory for the Attendees."/>
+    		</f:facet>
+   
+          <p:scrollPanel mode="native" >
+                
+                <p:messages id="msg2" redisplay="false" globalOnly="true" />
+              
+                <p:dataTable id="participantInformationdt" value="#{eventBean.participantSpecimenMasterList}" rowIndexVar="rowindex"  
+                var="participantSpec"  widgetVar="participantInformationDtwv" >                    
+
+                    <p:column headerText="Field"  style="font-weight:bold; font-style:italic;">
+                        <h:outputText value="#{participantSpec.fieldName}" style="font-weight:bold; font-size:13px;"/>
+                    </p:column>
+
+                    <p:column headerText="#{msg.Value}" >
+                        <h:outputText value="#{participantSpec.fieldType}"/>
+                    </p:column>
+                    
+                    <p:columns value="#{eventBean.ticketDTOList}" var="ticketDTO" columnIndexVar="colIndex"  >
+                        <f:facet name="header">
+                            <h:outputText value="#{ticketDTO.ticketCategoryName}" />                            
+                        </f:facet>                                               
+                        <p:selectBooleanCheckbox value="#{eventBean.parentMap[ticketDTO.ticketCategoryId][eventBean.parentMap[ticketDTO.ticketCategoryId].keySet().toArray()[rowindex]]}"/>
+                    </p:columns>
+                </p:dataTable>              
+            
+            </p:scrollPanel>
+            
+            <f:facet name="footer">
+                <p:outputPanel  styleClass="buttonRow" >
+                    <p:commandButton value="#{msg.save}" icon="ui-icon-circle-check" action="#{eventBean.saveParticipantDetails()}" update="msg2" />  
+                </p:outputPanel>
+            </f:facet>
+        </p:panel>
+        
+       <p:outputPanel id="btnPanelWizParticipant"  styleClass="ui-wizard-navbar" >
+		    <p:commandButton value="Back" icon="ui-icon-arrowthick-1-w" onclick="PF('wiz').back();" styleClass="ui-wizard-nav-back"/>    
+	  </p:outputPanel>
+        
+        
+    </ui:composition>
+
+</html>

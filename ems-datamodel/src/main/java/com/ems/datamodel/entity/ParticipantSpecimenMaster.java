@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.ems.datamodel.entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,10 +32,10 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "ParticipantSpecimenMaster.findByModifiedOn", query = "SELECT p FROM ParticipantSpecimenMaster p WHERE p.modifiedOn = :modifiedOn"),
     @NamedQuery(name = "ParticipantSpecimenMaster.findByModifiedBy", query = "SELECT p FROM ParticipantSpecimenMaster p WHERE p.modifiedBy = :modifiedBy")})
 public class ParticipantSpecimenMaster implements Serializable {
-    @OneToMany(mappedBy = "participantSpecimenId")
-    private Collection<ParticipantMaster> participantMasterCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue
     @Basic(optional = false)
     @Column(name = "participant_specimen_id")
     private Integer participantSpecimenId;
@@ -130,13 +128,4 @@ public class ParticipantSpecimenMaster implements Serializable {
     public String toString() {
         return "com.ems.datamodel.entity.ParticipantSpecimenMaster[ participantSpecimenId=" + participantSpecimenId + " ]";
     }
-
-    public Collection<ParticipantMaster> getParticipantMasterCollection() {
-        return participantMasterCollection;
-    }
-
-    public void setParticipantMasterCollection(Collection<ParticipantMaster> participantMasterCollection) {
-        this.participantMasterCollection = participantMasterCollection;
-    }
-    
 }
