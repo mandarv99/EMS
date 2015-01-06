@@ -19,37 +19,71 @@
                 <h:form id="eventListForm"> 
                    <p:panel id="panel" styleClass="Content"  >	
                    	
-	        		<f:facet name="header">
-                    		<p:commandButton value="#{msg.AddEventMaster}" icon="ui-icon-plus"  process="@this" action="#{pageNavBean.redirectPageToEventMaster(null)}" />
-	          		</f:facet>
-          		
                   	 <p:scrollPanel mode="native" >
                   	 
                   	 <p:messages id="messages" redisplay="false" globalOnly="true" />
                   	 
+                   	 <h:panelGrid id="eventDetails" columns="2" columnClasses="leftContentStyleSrch , rightContentStyle" 
+					 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent"
+					 rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}">	
+					 	    <h:outputLabel value="#{msg.EventName}"  />
+                            <p:inputText id="firstName" value="#{eventBeanList.eventMasterDTO.eventName}" title="#{msg.EventName}" label="#{msg.EventName}"/>
+                           
+                            <h:outputLabel value="#{msg.StartDate}"/>
+                            <p:calendar id="startDate" value="#{eventBeanList.eventMasterDTO.eventStartDatetime}"   
+ 	                        label="#{msg.StartDate}" title="#{msg.StartDateTT}"  readonlyInput="true" pattern="dd-MMM-yyyy"  />
+                           
+                            <h:outputLabel value="#{msg.EndDate}" />
+                            <p:calendar id="endDate" value="#{eventBeanList.eventMasterDTO.eventEndDatetime}" 
+	           				 pattern="dd-MMM-yyyy"  label="#{msg.EndDate}" title="#{msg.EndDateTT}"  readonlyInput="true"/>              
+	                                 
+	                        <h:outputLabel value="#{msg.EventStatus}" />
+				            <p:selectOneMenu id="eventStatus" value="#{eventBeanList.eventMasterDTO.eventStatus}"  title="#{msg.EventStatus}" >			
+				            	 <f:selectItem itemValue="0" itemLabel="Select"  />	  
+				            	 <f:selectItem itemValue="1" itemLabel="#{msg.active}"  />
+				                <f:selectItem itemValue="2" itemLabel="#{msg.inActive}"  />
+			 	            </p:selectOneMenu>                      
+                      </h:panelGrid>
+                        
+                       <p:panel border="0" id="buttonRow" styleClass="buttonRow"
+					  rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}">	 
+	                        <p:commandButton value="#{msg.Search}" icon="ui-icon-search" action="#{eventBeanList.searchEventListing}" update=":eventListForm"  />
+	                        
+	                        <p:spacer height="5" width="10" />                        
+ 	                        
+ 	                        <p:commandButton value="#{msg.AddEventMaster}" icon="ui-icon-plus"  process="@this" action="#{pageNavBean.redirectPageToEventMaster(null)}" />                        
+ 	                        
+ 	                         <p:spacer height="5" width="10" />                        
+ 	                         
+ 	                         <p:commandButton value="#{msg.reset}" icon="ui-icon-arrowrefresh-1-s" action="#{eventBeanList.resetEventList}" update=":eventListForm" immediate="true">
+	                            <p:resetInput target=":eventListForm:eventDetails" />
+	                        </p:commandButton>
+                        </p:panel>
+                        
+                        <p:spacer height="15" width="5"  rendered ="#{pageNavBean.loggedInUserDTO.adminRights == 1}" />	 
+                        
                         <p:dataTable value="#{eventBeanList.eventMasterList}" var="eventMaster"  style="text-align: center;padding-top:10px;" paginatorPosition="bottom"
- 						paginator="#{eventBeanList.eventMasterList.size() > pageNavBean.pageSize}" rows="#{pageNavBean.pageSize}"  >
+                        id="eventMasterList" paginator="#{eventBeanList.eventMasterList.size() > pageNavBean.pageSize}" rows="#{pageNavBean.pageSize}"  >
                             <p:column headerText="#{msg.EventName}">
                                 <h:outputText value="#{eventMaster.eventName}"  />
                             </p:column>
 
-                            <p:column headerText="#{msg.StartDate}">
+                            <p:column headerText="#{msg.EventDate}">
                                 <h:outputText value="#{eventMaster.eventStartDatetime}"  >
                                 	<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a"/>
                                 </h:outputText>
-                            </p:column>
-
-                            <p:column headerText="#{msg.EndDate}">
-                                <h:outputText value="#{eventMaster.eventEndDatetime}" >
+                                 To
+                                 <h:outputText value="#{eventMaster.eventEndDatetime}" >
                                 	<f:convertDateTime pattern="dd-MMM-yyyy hh:mm:ss a"/>
                                 </h:outputText>
+                                
                             </p:column>
 
                             <p:column headerText="#{msg.EventLocation}">
                                 <h:outputText value="#{eventMaster.eventAddress}"  />
                             </p:column>
 
-                            <p:column headerText="#{msg.EventStatus}">
+                            <p:column headerText="#{msg.EventStatus}" style="width:8%;">
                                 <h:outputText value="#{msg.inActive}" rendered="#{eventMaster.eventStatus == 2}"  />
                                 <h:outputText value="#{msg.active}" rendered="#{eventMaster.eventStatus == 1}"  />
                              </p:column>

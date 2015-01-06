@@ -10,7 +10,11 @@
     <ui:composition>                         
     
     	<p:panel id="panelEvent" styleClass="Content" >	
-    		<p:scrollPanel mode="native">
+    		<f:facet name="header">
+    			<h:outputLabel value="Provide brief description of the event. This information will be visible to your audience."/>
+    		</f:facet>
+    		
+    		<p:scrollPanel mode="native" >
     		
    	             <pe:tooltip global="true" myPosition="left center" atPosition="right center" showEvent="focus mouseenter"
   	              hideEvent="blur mouseleave" />  
@@ -22,7 +26,7 @@
 	    		 showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
 	       		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSittingArrang" value="#{msg.ReqSittingArrang}" 
 	       		  showEvent="focus mouseenter" hideEvent="blur mouseleave"  rendered="false" />  
-	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSignDis" value="#{msg.ReqSignDis}"  
+	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="reqSignDis" value="#{msg.ReqSignDisTT}"  
 	    		 showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
 	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="speParticiNum" value="#{msg.SpeParticiNum}" 
 	    		  showEvent="focus mouseenter" hideEvent="blur mouseleave"  rendered="false"/>  
@@ -30,10 +34,9 @@
 	      		  showEvent="focus mouseenter" hideEvent="blur mouseleave"  rendered="false"/>  
 	    		 <pe:tooltip  myPosition="left center" atPosition="right center" for="eventStatus" value="#{msg.EventStatus}" 
 	    		  showEvent="focus mouseenter" hideEvent="blur mouseleave"  rendered="false"/>  
- 
     		 
     	        <p:messages id="msg" redisplay="false" globalOnly="true" />
-	
+
 		       <h:panelGrid id="eventMasterDetails" columns="3" columnClasses="leftContentStyle , rightContentStyle" 
 					 	width="100%" cellpadding="5" cellspacing="5" styleClass="innerContent">	
 					 	
@@ -44,12 +47,12 @@
 	           
 	            <h:outputLabel value="#{msg.StartDate} " styleClass="star" />
 	            <p:calendar id="startDate" value="#{eventBean.eventMasterDTO.eventStartDatetime}"  required="true" mindate="#{pageNavBean.nextDay}" 
- 	                        label="#{msg.StartDate}" title="#{msg.StartDateTT}"  readonlyInput="true" pattern="MM/dd/yyyy HH:mm"/>
+ 	                        label="#{msg.StartDate}" title="#{msg.StartDateTT}"  readonlyInput="true" pattern="dd/MM/yyyy HH:mm"/>
 	           <p:message for="startDate" />	
 	           				
 	            <h:outputLabel value="#{msg.EndDate} " styleClass="star" for="endDate"/>
 	            <p:calendar id="endDate" value="#{eventBean.eventMasterDTO.eventEndDatetime}" required="true" mindate="#{pageNavBean.nextDay}" 
-	            pattern="MM/dd/yyyy HH:mm"    label="#{msg.EndDate}" title="#{msg.EndDateTT}"  readonlyInput="true"/>                                             
+	            pattern="dd/MM/yyyy HH:mm"    label="#{msg.EndDate}" title="#{msg.EndDateTT}"  readonlyInput="true"/>                                             
 	           	<p:message for="endDate" />	
 	           
 	            <h:outputLabel value="#{msg.EventDesc} " styleClass="star" for="eventDesc" />
@@ -86,16 +89,7 @@
 	            <p:selectBooleanCheckbox id="reqSittingArrang" value="#{eventBean.eventMasterDTO.isSittingArrangmentRequired}"   rendered="false"/>
 	             <p:message for="reqSittingArrang"  rendered="false"/>
 	             
-	            <h:outputLabel value="#{msg.ReqSignDis}" />
-	            <p:selectOneRadio value="#{eventBean.eventMasterDTO.requireDisclaimer}" id="reqSignDis" styleClass="radioIcon" title="#{msg.ReqSignDis}">
-	                <f:selectItem itemValue="0" itemLabel="Applicable to all tickets"   />
-	                <f:selectItem itemValue="1" itemLabel="Only specific tickets"  />
-	                <f:selectItem itemValue="2" itemLabel="not required"  />
-	                <p:ajax process="@this" update="disclaimer" listener="#{eventBean.onDisclaimerChange()}" />
-	            </p:selectOneRadio>
-	            <p:message for="reqSignDis" />
-	            
-	            <h:outputLabel value="#{msg.SpeParticiNum}"  rendered="false" />
+		        <h:outputLabel value="#{msg.SpeParticiNum}"  rendered="false" />
 	            <p:selectBooleanCheckbox id="speParticiNum" value="#{eventBean.eventMasterDTO.bibNumbering}" title="#{msg.SpeParticiNum}"  rendered="false"/>
 	             <p:message for="speParticiNum"  rendered="false"/>
 	             
@@ -111,9 +105,18 @@
  	            </p:selectOneMenu>     
 				<p:message for="eventStatus"  rendered="false"/>
 	
-	            <h:outputLabel value="#{msg.Disclaimer}" />
-	            <p:inputTextarea id="disclaimer" value="#{eventBean.eventMasterDTO.desclaimer}" 
-	                             title="#{msg.Disclaimer}" required="#{eventBean.eventMasterDTO.disclaimerRequired}" label="#{msg.Disclaimer}"/>
+	            <h:outputLabel value="#{msg.ReqSignDis}" />
+	            <p:selectOneRadio value="#{eventBean.eventMasterDTO.requireDisclaimer}" id="reqSignDis" styleClass="radioIcon" title="#{msg.ReqSignDis}">
+	                <f:selectItem itemValue="0" itemLabel="Applicable to all tickets"   />
+	                <f:selectItem itemValue="1" itemLabel="Only specific tickets"  />
+	                <f:selectItem itemValue="2" itemLabel="not required"  />
+	                <p:ajax process="@this" update="disclaimer"  />
+	            </p:selectOneRadio>
+	            <p:message for="reqSignDis" />
+	            
+	           <h:outputLabel value="#{msg.Disclaimer}" />
+	            <p:inputTextarea id="disclaimer" value="#{eventBean.eventMasterDTO.desclaimer}" disabled="#{eventBean.eventMasterDTO.requireDisclaimer != 0}"
+	               title="#{msg.Disclaimer}" required="true" label="#{msg.Disclaimer}"/>
 				<p:message for="disclaimer" />
 	        </h:panelGrid>   
 	        

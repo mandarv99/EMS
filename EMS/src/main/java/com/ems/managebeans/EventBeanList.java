@@ -5,6 +5,7 @@
  */
 package com.ems.managebeans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -30,16 +31,7 @@ public class EventBeanList extends AbstractMB {
     @ManagedProperty(value="#{pageNavBean}")
 	private PageNavigationBean pageNavBean ;
 
-    
-    @PostConstruct
-    public void init()
-    {
-        eventMasterDAO = new EventMasterDAO();
-        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
-        setEventMasterDTO(new EventMasterDTO());
-    }
-
-    /**
+       /**
      * @return the eventMasterList
      */
     public List<EventMasterDTO> getEventMasterList() {
@@ -67,16 +59,41 @@ public class EventBeanList extends AbstractMB {
         this.eventMasterDTO = eventMasterDTO;
     }
     
-    public void deleteEvent(int eventId){
-        eventMasterDAO.deleteEventMaster(eventId);
-        setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
-    }
-
-	public PageNavigationBean getPageNavBean() {
+ 	public PageNavigationBean getPageNavBean() {
 		return pageNavBean;
 	}
 
 	public void setPageNavBean(PageNavigationBean pageNavBean) {
 		this.pageNavBean = pageNavBean;
 	}
+	 
+    @PostConstruct
+    public void init()
+    {
+        eventMasterDAO = new EventMasterDAO();
+        setEventMasterDTO(new EventMasterDTO());
+         //setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
+        searchEventListing();
+    }
+
+    // to search events
+    public void searchEventListing()
+    {
+    	 setEventMasterList(eventMasterDAO.searchEvents(getEventMasterDTO(),pageNavBean.getLoggedInUserDTO()));	
+    }
+    
+    // to reset search listing
+    public void resetEventList()
+    {
+    	 setEventMasterDTO(new EventMasterDTO());
+    	 setEventMasterList(new ArrayList<EventMasterDTO>());
+    }
+    
+    // to delete an event
+   public void deleteEvent(int eventId)
+   {
+        eventMasterDAO.deleteEventMaster(eventId);
+       // setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
+        searchEventListing();
+    }
 }

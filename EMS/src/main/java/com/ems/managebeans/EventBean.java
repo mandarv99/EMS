@@ -338,12 +338,11 @@ public class EventBean extends AbstractMB {
     }
     
     public void onDisclaimerChange() {
-        if (eventMasterDTO != null && eventMasterDTO.getRequireDisclaimer() == 0) {
-            eventMasterDTO.setDisclaimerRequired(true);
-        } else {
-            eventMasterDTO.setDisclaimerRequired(false);
-        }
-    }
+        if(eventMasterDTO != null && eventMasterDTO.getRequireDisclaimer() == 0)
+             eventMasterDTO.setDisclaimerRequired(true);
+         else
+             eventMasterDTO.setDisclaimerRequired(false);
+      }
     
     public String editEvent(EventMasterDTO eventMaster) {
         this.eventMasterDTO = eventMaster;

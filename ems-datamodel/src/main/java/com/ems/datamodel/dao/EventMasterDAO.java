@@ -5,14 +5,19 @@
  */
 package com.ems.datamodel.dao;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import com.ems.datamodel.dto.DiscountMasterDTO;
 import com.ems.datamodel.dto.EventMasterDTO;
+import com.ems.datamodel.dto.SignUpDTO;
 import com.ems.datamodel.dto.TicketDTO;
 import com.ems.datamodel.entity.CompanyDetails;
 import com.ems.datamodel.entity.DiscountMaster;
@@ -26,6 +31,8 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
 	 * 
 	 */
 	private static final long serialVersionUID = -203790128008665235L;
+	SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yyyy");
+	SimpleDateFormat sdf2 = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
 	public EventMasterDAO() {
         super(EventMaster.class);
@@ -67,6 +74,97 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
         return eventMasterList;
     }
 
+    // to search based on search criteria
+    public List<EventMasterDTO> searchEvents(EventMasterDTO eventMasterDTO, SignUpDTO loggedInUser)
+    {
+     	Date startDate = new Date();
+    	Date endDate =  new Date();
+
+        List<EventMasterDTO> eventMasterList = new ArrayList<EventMasterDTO>();
+        try 
+        { 
+        	beginTransaction();
+            EntityManager em = getEntityManager();
+
+            String sql ="select c FROM EventMaster c  "
+            		+ " , CompanyDetails cd  " 
+					+"  , Users u "
+					+" where c.companyId = cd.companyId " 
+					+"	and cd.superUserId = u.superUserId " 
+					+"	and u.superUserId = :superUserId ";
+              
+            if(eventMasterDTO.getEventName()!=null && !eventMasterDTO.getEventName().trim().isEmpty())
+            	sql+=" and c.eventName like :eventName ";
+            
+            if (eventMasterDTO.getEventTypeId() != null)  
+            	sql+=" and c.eventTypeId = :eventTypeId ";
+            
+            if (eventMasterDTO.getEventStatus() != null && eventMasterDTO.getEventStatus() != 0)  
+            	sql+=" and c.eventStatus = :eventStatus ";
+            
+            if (eventMasterDTO.getEventStartDatetime() != null) 
+            {
+            	sql+=" and c.eventStartDatetime >= :eventStartDatetime ";
+            	String sDAte = sdf1.format(eventMasterDTO.getEventStartDatetime()) + " 00:00:00";
+	        	startDate = sdf2.parse(sDAte);
+            }
+            
+            if (eventMasterDTO.getEventEndDatetime() != null) 
+            {
+            	sql+=" and c.eventEndDatetime <= :eventEndDatetime ";
+            	String eDAte = sdf1.format(eventMasterDTO.getEventEndDatetime()) + " 23:59:59";
+            	endDate = sdf2.parse(eDAte);
+            }
+
+        	TypedQuery<EventMaster> query = (TypedQuery<EventMaster>) em.createQuery(sql);
+        	
+    		query.setParameter("superUserId", loggedInUser.getSuperUserId());
+ 		
+        	if(eventMasterDTO.getEventName()!=null && !eventMasterDTO.getEventName().trim().isEmpty())
+        		query.setParameter("eventName", eventMasterDTO.getEventName()+"%");
+        	
+            if (eventMasterDTO.getEventTypeId() != null)  
+            	query.setParameter("eventTypeId", eventMasterDTO.getEventTypeId());
+            
+            if (eventMasterDTO.getEventStatus() != null && eventMasterDTO.getEventStatus() != 0)  
+            	query.setParameter("eventStatus", eventMasterDTO.getEventStatus());
+            
+            if (eventMasterDTO.getEventStartDatetime() != null) 
+            	query.setParameter("eventStartDatetime", startDate);
+             
+            if (eventMasterDTO.getEventEndDatetime() != null) 
+            	query.setParameter("eventEndDatetime", endDate );
+            
+        	List<EventMaster> eventEnList = query.getResultList();
+              
+            for (EventMaster eventMasterD : eventEnList) {
+            	 EventMasterDTO evMasterDTO = new EventMasterDTO();
+            	 evMasterDTO.setEventId(eventMasterD.getEventId());
+            	 evMasterDTO.setEventName(eventMasterD.getEventName());
+            	 evMasterDTO.setEventStartDatetime(eventMasterD.getEventStartDatetime());
+            	 evMasterDTO.setEventEndDatetime(eventMasterD.getEventEndDatetime());
+            	 evMasterDTO.setEventDescription(eventMasterD.getEventDescription());
+            	 evMasterDTO.setPaidEvent(eventMasterD.getIsFreeEvent());
+                 evMasterDTO.setEventLocation(eventMasterD.getEventAddress());
+                 evMasterDTO.setEventTypeId(eventMasterD.getEventTypeId());
+                 evMasterDTO.setCompanyId(eventMasterD.getCompanyId().getCompanyId());
+                 evMasterDTO.setIsSittingArrangmentRequired(eventMasterD.getRequiredSittingArrangement());
+                 evMasterDTO.setRequireDisclaimer(eventMasterD.getRequireDisclaimer());
+                 evMasterDTO.setBibNumbering(eventMasterD.getBibNumbering());
+                 evMasterDTO.setEventStatus(eventMasterD.getEventStatus());
+                 evMasterDTO.setIsDiscounted(eventMasterD.getIsDiscounted());
+                 evMasterDTO.setEventAddress(eventMasterD.getEventAddress());
+                 evMasterDTO.setDesclaimer(eventMasterD.getDisclaimer());
+                 eventMasterList.add(evMasterDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            commitAndCloseTransaction();
+        }
+        return eventMasterList;
+    }
+    
     public EventMaster getEventMaster(int eventId) {
         EventMaster eventMaster = null;
         try {

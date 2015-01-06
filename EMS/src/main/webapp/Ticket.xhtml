@@ -11,12 +11,13 @@
     <p:panel id="panelTicket" styleClass="Content"  >	
     	<p:scrollPanel mode="native" >
     		
-  		<pe:tooltip global="true" myPosition="left center" atPosition="right center"/>  
- 	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="superCategory" value="#{msg.SuperCategory}"
+  		<pe:tooltip global="true" myPosition="left center" atPosition="right center" 
+  		showEvent="focus mouseenter" hideEvent="blur mouseleave"/>  
+ 	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="superCategory" value="#{msg.SuperCategoryTT}"
  	   	  showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
-	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="wantEarlybird" value="#{msg.WantEarlybird}"
+	   	 <pe:tooltip  myPosition="left center" atPosition="right center" for="wantEarlybird" value="#{msg.WantEarlybirdTT}"
 	   	  showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
-      	 <pe:tooltip  myPosition="left center" atPosition="right center" for="refundable" value="#{msg.Refundable}"
+      	 <pe:tooltip  myPosition="left center" atPosition="right center" for="refundable" value="#{msg.RefundableTT}"
       	  showEvent="focus mouseenter" hideEvent="blur mouseleave" />  
  
 	     <p:messages id="msg1" redisplay="false" globalOnly="true" />
@@ -83,22 +84,22 @@
             
             <h:outputLabel value="#{msg.SalesStartDate}" styleClass="star" />
             <p:calendar id="salesStartDate" value="#{eventBean.ticket.salesStartDate}" required="true"  mindate="#{pageNavBean.today}" 
-                        label="#{msg.SalesStartDate}" title="#{msg.SalesStartDate}" pattern="dd-MMM-yyyy" readonlyInput="true"/>            
+                        label="#{msg.SalesStartDate}" title="#{msg.SalesStartDateTT}" pattern="dd-MMM-yyyy" readonlyInput="true"/>            
              <p:message for="salesStartDate" />
                         
             <h:outputLabel value="#{msg.SalesEndDate}" styleClass="star" />
             <p:calendar id="salesEndDate" value="#{eventBean.ticket.salesEndDate}" required="true"   mindate="#{pageNavBean.today}" 
-                        label="#{msg.SalesEndDate}" title="#{msg.SalesEndDate}" pattern="dd-MMM-yyyy" readonlyInput="true" />                                                                             
+                        label="#{msg.SalesEndDate}" title="#{msg.SalesEndDateTT}" pattern="dd-MMM-yyyy" readonlyInput="true" />                                                                             
               <p:message for="salesEndDate" />
                          
             <h:outputLabel value="#{msg.AgeCriteriaFrom}" styleClass="star" />
             <p:inputMask maxlength="2" mask="9?9" slotChar=" " id="ageCriteriaFrom" value="#{eventBean.ticket.ageFrom}" 
-                         title="#{msg.AgeCriteriaFrom}" required="true" label="#{msg.AgeCriteriaFrom}"/>            
+                         title="#{msg.AgeCriteriaFromTT}" required="true" label="#{msg.AgeCriteriaFrom}"/>            
              <p:message for="ageCriteriaFrom" />
             
             <h:outputLabel value="#{msg.AgeCriteriaTo}" styleClass="star" />
             <p:inputMask maxlength="2" mask="9?9" slotChar=" " id="ageCriteriaTo" value="#{eventBean.ticket.ageTo}" 
-                         title="#{msg.AgeCriteriaTo}" required="true" label="#{msg.AgeCriteriaTo}"/>            
+                         title="#{msg.AgeCriteriaToTT}" required="true" label="#{msg.AgeCriteriaTo}"/>            
              <p:message for="ageCriteriaTo" />
              
             <h:outputLabel value="#{msg.TicketPrice}" styleClass="star" />
@@ -122,20 +123,20 @@
                          required="true" label="#{msg.TotTicketsAvail}"/>            
              <p:message for="totTicketsAvail" />
              
-            <h:outputLabel value="#{msg.MaxTicketsPerTrans}" styleClass="star" />
-            <p:inputMask maxlength="2" mask="9?9" slotChar="" id="maxTicketsPerTrans" value="#{eventBean.ticket.maxTicketsPerTransaction}"
-                         title="#{msg.MaxTicketsPerTrans}" required="true" label="#{msg.MaxTicketsPerTrans}"/>            
-              <p:message for="maxTicketsPerTrans" />
-              
-            <h:outputLabel value="#{msg.MinTicketsPerTrans}" styleClass="star" />
+             <h:outputLabel value="#{msg.MinTicketsPerTrans}" styleClass="star" />
             <p:inputMask maxlength="2" mask="9?9" slotChar="" id="minTicketsPerTrans" value="#{eventBean.ticket.minTicketsPerTransaction}" 
                          title="#{msg.MinTicketsPerTrans}" required="true" label="#{msg.MinTicketsPerTrans}"/>                                
           	<p:message for="minTicketsPerTrans" />
             
-            <h:outputLabel value="#{msg.Disclaimer}" styleClass="star" />
-            <p:inputTextarea id="disclaimertkt" value="#{eventBean.ticket.disclaimer}" rows="5" cols="10"
-                             title="#{msg.Disclaimer}" required="true" label="#{msg.Disclaimer}"/>   
-          	<p:message for="disclaimertkt" />
+            <h:outputLabel value="#{msg.MaxTicketsPerTrans}" styleClass="star" />
+            <p:inputMask maxlength="2" mask="9?9" slotChar="" id="maxTicketsPerTrans" value="#{eventBean.ticket.maxTicketsPerTransaction}"
+                         title="#{msg.MaxTicketsPerTrans}" required="true" label="#{msg.MaxTicketsPerTrans}"/>            
+            <p:message for="maxTicketsPerTrans" />
+              
+             <h:outputLabel value="#{msg.Disclaimer}"  rendered="#{eventBean.eventMasterDTO.requireDisclaimer == 1}"/>
+            <p:inputTextarea id="disclaimertkt" value="#{eventBean.ticket.disclaimer}" rows="5" cols="10" rendered="#{eventBean.eventMasterDTO.requireDisclaimer == 1}"
+                             title="#{msg.Disclaimer}" required="false" label="#{msg.Disclaimer}"/>   
+          	<p:message for="disclaimertkt"   rendered="#{eventBean.eventMasterDTO.requireDisclaimer == 1}"/>
                                       
         </h:panelGrid>  
  	
