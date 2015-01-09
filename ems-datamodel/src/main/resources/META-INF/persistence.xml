@@ -19,6 +19,7 @@
     <class>com.ems.datamodel.entity.UserTypePagelinks</class>
     <class>com.ems.datamodel.entity.UserTypePagelinksPK</class>
     <class>com.ems.datamodel.entity.PagelinksMaster</class>
+    <class>com.ems.datamodel.entity.Status</class>
     <properties>
        <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://10.1.6.21:1433;databaseName=db_events"/>
         <property name="javax.persistence.jdbc.user" value="sa"/>

@@ -14,7 +14,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.ems.datamodel.dao.EventMasterDAO;
+import com.ems.datamodel.dao.StatusDAO;
 import com.ems.datamodel.dto.EventMasterDTO;
+import com.ems.datamodel.dto.StatusDTO;
+import com.ems.util.StatusConstant;
 
 @ManagedBean(name = "eventBeanList")
 @ViewScoped
@@ -27,9 +30,12 @@ public class EventBeanList extends AbstractMB {
 	private List<EventMasterDTO> eventMasterList;
     private EventMasterDTO eventMasterDTO;
     EventMasterDAO eventMasterDAO = null;
+    StatusDAO statusDAO = null;
    
     @ManagedProperty(value="#{pageNavBean}")
 	private PageNavigationBean pageNavBean ;
+    
+	private List<StatusDTO> statusList;
 
        /**
      * @return the eventMasterList
@@ -67,13 +73,22 @@ public class EventBeanList extends AbstractMB {
 		this.pageNavBean = pageNavBean;
 	}
 	 
-    @PostConstruct
+    public List<StatusDTO> getStatusList() {
+		return statusList;
+	}
+
+	public void setStatusList(List<StatusDTO> statusList) {
+		this.statusList = statusList;
+	}
+
+	@PostConstruct
     public void init()
     {
         eventMasterDAO = new EventMasterDAO();
         setEventMasterDTO(new EventMasterDTO());
-         //setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
+        statusDAO = new StatusDAO();
         searchEventListing();
+        populateStatusList();
     }
 
     // to search events
@@ -95,5 +110,10 @@ public class EventBeanList extends AbstractMB {
         eventMasterDAO.deleteEventMaster(eventId);
        // setEventMasterList(eventMasterDAO.getEventMasterList(pageNavBean.getLoggedInUserDTO().getSuperUserId()));
         searchEventListing();
-    }
+   }
+   
+   public void populateStatusList()
+   {
+	   setStatusList(statusDAO.getStatusListFor(StatusConstant.EVENT_STATUS.getStatusValue()));
+   }
 }

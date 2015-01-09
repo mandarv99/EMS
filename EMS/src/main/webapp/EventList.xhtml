@@ -39,9 +39,8 @@
 	                                 
 	                        <h:outputLabel value="#{msg.EventStatus}" />
 				            <p:selectOneMenu id="eventStatus" value="#{eventBeanList.eventMasterDTO.eventStatus}"  title="#{msg.EventStatus}" >			
-				            	 <f:selectItem itemValue="0" itemLabel="Select"  />	  
-				            	 <f:selectItem itemValue="1" itemLabel="#{msg.active}"  />
-				                <f:selectItem itemValue="2" itemLabel="#{msg.inActive}"  />
+				            	 <f:selectItem itemValue="0" itemLabel="All"  />	  
+				                <f:selectItems value="#{eventBeanList.statusList}" var="statusList" itemLabel="#{statusList.statusName}" itemValue="#{statusList.statusId}"/>
 			 	            </p:selectOneMenu>                      
                       </h:panelGrid>
                         
