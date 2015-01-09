@@ -35,5 +35,80 @@
 		 </field>
 		 
 	</mapping>
+	
+	<mapping wildcard="true" type="one-way">
+		<class-a>com.ems.datamodel.entity.CompanyDetails</class-a>
+		<class-b>com.ems.datamodel.dto.CompanyDetailsDTO</class-b>
+		
+		<field>
+			<a>iFSCcode</a>
+			<b>ifscCode</b>
+		</field>
+		
+		<field>
+		    <a>bankAcctNo</a>
+		    <b>bankAccountNo</b>
+		 </field>
+		 
+		 <field>
+		    <a>bankAcctNo</a>
+		    <b>confirmBankAccountNo</b>
+		 </field>
+		 
+		 <field>
+		    <a>phone1</a>
+		    <b>phoneNo</b>
+		 </field>
+	 </mapping>
+	 
+	 <mapping wildcard="true" type="one-way">
+		<class-a>com.ems.datamodel.entity.Users</class-a>
+		<class-b>com.ems.datamodel.dto.SignUpDTO</class-b>
+		
+		<field>
+			<a>email</a>
+			<b>emailAddress</b>
+		</field>
+		
+		<field>
+		    <a>userTypeId.userTypeId</a>
+		    <b>userType</b>
+		 </field>
+		 
+		 <field>
+		    <a>userTypeId.userTypeName</a>
+		    <b>userTypeName</b>
+		 </field>
+		 
+		 <field>
+		    <a>userTypeId.adminrights</a>
+		    <b>adminRights</b>
+		 </field>
+	 </mapping>
+	 
+	  <mapping wildcard="true" type="one-way">
+		<class-a>com.ems.datamodel.entity.Users</class-a>
+		<class-b>com.ems.datamodel.dto.OrganizerUserDTO</class-b>
+		
+		<field>
+			<a>email</a>
+			<b>emailAddress</b>
+		</field>
+		
+		<field>
+		    <a>userTypeId.userTypeId</a>
+		    <b>userTypeId</b>
+		 </field>
+		 
+		 <field>
+		    <a>userTypeId.userTypeName</a>
+		    <b>userTypeName</b>
+		 </field>
+		 
+		 <field>
+		    <a>passChangeInNextLogin</a>
+		    <b>changeInNextLogin</b>
+		 </field>
+	 </mapping>
 
 </mappings>        

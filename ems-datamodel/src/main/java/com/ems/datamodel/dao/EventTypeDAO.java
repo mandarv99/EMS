@@ -6,13 +6,20 @@
 package com.ems.datamodel.dao;
 
 import com.ems.datamodel.dto.EventTypesDTO;
+import com.ems.datamodel.entity.DTOEntityMapper;
 import com.ems.datamodel.entity.EventTypes;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventTypeDAO extends GenericDAO<EventTypes> {
 
-    public EventTypeDAO() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6149250605018274899L;
+
+	public EventTypeDAO() {
         super(EventTypes.class);
     }
 
@@ -23,8 +30,7 @@ public class EventTypeDAO extends GenericDAO<EventTypes> {
             List<EventTypes> eventTypesList = findAll();
             for (EventTypes eventTypes : eventTypesList) {
                 EventTypesDTO eventTypesDTO = new EventTypesDTO();
-                eventTypesDTO.setEventTypeId(eventTypes.getEventTypeId());
-                eventTypesDTO.setEventTypeName(eventTypes.getEventTypeName());
+                DTOEntityMapper.getMapper().map(eventTypes, eventTypesDTO);
                 eventTypesDTOList.add(eventTypesDTO);
             }
         } catch (Exception e) {

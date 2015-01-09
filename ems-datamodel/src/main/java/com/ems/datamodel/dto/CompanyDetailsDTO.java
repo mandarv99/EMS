@@ -27,6 +27,7 @@ public class CompanyDetailsDTO  extends AbstractDTO {
     private String ifscCode;
     private String bankName;
     private String branchName;
+    private int companyId;
 
     @Override
     public String toString() {
@@ -242,5 +243,13 @@ public class CompanyDetailsDTO  extends AbstractDTO {
     public void setBranchName(String branchName) {
         this.branchName = branchName;
     }
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
     
 }

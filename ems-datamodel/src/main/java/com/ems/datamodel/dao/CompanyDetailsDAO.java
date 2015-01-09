@@ -7,6 +7,8 @@ package com.ems.datamodel.dao;
 
 import com.ems.datamodel.dto.CompanyDetailsDTO;
 import com.ems.datamodel.entity.CompanyDetails;
+import com.ems.datamodel.entity.DTOEntityMapper;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
         super(CompanyDetails.class);
     }
 
+	// get company listing based on super_user_id
     public List<CompanyDetailsDTO> getCompanyDetailsList(int superUserId) {
         List<CompanyDetailsDTO> companyDetailsDTOList = new ArrayList<CompanyDetailsDTO>();
         try {
@@ -31,18 +34,12 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
             Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("superUserId", superUserId);
             List<CompanyDetails> companyDetailsList = super.findResults("CompanyDetails.findBySuperUserId", parameters);
-            for (CompanyDetails companyDetails : companyDetailsList) {
+            
+            for (CompanyDetails companyDetails : companyDetailsList)
+            {
                 CompanyDetailsDTO companyDetailsDTO = new CompanyDetailsDTO();
-                companyDetailsDTO.setAddress1(companyDetails.getAddress1());
-                companyDetailsDTO.setAddress2(companyDetails.getAddress2());
-                companyDetailsDTO.setBankAccountNo(companyDetails.getBankAcctNo());
-                companyDetailsDTO.setConfirmBankAccountNo(companyDetails.getBankAcctNo());
-                companyDetailsDTO.setBankName(companyDetails.getBankName());
-                companyDetailsDTO.setBranchName(companyDetails.getBranchName());
+                DTOEntityMapper.getMapper().map(companyDetails, companyDetailsDTO);
                 companyDetailsDTO.setId(companyDetails.getCompanyId());
-                companyDetailsDTO.setCompanyName(companyDetails.getCompanyName());
-                companyDetailsDTO.setIfscCode(companyDetails.getIFSCcode());
-                companyDetailsDTO.setPhoneNo(companyDetails.getPhone1());
                 companyDetailsDTOList.add(companyDetailsDTO);
             }
         } catch (Exception e) {
@@ -53,6 +50,7 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
         return companyDetailsDTOList;
     }
 
+    // insert new company details
     public void insertCompanyDetails(CompanyDetailsDTO companyDetailsDTO, int userId , int superUserId) {
         try {
             beginTransaction();
@@ -77,6 +75,7 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
         }
     }
 
+    // update company details
     public void updateCompanyDetails(CompanyDetailsDTO companyDetailsDTO, int userId) {
         try {
             beginTransaction();
@@ -100,6 +99,7 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
         }
     }
 
+    // delete company details
     public void deleteCompanyDetails(CompanyDetailsDTO companyDetailsDTO) {
         try {
             beginTransaction();
@@ -114,6 +114,7 @@ public class CompanyDetailsDAO extends GenericDAO<CompanyDetails> {
         }
     }
 
+    // get company details
     public CompanyDetails getCompanyDetails(int companyId) {
         CompanyDetails companyDetails = null;
         try {

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ems.datamodel.dto.StatusDTO;
+import com.ems.datamodel.entity.DTOEntityMapper;
 import com.ems.datamodel.entity.Status;
 
 /**
@@ -35,12 +36,13 @@ public class StatusDAO extends GenericDAO<Status> {
             Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("statusFor", statusFor);
             List<Status> statusList = findResults("Status.findByStatusFor", parameters);
-            for (Status userType : statusList) {
+            for (Status status : statusList)
+            {
                 StatusDTO statusDto = new StatusDTO();
-                statusDto.setStatusId(userType.getStatusId());
-                statusDto.setStatusName(userType.getStatusName());
-                statusDto.setStatusFor(userType.getStatusFor());
-               statusDTOList.add(statusDto);
+
+                DTOEntityMapper.getMapper().map(status, statusDto);
+
+                statusDTOList.add(statusDto);
             }
 
         } catch (Exception e) {

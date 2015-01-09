@@ -6,7 +6,9 @@
 package com.ems.datamodel.dao;
 
 import com.ems.datamodel.dto.UserTypeDTO;
+import com.ems.datamodel.entity.DTOEntityMapper;
 import com.ems.datamodel.entity.UserType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,8 @@ public class UserTypeDAO extends GenericDAO<UserType> {
             List<UserType> userTypeList = findResults("UserType.findByUserTypeExSuperUser", null);
             for (UserType userType : userTypeList) {
                 UserTypeDTO userTypeDTO = new UserTypeDTO();
-                userTypeDTO.setUserTypeId(userType.getUserTypeId());
-                userTypeDTO.setUserTypeName(userType.getUserTypeName());
+                
+                DTOEntityMapper.getMapper().map(userType, userTypeDTO);
                 userTypeDTOList.add(userTypeDTO);
             }
 

@@ -18,6 +18,7 @@ import javax.persistence.criteria.Root;
 
 import com.ems.datamodel.dto.OrganizerUserDTO;
 import com.ems.datamodel.dto.SignUpDTO;
+import com.ems.datamodel.entity.DTOEntityMapper;
 import com.ems.datamodel.entity.Users;
 import com.ems.datamodel.entity.Users_;
 
@@ -61,16 +62,8 @@ public class UsersDAO extends GenericDAO<Users> {
             if(users!=null)
             {
             	userDetails = new SignUpDTO();
-            	userDetails.setUserId(users.getUserId());
-            	userDetails.setFirstName(users.getFirstName());
-            	userDetails.setLastName(users.getLastName());
-            	userDetails.setSuperUserId(users.getSuperUserId());
-            	userDetails.setUserType(users.getUserTypeId().getUserTypeId());
-            	userDetails.setUserTypeName(users.getUserTypeId().getUserTypeName());
-            	userDetails.setAdminRights(users.getUserTypeId().getAdminrights());
-            	userDetails.setStatusId(users.getStatusId());
+                DTOEntityMapper.getMapper().map(users, userDetails);
             	userDetails.setSuperUserId(users.getSuperUserId() > 0 ? users.getSuperUserId() : users.getUserId());
-            	userDetails.setEmailAddress(users.getEmail());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,15 +118,11 @@ public class UsersDAO extends GenericDAO<Users> {
             parameters.put("superUserId", superUserId);
             List<Users> userEnList = super.findResults("Users.findBySuperUserId", parameters);
             for (Users user : userEnList) {
-                OrganizerUserDTO organizerUserDTO = new OrganizerUserDTO();
-                organizerUserDTO.setEmailAddress(user.getEmail());
-                organizerUserDTO.setFirstName(user.getFirstName());
-                organizerUserDTO.setLastName(user.getLastName());
-                organizerUserDTO.setUserId(user.getUserId());
-                organizerUserDTO.setSuperUserId(user.getSuperUserId());
-                organizerUserDTO.setUserTypeId(user.getUserTypeId().getUserTypeId());
-                organizerUserDTO.setUserTypeName(user.getUserTypeId().getUserTypeName());
-                organizerUserDTO.setChangeInNextLogin(user.getPassChangeInNextLogin());
+               
+            	OrganizerUserDTO organizerUserDTO = new OrganizerUserDTO();
+
+                DTOEntityMapper.getMapper().map(user, organizerUserDTO);
+                
                 userList.add(organizerUserDTO);
             }
         } catch (Exception e) {
@@ -151,15 +140,8 @@ public class UsersDAO extends GenericDAO<Users> {
             beginTransaction();
             Users users = find(userId);
             organizerUserDTO = new OrganizerUserDTO();
-            organizerUserDTO.setChangeInNextLogin(users.getPassChangeInNextLogin());
-            organizerUserDTO.setEmailAddress(users.getEmail());
-            organizerUserDTO.setFirstName(users.getFirstName());
-            organizerUserDTO.setLastName(users.getLastName());
-            organizerUserDTO.setPassword(users.getPassword());
-            organizerUserDTO.setSuperUserId(users.getSuperUserId());
-            organizerUserDTO.setUserId(users.getUserId());
-            organizerUserDTO.setUserTypeName(users.getUserTypeId().getUserTypeName());
-            organizerUserDTO.setUserTypeId(users.getUserTypeId().getUserTypeId());
+ 
+            DTOEntityMapper.getMapper().map(users, organizerUserDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -177,9 +159,8 @@ public class UsersDAO extends GenericDAO<Users> {
             Users users = super.findOneResult("Users.findByEmailAndPwdAndUserId", parameters);
             if (users != null) {
                 signUpDTO = new SignUpDTO();
-                signUpDTO.setFirstName(users.getFirstName());
-                signUpDTO.setLastName(users.getLastName());
-                signUpDTO.setUserId(users.getUserId());
+              
+                DTOEntityMapper.getMapper().map(users, signUpDTO);
                 users.setStatusId(1);
                 update(users);
             }
@@ -284,15 +265,10 @@ public class UsersDAO extends GenericDAO<Users> {
             List<Users> usersEnList = em.createQuery(query).getResultList();
             for (Users user : usersEnList) {
                 OrganizerUserDTO organizerUserDTO = new OrganizerUserDTO();
-                organizerUserDTO.setEmailAddress(user.getEmail());
-                organizerUserDTO.setFirstName(user.getFirstName());
-                organizerUserDTO.setLastName(user.getLastName());
-                organizerUserDTO.setUserId(user.getUserId());
-                organizerUserDTO.setSuperUserId(user.getSuperUserId());
-                organizerUserDTO.setUserTypeId(user.getUserTypeId().getUserTypeId());
-                organizerUserDTO.setUserTypeName(user.getUserTypeId().getUserTypeName());
+                 
+                DTOEntityMapper.getMapper().map(users, organizerUserDTO);
                 organizerUserDTO.setChangeInNextLogin(user.getPassChangeInNextLogin() !=null ? user.getPassChangeInNextLogin() : false );
-                organizerUserDTO.setUserId(user.getUserId());
+                
                 userList.add(organizerUserDTO);
             }
         } catch (Exception e) {
