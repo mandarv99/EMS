@@ -111,7 +111,11 @@ public class EventMaster implements Serializable {
     private Date addedOn;
     @Column(name = "added_by")
     private Integer addedBy;
-
+    @Column(name = "latitude")
+    private Double latitude;
+    @Column(name = "longitude")
+    private Double longitude;
+    
     public EventMaster() {
     }
 
@@ -369,4 +373,20 @@ public class EventMaster implements Serializable {
     public void setAddedBy(Integer addedBy) {
         this.addedBy = addedBy;
     }
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 }

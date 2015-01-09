@@ -63,6 +63,8 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
                 eventMasterDTO.setIsDiscounted(eventMaster.getIsDiscounted());
                 eventMasterDTO.setEventAddress(eventMaster.getEventAddress());
                 eventMasterDTO.setDesclaimer(eventMaster.getDisclaimer());
+                  	eventMasterDTO.getMapDetails().setLatitude(eventMaster.getLatitude());
+                  	eventMasterDTO.getMapDetails().setLongitude(eventMaster.getLongitude());
                 eventMasterList.add(eventMasterDTO);
             }
 
@@ -155,6 +157,8 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
                  evMasterDTO.setIsDiscounted(eventMasterD.getIsDiscounted());
                  evMasterDTO.setEventAddress(eventMasterD.getEventAddress());
                  evMasterDTO.setDesclaimer(eventMasterD.getDisclaimer());
+                  	eventMasterDTO.getMapDetails().setLatitude(eventMasterD.getLatitude());
+                  	eventMasterDTO.getMapDetails().setLongitude(eventMasterD.getLongitude());
                  eventMasterList.add(evMasterDTO);
             }
         } catch (Exception e) {
@@ -199,6 +203,9 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
             eventMasterDTO.setRequireDisclaimer(eventMaster.getRequireDisclaimer());
             eventMasterDTO.setIsSittingArrangmentRequired(eventMaster.getRequiredSittingArrangement());
             eventMasterDTO.setTicketMasterDTOList(getTicketList((List<TicketMaster>) eventMaster.getTicketMasterCollection()));
+             	eventMasterDTO.getMapDetails().setLatitude(eventMaster.getLatitude());
+             	eventMasterDTO.getMapDetails().setLongitude(eventMaster.getLongitude());
+            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -249,6 +256,10 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
             CompanyDetails companyDetails = companyDetailsDAO.getCompanyDetails(eventMasterDTO.getCompanyId());
             eventMaster.setCompanyId(companyDetails);
 //            eventMaster.setTicketMasterCollection(getTicketMaster(eventMasterDTO.getTicketMasterDTOList(), eventMaster));
+           
+            	eventMaster.setLatitude(eventMasterDTO.getMapDetails().getLatitude());
+            	eventMaster.setLongitude(eventMasterDTO.getMapDetails().getLongitude());
+               
             save(eventMaster);
             eventMasterDTO.setEventId(eventMaster.getEventId());
             result = true;
@@ -312,7 +323,11 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
             eventMaster.setIsFreeEvent(eventMasterDTO.isPaidEvent());
             eventMaster.setRequireDisclaimer(eventMasterDTO.getRequireDisclaimer());
             eventMaster.setRequiredSittingArrangement(eventMasterDTO.isIsSittingArrangmentRequired());
+           	eventMaster.setLatitude(eventMasterDTO.getMapDetails().getLatitude());
+            eventMaster.setLongitude(eventMasterDTO.getMapDetails().getLongitude());
+             
             eventMaster.setEventUrl("dhd");
+            
             result = true;
 
         } catch (Exception e) {

@@ -15,7 +15,11 @@ import java.util.List;
  */
 public class EventMasterDTO extends AbstractDTO {
 
-    private Integer eventId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 960109282100568371L;
+	private Integer eventId;
     private String eventCode;
     private String eventName;
     private Integer eventTypeId;
@@ -41,9 +45,11 @@ public class EventMasterDTO extends AbstractDTO {
     private boolean disclaimerRequired;
     private Date addedOn;    
     private Integer addedBy;
+    private  MapDTO mapDetails;
 
     public EventMasterDTO() {
         ticketMasterDTOList = new ArrayList<TicketDTO>();
+        mapDetails = new MapDTO();
     }
 
     /**
@@ -415,4 +421,11 @@ public class EventMasterDTO extends AbstractDTO {
         this.addedBy = addedBy;
     }
 
+	public void setMapDetails(MapDTO mapDetails) {
+		this.mapDetails = mapDetails;
+	}
+
+	public MapDTO getMapDetails() {
+		return mapDetails;
+	}
 }

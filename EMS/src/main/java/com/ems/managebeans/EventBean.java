@@ -7,7 +7,10 @@ package com.ems.managebeans;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +19,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 
 import org.primefaces.event.FlowEvent;
+import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import com.ems.datamodel.dao.CompanyDetailsDAO;
 import com.ems.datamodel.dao.EventMasterDAO;
@@ -28,12 +36,10 @@ import com.ems.datamodel.dto.CompanyDetailsDTO;
 import com.ems.datamodel.dto.DiscountMasterDTO;
 import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.EventTypesDTO;
+import com.ems.datamodel.dto.MapDTO;
 import com.ems.datamodel.dto.SuperCategoryTktDTO;
 import com.ems.datamodel.dto.TicketDTO;
 import com.ems.datamodel.entity.ParticipantSpecimenMaster;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
 
 @ManagedBean(name = "eventBean")
 @ViewScoped
@@ -59,20 +65,16 @@ public class EventBean extends AbstractMB {
     private List<ParticipantSpecimenMaster> participantSpecimenMasterList;
     private Map<Integer, Boolean> participantSpecimanMap;
     private Map<Integer, Map<Integer, Boolean>> parentMap;
+    
     @ManagedProperty(value = "#{pageNavBean}")
     private PageNavigationBean pageNavBean;
+    
     private TicketDAO ticketDAO;
     private ParticipantMasterDAO participantMasterDAO;
+    private MapModel mapModel;
+    private MapDTO mapDto;
 
-    public PageNavigationBean getPageNavBean() {
-        return pageNavBean;
-    }
-
-    public void setPageNavBean(PageNavigationBean pageNavBean) {
-        this.pageNavBean = pageNavBean;
-    }
-
-    @PostConstruct
+  	@PostConstruct
     public void init() {
 
         eventMasterDAO = new EventMasterDAO();
@@ -98,7 +100,19 @@ public class EventBean extends AbstractMB {
         participantSpecimenMasterDAO = new ParticipantSpecimenMasterDAO();
         participantMasterDAO = new ParticipantMasterDAO();
         participantSpecimenMasterList = participantSpecimenMasterDAO.getParticipantSpecimenMasterList();
-    }
+        
+        initialiseMap();
+     }
+	
+	// to initialize the map parameters
+	private void initialiseMap()
+	{
+		mapDto =  new MapDTO();
+        mapModel =  new DefaultMapModel();
+        mapDto.setLatitude(21.000000);
+        mapDto.setLongitude(78.000000);
+        mapDto.setZoom(6);
+	}
 
     private void getDataFromRequestMap() {
         Object obj = getObjectFromFlash("eventMaster");
@@ -106,6 +120,30 @@ public class EventBean extends AbstractMB {
             this.eventMasterDTO = (EventMasterDTO) obj;
         }
     }
+
+    public MapDTO getMapDto() {
+  		return mapDto;
+  	}
+
+  	public void setMapDto(MapDTO mapDto) {
+  		this.mapDto = mapDto;
+  	}
+
+  	public PageNavigationBean getPageNavBean() {
+          return pageNavBean;
+      }
+
+      public void setPageNavBean(PageNavigationBean pageNavBean) {
+          this.pageNavBean = pageNavBean;
+      }
+
+      public MapModel getMapModel() {
+  		return mapModel;
+  	}
+
+  	public void setMapModel(MapModel mapModel) {
+  		this.mapModel = mapModel;
+  	}
 
     /**
      * @return the eventMasterDTO
@@ -219,6 +257,48 @@ public class EventBean extends AbstractMB {
         this.companyDetailsDTOList = companyDetailsDTOList;
     }
 
+    /**
+     * @return the participantSpecimenMasterList
+     */
+    public List<ParticipantSpecimenMaster> getParticipantSpecimenMasterList() {
+        return participantSpecimenMasterList;
+    }
+
+    /**
+     * @param participantSpecimenMasterList the participantSpecimenMasterList to
+     * set
+     */
+    public void setParticipantSpecimenMasterList(List<ParticipantSpecimenMaster> participantSpecimenMasterList) {
+        this.participantSpecimenMasterList = participantSpecimenMasterList;
+    }
+
+    /**
+     * @return the participantSpecimanMap
+     */
+    public Map<Integer, Boolean> getParticipantSpecimanMap() {
+        return participantSpecimanMap;
+    }
+
+    /**
+     * @param participantSpecimanMap the participantSpecimanMap to set
+     */
+    public void setParticipantSpecimanMap(Map<Integer, Boolean> participantSpecimanMap) {
+        this.participantSpecimanMap = participantSpecimanMap;
+    }
+
+    /**
+     * @return the parentMap
+     */
+    public Map<Integer, Map<Integer, Boolean>> getParentMap() {
+        return parentMap;
+    }
+
+    /**
+     * @param parentMap the parentMap to set
+     */
+    public void setParentMap(Map<Integer, Map<Integer, Boolean>> parentMap) {
+        this.parentMap = parentMap;
+    }
     public void saveEvent() {
         try {
             eventMasterDTO.setAddedBy(pageNavBean.getLoggedInUserDTO().getUserId());
@@ -389,48 +469,6 @@ public class EventBean extends AbstractMB {
         }
     }
 
-    /**
-     * @return the participantSpecimenMasterList
-     */
-    public List<ParticipantSpecimenMaster> getParticipantSpecimenMasterList() {
-        return participantSpecimenMasterList;
-    }
-
-    /**
-     * @param participantSpecimenMasterList the participantSpecimenMasterList to
-     * set
-     */
-    public void setParticipantSpecimenMasterList(List<ParticipantSpecimenMaster> participantSpecimenMasterList) {
-        this.participantSpecimenMasterList = participantSpecimenMasterList;
-    }
-
-    /**
-     * @return the participantSpecimanMap
-     */
-    public Map<Integer, Boolean> getParticipantSpecimanMap() {
-        return participantSpecimanMap;
-    }
-
-    /**
-     * @param participantSpecimanMap the participantSpecimanMap to set
-     */
-    public void setParticipantSpecimanMap(Map<Integer, Boolean> participantSpecimanMap) {
-        this.participantSpecimanMap = participantSpecimanMap;
-    }
-
-    /**
-     * @return the parentMap
-     */
-    public Map<Integer, Map<Integer, Boolean>> getParentMap() {
-        return parentMap;
-    }
-
-    /**
-     * @param parentMap the parentMap to set
-     */
-    public void setParentMap(Map<Integer, Map<Integer, Boolean>> parentMap) {
-        this.parentMap = parentMap;
-    }
 
     public void saveParticipantDetails() {
         try {
@@ -440,4 +478,22 @@ public class EventBean extends AbstractMB {
             e.printStackTrace();
         }
     }
+    
+    // add marker on point select on the map
+    public void onPointSelect(PointSelectEvent event)
+    {
+        LatLng latlng = event.getLatLng();
+        eventMasterDTO.getMapDetails().setLatitude(latlng.getLat());
+        eventMasterDTO.getMapDetails().setLongitude(latlng.getLng());
+       
+        // refresh map center & zoom
+        mapDto.setLatitude(latlng.getLat());
+        mapDto.setLongitude(latlng.getLng());
+        mapDto.setZoom(15);
+      
+        // remove earlier marker & add new markers
+        mapModel = new DefaultMapModel();
+	    Marker marker = new Marker(latlng, "");
+	    mapModel.addOverlay(marker);
+   }
 }

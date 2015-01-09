@@ -8,8 +8,10 @@
 	xmlns:pe="http://primefaces.org/ui/extensions" >
 
     <ui:composition>                         
-    
-    	<p:panel id="panelEvent" styleClass="Content" >	
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+	   	<p:panel id="panelEvent" styleClass="Content" >	
     		<f:facet name="header">
     			<h:outputLabel value="Provide brief description of the event. This information will be visible to your audience."/>
     		</f:facet>
@@ -65,9 +67,15 @@
 				 <p:message for="freeEvent" />	
 	 
 	            <h:outputLabel value="#{msg.EventLocation} " styleClass="star" />
-	            <p:inputTextarea id="eventLocation" value="#{eventBean.eventMasterDTO.eventAddress}" 
-	                             title="#{msg.EventLocationTT}" required="true"  requiredMessage="#{msg.EventLocation} is Required" />
-	            <p:message for="eventLocation" />
+	             <h:panelGroup>
+		           <h:panelGrid columns="2" width="100%" cellpadding="0" cellspacing="0">
+			            <p:inputTextarea id="eventLocation" value="#{eventBean.eventMasterDTO.eventAddress}" 
+			                             title="#{msg.EventLocationTT}" required="true"  requiredMessage="#{msg.EventLocation} is Required" />
+			           
+			             <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Locate on Map" onclick="PF('dlgMap').show();" />
+		             </h:panelGrid>
+		         </h:panelGroup>
+	             <p:message for="eventLocation" />
 	            
 	            <h:outputLabel value="#{msg.EventType} " rendered="false" />
   	            <p:selectOneMenu id="eventType" value="#{eventBean.eventMasterDTO.eventTypeId}" required="false" title="#{msg.EventType}" 
@@ -124,9 +132,44 @@
         </p:panel>
        	 
  	  <p:outputPanel id="btnPanel1"  styleClass="ui-wizard-navbar" >
-		    <p:commandButton value="Next" icon="ui-icon-arrowthick-1-e"  onclick="PF('wiz').next();"/>  
+ 		    <p:commandButton value="Next" icon="ui-icon-arrowthick-1-e"  onclick="PF('wiz').next();"/>  
 	  </p:outputPanel>
-  
-                                               
-    </ui:composition>
+                    
+		<p:dialog id="dlgMap" widgetVar="dlgMap" width="625" height="400" modal="true" header="Select Event Location">
+		 
+    		<p:gmap id="map" center="#{eventBean.mapDto.latitude} , #{eventBean.mapDto.longitude}" zoom="#{eventBean.mapDto.zoom}"  type="ROADMAP" 
+    		style="width:600px;height:400px"  model="#{eventBean.mapModel}"   widgetVar="map" >	
+				 <p:ajax event="pointSelect" listener="#{eventBean.onPointSelect}" update="map" />
+ 			</p:gmap>
+ 				
+ <!-- 				<script type="text/javascript">
+			    if (navigator.geolocation) {
+			        checkGeolocationByHTML5();
+			    } else {
+			        checkGeolocationByLoaderAPI(); // HTML5 not supported! Fall back to Loader API.
+			    }
+			
+			    function checkGeolocationByHTML5() {
+			        navigator.geolocation.getCurrentPosition(function(position) {
+			            setMapCenter(position.coords.latitude, position.coords.longitude);
+			        }, function() {
+			            checkGeolocationByLoaderAPI(); // Error! Fall back to Loader API.
+			        });
+			    }
+			
+			    function checkGeolocationByLoaderAPI() {
+			        if (google.loader.ClientLocation) {
+			            setMapCenter(google.loader.ClientLocation.latitude, google.loader.ClientLocation.longitude);
+			        } else {
+			            // Unsupported! Show error/warning?
+			        }
+			    }
+			
+			    function setMapCenter(latitude, longitude) {
+			    	PF('map').getMap().setCenter(new google.maps.LatLng(latitude, longitude));
+			    }
+			</script> -->
+   		</p:dialog>
+ 
+     </ui:composition>
 </html>

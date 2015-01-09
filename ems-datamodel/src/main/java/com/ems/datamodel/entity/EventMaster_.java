@@ -42,7 +42,9 @@ public class EventMaster_{
     public static volatile SingularAttribute<EventMaster, String>   eventCode;
     public static volatile SingularAttribute<EventMaster, Integer> requireDisclaimer;
     public static volatile SingularAttribute<EventMaster, Boolean>  bibNumbering;
-    
+    public static volatile SingularAttribute<EventMaster, Double>   latitude;
+    public static volatile SingularAttribute<EventMaster, Double>   longitude;
+
     public static volatile PluralAttribute<EventMaster,  Collection , Disclaimer > disclaimerCollection;
     public static volatile PluralAttribute<EventMaster,   Collection ,TicketMaster > ticketMasterCollection;
     public static volatile PluralAttribute<EventMaster, Collection ,DiscountMaster > discountMasterCollection;
