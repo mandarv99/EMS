@@ -83,8 +83,7 @@
                             </p:column>
 
                             <p:column headerText="#{msg.EventStatus}" style="width:8%;">
-                                <h:outputText value="#{msg.inActive}" rendered="#{eventMaster.eventStatus == 2}"  />
-                                <h:outputText value="#{msg.active}" rendered="#{eventMaster.eventStatus == 1}"  />
+                                <h:outputText value="#{eventMaster.statusDto.statusName}"  />
                              </p:column>
 
                             <p:column headerText="#{msg.edit}" style="width:5%;">

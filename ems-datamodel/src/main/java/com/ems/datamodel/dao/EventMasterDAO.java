@@ -8,9 +8,7 @@ package com.ems.datamodel.dao;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -20,6 +18,7 @@ import com.ems.datamodel.dto.EventMasterDTO;
 import com.ems.datamodel.dto.SignUpDTO;
 import com.ems.datamodel.dto.TicketDTO;
 import com.ems.datamodel.entity.CompanyDetails;
+import com.ems.datamodel.entity.DTOEntityMapper;
 import com.ems.datamodel.entity.DiscountMaster;
 import com.ems.datamodel.entity.EventMaster;
 import com.ems.datamodel.entity.SuperCategoryTkt;
@@ -38,45 +37,7 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
         super(EventMaster.class);
     }
 
-    public List<EventMasterDTO> getEventMasterList(Integer addedBy) {
-        List<EventMasterDTO> eventMasterList = new ArrayList<EventMasterDTO>();
-        try {
-            beginTransaction();
-            Map<String, Object> parameters = new HashMap<String, Object>();
-            parameters.put("addedBy", addedBy);
-            List<EventMaster> eventMasterEnList = super.findResults("EventMaster.findByAddedBy", parameters);
-            for (EventMaster eventMaster : eventMasterEnList) {
-                EventMasterDTO eventMasterDTO = new EventMasterDTO();
-                eventMasterDTO.setEventId(eventMaster.getEventId());
-                eventMasterDTO.setEventName(eventMaster.getEventName());
-                eventMasterDTO.setEventStartDatetime(eventMaster.getEventStartDatetime());
-                eventMasterDTO.setEventEndDatetime(eventMaster.getEventEndDatetime());
-                eventMasterDTO.setEventDescription(eventMaster.getEventDescription());
-                eventMasterDTO.setPaidEvent(eventMaster.getIsFreeEvent());
-                eventMasterDTO.setEventLocation(eventMaster.getEventAddress());
-                eventMasterDTO.setEventTypeId(eventMaster.getEventTypeId());
-                eventMasterDTO.setCompanyId(eventMaster.getCompanyId().getCompanyId());
-                eventMasterDTO.setIsSittingArrangmentRequired(eventMaster.getRequiredSittingArrangement());
-                eventMasterDTO.setRequireDisclaimer(eventMaster.getRequireDisclaimer());
-                eventMasterDTO.setBibNumbering(eventMaster.getBibNumbering());
-                eventMasterDTO.setEventStatus(eventMaster.getEventStatus());
-                eventMasterDTO.setIsDiscounted(eventMaster.getIsDiscounted());
-                eventMasterDTO.setEventAddress(eventMaster.getEventAddress());
-                eventMasterDTO.setDesclaimer(eventMaster.getDisclaimer());
-                  	eventMasterDTO.getMapDetails().setLatitude(eventMaster.getLatitude());
-                  	eventMasterDTO.getMapDetails().setLongitude(eventMaster.getLongitude());
-                eventMasterList.add(eventMasterDTO);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            commitAndCloseTransaction();
-        }
-        return eventMasterList;
-    }
-
-    // to search based on search criteria
+	// to search based on search criteria
     public List<EventMasterDTO> searchEvents(EventMasterDTO eventMasterDTO, SignUpDTO loggedInUser)
     {
      	Date startDate = new Date();
@@ -88,11 +49,12 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
         	beginTransaction();
             EntityManager em = getEntityManager();
 
-            String sql ="select c FROM EventMaster c  "
+            String sql ="select c  FROM EventMaster c  "
             		+ " , CompanyDetails cd  " 
-					+"  , Users u "
+					+"  , Users u , Status s "
 					+" where c.companyId = cd.companyId " 
-					+"	and cd.superUserId = u.superUserId " 
+					+"	and cd.superUserId = u.superUserId "
+				 	+ " and c.eventStatus = s.statusId " 
 					+"	and u.superUserId = :superUserId ";
               
             if(eventMasterDTO.getEventName()!=null && !eventMasterDTO.getEventName().trim().isEmpty())
@@ -102,7 +64,7 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
             	sql+=" and c.eventTypeId = :eventTypeId ";
             
             if (eventMasterDTO.getEventStatus() != null && eventMasterDTO.getEventStatus() != 0)  
-            	sql+=" and c.eventStatus = :eventStatus ";
+            	sql+=" and s.statusId = :eventStatus ";
             
             if (eventMasterDTO.getEventStartDatetime() != null) 
             {
@@ -141,7 +103,7 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
               
             for (EventMaster eventMasterD : eventEnList) {
             	 EventMasterDTO evMasterDTO = new EventMasterDTO();
-            	 evMasterDTO.setEventId(eventMasterD.getEventId());
+            	/* evMasterDTO.setEventId(eventMasterD.getEventId());
             	 evMasterDTO.setEventName(eventMasterD.getEventName());
             	 evMasterDTO.setEventStartDatetime(eventMasterD.getEventStartDatetime());
             	 evMasterDTO.setEventEndDatetime(eventMasterD.getEventEndDatetime());
@@ -157,8 +119,10 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
                  evMasterDTO.setIsDiscounted(eventMasterD.getIsDiscounted());
                  evMasterDTO.setEventAddress(eventMasterD.getEventAddress());
                  evMasterDTO.setDesclaimer(eventMasterD.getDisclaimer());
-                  	eventMasterDTO.getMapDetails().setLatitude(eventMasterD.getLatitude());
-                  	eventMasterDTO.getMapDetails().setLongitude(eventMasterD.getLongitude());
+                 eventMasterDTO.getMapDetails().setLatitude(eventMasterD.getLatitude());
+                 eventMasterDTO.getMapDetails().setLongitude(eventMasterD.getLongitude());
+                 eventMasterDTO.setStatusDto(eventMasterD.getStatus());*/
+                 DTOEntityMapper.getMapper().map(eventMasterD, evMasterDTO);
                  eventMasterList.add(evMasterDTO);
             }
         } catch (Exception e) {
@@ -174,38 +138,6 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
         try {
             beginTransaction();
             eventMaster = find(eventId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            commitAndCloseTransaction();
-        }
-        return eventMaster;
-    }
-
-    public EventMaster getEventMaster(EventMasterDTO eventMasterDTO) {
-        EventMaster eventMaster = null;
-        try {
-            beginTransaction();
-            eventMaster = find(eventMasterDTO.getEventId());
-            eventMasterDTO.setEventName(eventMaster.getEventName());
-            eventMasterDTO.setEventStartDatetime(eventMaster.getEventStartDatetime());
-            eventMasterDTO.setEventEndDatetime(eventMaster.getEventEndDatetime());
-            eventMasterDTO.setEventLocation(eventMaster.getEventAddress());
-            eventMasterDTO.setEventHeaderImage(eventMaster.getEventHeaderImage());
-            eventMasterDTO.setEventTypeId(eventMaster.getEventTypeId());
-            eventMasterDTO.setBibNumbering(eventMaster.getBibNumbering());
-            eventMasterDTO.setDesclaimer(eventMaster.getDisclaimer());
-            eventMasterDTO.setEventAddress(eventMaster.getEventAddress());
-            eventMasterDTO.setEventDescription(eventMaster.getEventDescription());
-            eventMasterDTO.setEventStatus(eventMaster.getEventStatus());
-            eventMasterDTO.setIsDiscounted(eventMaster.getIsDiscounted());
-            eventMasterDTO.setPaidEvent(eventMaster.getIsFreeEvent());
-            eventMasterDTO.setRequireDisclaimer(eventMaster.getRequireDisclaimer());
-            eventMasterDTO.setIsSittingArrangmentRequired(eventMaster.getRequiredSittingArrangement());
-            eventMasterDTO.setTicketMasterDTOList(getTicketList((List<TicketMaster>) eventMaster.getTicketMasterCollection()));
-             	eventMasterDTO.getMapDetails().setLatitude(eventMaster.getLatitude());
-             	eventMasterDTO.getMapDetails().setLongitude(eventMaster.getLongitude());
-            
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -317,7 +249,7 @@ public class EventMasterDAO extends GenericDAO<EventMaster> {
             eventMaster.setEventEndDatetime(eventMasterDTO.getEventEndDatetime());
             eventMaster.setEventName(eventMasterDTO.getEventName());
             eventMaster.setEventStartDatetime(eventMasterDTO.getEventStartDatetime());
-            eventMaster.setEventStatus(eventMasterDTO.getEventStatus());
+          //  eventMaster.setEventStatus(eventMasterDTO.getEventStatus());
             eventMaster.setEventTypeId(eventMasterDTO.getEventTypeId());
             eventMaster.setIsDiscounted(eventMasterDTO.getIsDiscounted());
             eventMaster.setIsFreeEvent(eventMasterDTO.isPaidEvent());

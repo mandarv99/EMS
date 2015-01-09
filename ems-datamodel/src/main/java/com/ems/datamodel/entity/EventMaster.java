@@ -13,7 +13,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -37,7 +36,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "EventMaster.findByEventCode", query = "SELECT e FROM EventMaster e WHERE e.eventCode = :eventCode"),
     @NamedQuery(name = "EventMaster.findByEventName", query = "SELECT e FROM EventMaster e WHERE e.eventName = :eventName"),
     @NamedQuery(name = "EventMaster.findByEventTypeId", query = "SELECT e FROM EventMaster e WHERE e.eventTypeId = :eventTypeId"),
-    @NamedQuery(name = "EventMaster.findByEventStatus", query = "SELECT e FROM EventMaster e WHERE e.eventStatus = :eventStatus"),
+   // @NamedQuery(name = "EventMaster.findByEventStatus", query = "SELECT e FROM EventMaster e WHERE e.eventStatus = :eventStatus"),
     @NamedQuery(name = "EventMaster.findByEventStartDatetime", query = "SELECT e FROM EventMaster e WHERE e.eventStartDatetime = :eventStartDatetime"),
     @NamedQuery(name = "EventMaster.findByEventEndDatetime", query = "SELECT e FROM EventMaster e WHERE e.eventEndDatetime = :eventEndDatetime"),
     @NamedQuery(name = "EventMaster.findByEventDescription", query = "SELECT e FROM EventMaster e WHERE e.eventDescription = :eventDescription"),
@@ -103,8 +102,8 @@ public class EventMaster implements Serializable {
     private Integer requireDisclaimer;
     @Column(name = "is_discounted")
     private Integer isDiscounted;
-    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id",insertable=false, updatable=false)
+    @ManyToOne
     private CompanyDetails companyId;
     @Column(name = "added_on")
     @Temporal(TemporalType.TIMESTAMP)
@@ -115,8 +114,11 @@ public class EventMaster implements Serializable {
     private Double latitude;
     @Column(name = "longitude")
     private Double longitude;
-    
-    public EventMaster() {
+    @ManyToOne
+    @JoinColumn(name="event_status" ,insertable=false, updatable=false)
+    private Status status;
+
+   public EventMaster() {
     }
 
     public EventMaster(Integer eventId) {
@@ -388,5 +390,13 @@ public class EventMaster implements Serializable {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }

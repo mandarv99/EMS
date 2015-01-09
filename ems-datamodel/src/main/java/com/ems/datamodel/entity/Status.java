@@ -7,12 +7,15 @@
 package com.ems.datamodel.entity;
 
 import java.io.Serializable;
+import java.util.Set;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -41,6 +44,9 @@ public class Status implements Serializable {
     @Column(name = "status_for")
     private String statusFor;
 
+    @OneToMany(mappedBy="status")
+    private Set<EventMaster> events;
+    
     public Status() {
     }
 

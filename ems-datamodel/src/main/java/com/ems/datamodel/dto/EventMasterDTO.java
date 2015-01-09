@@ -45,11 +45,13 @@ public class EventMasterDTO extends AbstractDTO {
     private boolean disclaimerRequired;
     private Date addedOn;    
     private Integer addedBy;
-    private  MapDTO mapDetails;
+    private MapDTO mapDetails;
+    private StatusDTO statusDto;
 
     public EventMasterDTO() {
         ticketMasterDTOList = new ArrayList<TicketDTO>();
         mapDetails = new MapDTO();
+        statusDto = new StatusDTO();
     }
 
     /**
@@ -427,5 +429,13 @@ public class EventMasterDTO extends AbstractDTO {
 
 	public MapDTO getMapDetails() {
 		return mapDetails;
+	}
+
+	public StatusDTO getStatusDto() {
+		return statusDto;
+	}
+
+	public void setStatusDto(StatusDTO statusDto) {
+		this.statusDto = statusDto;
 	}
 }
